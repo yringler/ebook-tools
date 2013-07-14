@@ -1,0 +1,4 @@
+*.o
+*.gch
+# from vim
+*.swp
