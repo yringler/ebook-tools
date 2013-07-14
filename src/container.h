@@ -10,21 +10,23 @@ namespace sefer {
 // A container contains content
 // Content could be a container
 template <typename T>	// What contains
-class Container : public Component, private std::deque<T>
+class Container : public Component
 {
+	private :
+		std::deque<T> m_content;
 	protected:
-		T & last() { return std::deque<T>::front(); }
+		T & last() { return m_content.front(); }
 	public:
 		Container(int i = 0, std::wstring str = "") 
 			: Component(i,str) {}
 
 		void add(const std::string & str = "") { 
-			push_front( T(str,std::deque<T>::size()+1) ); 
+			push_front( T(str,m_content.size()+1) ); 
 		}
-		void next() { std::deque<T>::pop_back(); }
-		bool finished() { return std::deque<T>::empty(); }
+		void next() { m_content.pop_back(); }
+		bool finished() { return m_content.empty(); }
 
-		T & content() { return std::deque<T>::back(); }
+		T & content() { return m_content.back(); }
 };
 
 }	// end namespace sefer
