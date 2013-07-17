@@ -25,7 +25,7 @@ void BasicLinkableString<CharT>::next()
 	if(link_queue().empty()) {
 		range.start(range.finish() + 1);
 		range.finish(m_string.length());
-	} else if(link_queue->start() > range.finish() + 1) {
+	} else if(link_queue.back().start() > range.finish() + 1) {
 		range.start(range.finish() + 1);
 		range.finish(link_range->start() - 1);
 	} else {	// assumed equal to
