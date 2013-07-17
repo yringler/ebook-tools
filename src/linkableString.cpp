@@ -28,6 +28,7 @@ void BasicLinkableString<CharT>::next()
 			range.finish(m_string.length());
 		}
 	} else if(link_queue.back().start() > range.finish() + 1) {
+		// if theres stuff before the next linked to text
 		range.start(range.finish() + 1);
 		range.finish(link_range->start() - 1);
 	} else {	// assumed equal to
