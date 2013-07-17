@@ -9,7 +9,7 @@ bool BasicLinkableString<CharT>::addLink(const Link & a_link)
 	} else {
 		a_link.range().start(link_start);
 	// subtract 1 because first char counted in length is link_start
-		a_link.range.finish(link_start + m_string.length() - 1);
+		a_link.range.finish(link_start + a_link.link().length() - 1);
 		int size_not_linked = link_start - link_search_start;
 
 		link_search_start += size_not_linked + a_link.link().size();
