@@ -23,8 +23,10 @@ void BasicLinkableString<CharT>::next()
 	Range *link_range = (link_queue.empty())? 0: &link_queue.back().range();
 
 	if(link_queue().empty()) {
-		range.start(range.finish() + 1);
-		range.finish(m_string.length());
+		if(not finished()) {	// if I didn't do this already
+			range.start(range.finish() + 1);
+			range.finish(m_string.length());
+		}
 	} else if(link_queue.back().start() > range.finish() + 1) {
 		range.start(range.finish() + 1);
 		range.finish(link_range->start() - 1);
