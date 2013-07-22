@@ -3,7 +3,8 @@
 template<typename CharT>
 bool BasicLinkableString<CharT>::addLink(const Link & a_link) 
 { 
-	int link_start = m_string.find(a_link.link(), link_search_start);
+	search_start = (link_queue.empty())? 0: link_queue.front().finish() + 1;
+	int link_start = m_string.find(a_link.link(), search_start);
 	if(link_start == String::npos) {
 		return 0;
 	} else {
@@ -11,8 +12,6 @@ bool BasicLinkableString<CharT>::addLink(const Link & a_link)
 	// subtract 1 because first char counted in length is link_start
 		a_link.range.finish(link_start + a_link.link().length() - 1);
 		link_queue.push_front(a_link);
-
-		link_search_start = a_link.range().finish() + 1;
 	}
 }
 template<typename CharT>
