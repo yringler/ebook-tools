@@ -23,21 +23,48 @@ bool BasicLinkableString<CharT>::addLink(Link & a_link)
 	}
 }
 template<typename CharT>
+void BasicLinkableString<CharT>::start()
+{
+	if(link_queue.empty()) {
+		range.start = 0;
+		range.finish = String::length();
+	} else if(link_queue.back().range.start == 0) {
+		range = link_queue.back().range;
+	} else {
+		range.start = 0;
+		range.finish = link_queue.back().range.start - 1;
+	}
+}
+#include <iostream>
+template<typename CharT>
 void BasicLinkableString<CharT>::next()
 {
+	std::cout << '\n';
+	std::cout << "queue size: " << link_queue.size()
+		<< " Current Range: " << range.start << ", " << range.finish;
+	std::cout << "\nsource text: " << curStr();
+	if(hasLink()) {
+		std::cout << "\nlink: " << link_queue.back().link;
+		std::cout << "\nlink text:" << link_queue.back().text << '\n';
+	}
+
 	if(finished()) {
 		return;
-	} else if(link_queue().size() == 1 && hasLink()) {
+	} else if(hasLink()){
+		std::cout << "*popped*";
+		link_queue.pop_back();
+	}
+	std::cout << std::endl;
+
+	if(link_queue.empty() && not finished()) {
 		// if I am on the last link
 		range.start = range.finish + 1;
 		range.finish = String::length();
-		link_queue.pop_back();
-	} else if(link_queue.back().start > range.finish + 1) {
+	} else if(link_queue.back().range.start > range.finish + 1) {
 		// if theres stuff before the next linked to text
-		// I know queue is not empty - if was, finished()
 		range.start = range.finish + 1;
 		range.finish = link_queue.back().range.start - 1;
-	} else if(link_queue.back().start == range.finish + 1){	
+	} else if(link_queue.back().range.start == range.finish + 1){	
 		range = link_queue.back().range;
 	} else {
 		std::cerr << "linkableString:next():error\n";

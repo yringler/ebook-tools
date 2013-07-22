@@ -17,6 +17,7 @@ private:
 public:
 	bool addLink(Link & a_link);
 	void next();
+	void start();
 	bool hasLink() {
 		return (link_queue.empty())? 0: 
 			link_queue.back().range == range;
@@ -26,8 +27,7 @@ public:
 		return String::substr(range.start, 
 				range.rangeSize());
 	}
-	bool finished() { return range.finish == 
-		String::length();
+	bool finished() { return range.finish == String::length();
 	}
 
 };
