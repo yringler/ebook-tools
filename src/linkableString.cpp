@@ -2,7 +2,7 @@
 #include <iostream>
 
 template<typename CharT>
-bool BasicLinkableString<CharT>::addLink(const Link & a_link) 
+bool BasicLinkableString<CharT>::addLink(Link & a_link) 
 { 
 	int search_start = (link_queue.empty())? 0: 
 		link_queue.front().finish + 1;

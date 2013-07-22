@@ -15,7 +15,7 @@ private:
 	std::deque<Link> link_queue;
 	Range range;
 public:
-	bool addLink(const Link & a_link);
+	bool addLink(Link & a_link);
 	void next();
 	bool hasLink() {
 		return (link_queue.empty())? 0: 
