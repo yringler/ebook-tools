@@ -3,15 +3,10 @@
 template<typename CharT>
 bool BasicLinkableString<CharT>::addLink(const Link & a_link) 
 { 
-<<<<<<< Updated upstream
-	int search_start = (link_queue.empty())? 0: 
-		link_queue.front().finish() + 1;
-	int link_start = m_string.find(a_link.link, search_start);
-=======
 	int search_start = (link_queue.empty())? 0: 
 		link_queue.front().finish + 1;
 	int link_start = m_string.find(a_link.link, search_start);
->>>>>>> Stashed changes
+
 	if(link_start == String::npos) {
 		return 0;
 	} else {
