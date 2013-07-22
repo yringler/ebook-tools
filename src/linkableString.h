@@ -21,7 +21,7 @@ public:
 		return (link_queue.empty())? 0: 
 			link_queue.back().range() == range;
 	}
-	Link & link() { if(hasLink()) return link_queue.back(); else throw; }
+	Link & link() { return link_queue.back(); }
 	String string() { 
 		return m_string.substr(range.start(), range.rangeSize());
 	}
