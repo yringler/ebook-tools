@@ -2,3 +2,5 @@
 *.gch
 # from vim
 *.swp
+# from g++
+*.out
