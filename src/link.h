@@ -15,6 +15,7 @@ struct BasicLink
 	BasicLink(String a_link, String a_text) { 
 		link(a_link, a_text);
 	}
+	BasicLink() {}
 };
 typedef BasicLink<char> Link;
 typedef BasicLink<wchar_t> WLink;
