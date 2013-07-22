@@ -14,7 +14,6 @@ private:
 	String m_string;
 	std::deque<Link> link_queue;
 	Range range;
-	int link_search_start;	// where the next search for a link should start
 public:
 	BasicLinkableString() : link_search_start(0) {}
 	bool addLink(const Link & a_link);
