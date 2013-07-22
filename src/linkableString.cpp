@@ -39,19 +39,9 @@ void BasicLinkableString<CharT>::start()
 template<typename CharT>
 void BasicLinkableString<CharT>::next()
 {
-	std::cout << '\n';
-	std::cout << "queue size: " << link_queue.size()
-		<< " Current Range: " << range.start << ", " << range.finish;
-	std::cout << "\nsource text: " << curStr();
-	if(hasLink()) {
-		std::cout << "\nlink: " << link_queue.back().link;
-		std::cout << "\nlink text:" << link_queue.back().text << '\n';
-	}
-
 	if(finished()) {
 		return;
 	} else if(hasLink()){
-		std::cout << "*popped*";
 		link_queue.pop_back();
 	}
 	std::cout << std::endl;
