@@ -6,7 +6,7 @@ bool BasicLinkableString<CharT>::addLink(const Link & a_link)
 { 
 	int search_start = (link_queue.empty())? 0: 
 		link_queue.front().finish + 1;
-	int link_start = m_string.find(a_link.link, search_start);
+	int link_start = String::find(a_link.link, search_start);
 
 	if(link_start == String::npos) {
 		return 0;
@@ -27,7 +27,7 @@ void BasicLinkableString<CharT>::next()
 	} else if(link_queue().size() == 1 && hasLink()) {
 		// if I am on the last link
 		range.start = range.finish + 1;
-		range.finish = m_string.length();
+		range.finish = String::length();
 		link_queue.pop_back();
 	} else if(link_queue.back().start > range.finish + 1) {
 		// if theres stuff before the next linked to text

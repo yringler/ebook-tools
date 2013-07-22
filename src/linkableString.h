@@ -2,16 +2,16 @@
 #define LINKABLE_STRING_H
 
 #include <deque>
+#include <string>
 #include "range.h"
 #include "link.h"
 
 template<typename CharT>
-class BasicLinkableString
+class BasicLinkableString : std::basic_string<CharT>
 {
 private:
 	typedef std::basic_string<CharT> String;
 	typedef BasicLink<CharT> Link;
-	String m_string;
 	std::deque<Link> link_queue;
 	Range range;
 public:
@@ -22,10 +22,13 @@ public:
 			link_queue.back().range == range;
 	}
 	Link & link() { return link_queue.back(); }
-	String string() { 
-		return m_string.substr(range.start, range.rangeSize());
+	std::basic_string<CharT> curStr() { 
+		return String::substr(range.start, 
+				range.rangeSize());
 	}
-	bool finished() { return range.finish == m_string.length(); }
+	bool finished() { return range.finish == 
+		String::length();
+	}
 
 };
 
