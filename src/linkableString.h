@@ -7,7 +7,7 @@
 #include "link.h"
 
 template<typename CharT>
-class BasicLinkableString : std::basic_string<CharT>
+class BasicLinkableString : public std::basic_string<CharT>
 {
 private:
 	typedef std::basic_string<CharT> String;
@@ -34,5 +34,7 @@ public:
 
 typedef BasicLinkableString<char> LinkableString;
 typedef BasicLinkableString<wchar_t> LinkableWString;
+
+#include "linkableString.cpp"
 
 #endif

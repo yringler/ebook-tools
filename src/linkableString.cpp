@@ -1,3 +1,6 @@
+#ifndef LINKABLE_STRING_CPP
+#define LINKABLE_STRING_CPP
+
 #include "linkableString.h"
 #include <iostream>
 
@@ -5,7 +8,7 @@ template<typename CharT>
 bool BasicLinkableString<CharT>::addLink(Link & a_link) 
 { 
 	int search_start = (link_queue.empty())? 0: 
-		link_queue.front().finish + 1;
+		link_queue.front().range.finish + 1;
 	int link_start = String::find(a_link.link, search_start);
 
 	if(link_start == String::npos) {
@@ -41,3 +44,5 @@ void BasicLinkableString<CharT>::next()
 		throw;
 	}
 }
+
+#endif
