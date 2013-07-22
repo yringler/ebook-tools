@@ -1,4 +1,5 @@
 #include "linkableString.h"
+#include <iostream>
 
 template<typename CharT>
 bool BasicLinkableString<CharT>::addLink(const Link & a_link) 
@@ -21,19 +22,22 @@ bool BasicLinkableString<CharT>::addLink(const Link & a_link)
 template<typename CharT>
 void BasicLinkableString<CharT>::next()
 {
-	if(hasLink()) link_queue.pop_back();
-	Range *link_range = (link_queue.empty())? 0: &link_queue.back().range;
-
-	if(link_queue().empty()) {
-		if(not finished()) {	// if I didn't do this already
-			range.start = range.finish + 1;
-			range.finish = m_string.length();
-		}
+	if(finished()) {
+		return;
+	} else if(link_queue().size() == 1 && hasLink()) {
+		// if I am on the last link
+		range.start = range.finish + 1;
+		range.finish = m_string.length();
+		link_queue.pop_back();
 	} else if(link_queue.back().start > range.finish + 1) {
 		// if theres stuff before the next linked to text
+		// I know queue is not empty - if was, finished()
 		range.start = range.finish + 1;
-		range.finish = link_range->start - 1;
-	} else {	// assumed equal to
-		range = *link_range;
+		range.finish = link_queue.back().range.start - 1;
+	} else if(link_queue.back().start == range.finish + 1){	
+		range = link_queue.back().range;
+	} else {
+		std::cerr << "linkableString:next():error\n";
+		throw;
 	}
 }
