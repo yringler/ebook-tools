@@ -19,13 +19,13 @@ public:
 	void next();
 	bool hasLink() {
 		return (link_queue.empty())? 0: 
-			link_queue.back().range() == range;
+			link_queue.back().range == range;
 	}
 	Link & link() { return link_queue.back(); }
 	String string() { 
-		return m_string.substr(range.start(), range.rangeSize());
+		return m_string.substr(range.start, range.rangeSize());
 	}
-	bool finished() { return range.finish() == m_string.length(); }
+	bool finished() { return range.finish == m_string.length(); }
 
 };
 
