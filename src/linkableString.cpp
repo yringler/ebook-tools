@@ -12,6 +12,8 @@ bool BasicLinkableString<CharT>::addLink(const Link & a_link)
 	// subtract 1 because first char counted in length is link_start
 		a_link.range.finish(link_start + a_link.link().length() - 1);
 		link_queue.push_front(a_link);
+		return 1;
+
 	}
 }
 template<typename CharT>
