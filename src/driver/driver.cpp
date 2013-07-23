@@ -59,6 +59,6 @@ int main()
 	}
 	cout << commented_story.curStr();
 	if(commented_story.hasLink())
-		cout << "commented_story.link()";
+		cout << "<link>" << commented_story.link().text << "<\\link>";
 	cout << endl;
 }
