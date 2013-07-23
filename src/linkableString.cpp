@@ -44,7 +44,6 @@ void BasicLinkableString<CharT>::next()
 	} else if(hasLink()){
 		link_queue.pop_back();
 	}
-	std::cout << std::endl;
 
 	if(link_queue.empty() && not finished()) {
 		// if I am on the last link
