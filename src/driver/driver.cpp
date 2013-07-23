@@ -21,7 +21,8 @@ int main()
 	// load story
 	std::string tmp_str;
 	while(std::getline(story,tmp_str)){
-		commented_story += tmp_str += '\n';
+		commented_story += tmp_str;
+		cout << "Section: " << tmp_str;
 	}
 	cout << commented_story;
 
@@ -45,13 +46,19 @@ int main()
 		}
 	}
 
-	cout << "\nENTERED PROCCESSING LOOP\n\n";
 	commented_story.start();
+	cout << "\nENTERED PROCCESSING LOOP\n\n";
 	while(not commented_story.finished()){
+		cout << commented_story.curStr();
+
+		if(commented_story.hasLink())
+			cout << "<link>" 
+				<< commented_story.link().text
+				<< "<\\link>";
 		commented_story.next();
 	}
-	cout << "\nEND TEXT\n";
 	cout << commented_story.curStr();
 	if(commented_story.hasLink())
 		cout << "commented_story.link()";
+	cout << endl;
 }
