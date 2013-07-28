@@ -46,7 +46,7 @@ void BasicLinkableString<CharT>::next()
 	}
 
 	if(link_queue.empty() && not finished()) {
-		// if I am on the last link
+	// if there are no more links and didn't already set range to end
 		range.start = range.finish + 1;
 		range.finish = String::length();
 	} else if(link_queue.back().range.start > range.finish + 1) {
