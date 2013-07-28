@@ -22,9 +22,8 @@ int main()
 	std::string tmp_str;
 	while(std::getline(story,tmp_str)){
 		commented_story += tmp_str;
-		cout << "Section: " << tmp_str;
+		cout << "Line: " << tmp_str << endl;
 	}
-	cout << commented_story;
 
 	// add comments
 	Link tmp_link;
@@ -48,7 +47,7 @@ int main()
 
 	commented_story.start();
 	cout << "\nENTERED PROCCESSING LOOP\n\n";
-	while(not commented_story.finished()){
+	do {
 		cout << commented_story.curStr();
 
 		if(commented_story.hasLink())
@@ -56,9 +55,6 @@ int main()
 				<< commented_story.link().text
 				<< "<\\link>";
 		commented_story.next();
-	}
-	cout << commented_story.curStr();
-	if(commented_story.hasLink())
-		cout << "<link>" << commented_story.link().text << "<\\link>";
+	} while(not commented_story.finished());
 	cout << endl;
 }
