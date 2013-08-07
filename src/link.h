@@ -2,7 +2,6 @@
 #define LINK_H
 
 #include <string>
-#include "range.h"
 
 template<typename CharT>
 struct BasicLink
@@ -10,13 +9,17 @@ struct BasicLink
 	typedef std::basic_string<CharT> String;
 	String link;
 	String text;
-	Range range;
 
-	BasicLink(String a_link, String a_text) { 
-		link(a_link, a_text);
+	/* begin and end in source string */
+	typename String::const_iterator begin;
+	typename String::const_iterator end;
+
+	BasicLink(String a_link = String(), String a_text = String()) { 
+		link = a_link, text = a_text;
 	}
-	BasicLink() {}
 };
+
 typedef BasicLink<char> Link;
 typedef BasicLink<wchar_t> WLink;
+
 #endif

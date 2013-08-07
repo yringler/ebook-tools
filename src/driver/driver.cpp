@@ -1,12 +1,18 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "../linkableString.h"
+#include <queue>
+#include <iterator>
+#include "../link.h"
+#include "../attachLink.h"
 
 int main()
 {
 	using std::cout;
 	using std::endl;
+
+	std::string commentedStory;
+	std::queue<Link> commentQueue;
 
 	cout << "INITIALIZING DATA\n\n";
 
@@ -16,45 +22,59 @@ int main()
 		cout << "Files opened\n";
 	else
 		cout << "Files not opened\n";
-	LinkableString commented_story;
 
-	// load story
+		/* load story */
 	std::string tmp_str;
 	while(std::getline(story,tmp_str)){
-		commented_story += tmp_str;
-		cout << "Line: " << tmp_str << endl;
+		commentedStory += tmp_str;
 	}
+/* here because of sorta bug: the iterators are invalid after change */
+	AttachLink commentAttacher(commentedStory);
 
-	// add comments
+		/* load comments */
 	Link tmp_link;
 	while(std::getline(comments,tmp_str)){
 		if(tmp_str[0] == '~'){
 			tmp_link.link = tmp_str.substr(1);
 			std::getline(comments,tmp_str);
 			tmp_link.text = tmp_str;
-
-			cout << "Attempt add...";
-			if(commented_story.addLink(tmp_link)){
-				cout << "Added\n";
-				cout << "Body: " << tmp_link.text << endl;
-				cout << "Range: " << tmp_link.range.start 
-					<< ' ' << tmp_link.range.finish
-					<< endl;
-			} else
-				cout << "Fail\n";
+		
+			cout << "Attempt attach...";
+			if(commentAttacher.attach(tmp_link)) {
+				cout << "Attached\n";
+				commentQueue.push(tmp_link);
+			} else {
+				cout << "Failed\n";
+			}
 		}
 	}
 
-	commented_story.start();
 	cout << "\nENTERED PROCCESSING LOOP\n\n";
-	do {
-		cout << commented_story.curStr();
 
-		if(commented_story.hasLink())
-			cout << "<link>" 
-				<< commented_story.link().text
-				<< "<\\link>";
-		commented_story.next();
-	} while(not commented_story.finished());
+	if(commentQueue.empty()) {
+		cout << "Error:commentQueue empty\n";
+		return 1;
+	}
+
+		/* Print story with comments */
+	std::ostream_iterator<char> p_iter(cout);
+	const std::string & kludge = commentedStory;
+	std::copy(kludge.begin(), commentQueue.front().begin, p_iter);
+
+	Link next_link = commentQueue.front();
+	while(not commentQueue.empty()) {
+		tmp_link = next_link;
+		commentQueue.pop();
+
+		std::copy(tmp_link.begin, tmp_link.end, p_iter);
+		cout << "<comment>" << tmp_link.text << "<\\comment>";
+		if(not commentQueue.empty()) {
+			next_link = commentQueue.front();
+			std::copy(tmp_link.end, next_link.begin, p_iter);
+		} else {
+			std::copy(tmp_link.end, kludge.end(), p_iter);
+		}
+	}
+
 	cout << endl;
 }
