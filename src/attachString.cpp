@@ -1,10 +1,10 @@
 #include <algorithm>
 #include <iostream>
-#include "attachLink.h"
+#include "attachString.h"
 
 template<typename CharT>
-bool BasicAttachLink<CharT>::attach(BasicLink<CharT> & link,
-		 const_iter search_start)
+bool BasicAttachString<CharT>::attach(BasicLink<CharT> & link,
+		 const_iter search_start) const
 {
 	typename String::const_iterator begin;
 	begin = std::search(search_start, to_str->end(),
@@ -26,7 +26,8 @@ bool BasicAttachLink<CharT>::attach(BasicLink<CharT> & link,
 #include <iostream>
 
 template<typename CharT>
-bool BasicAttachLink<CharT>::attach(BasicLink<CharT> & link, AttachMode mode)
+bool BasicAttachString<CharT>::attach(BasicLink<CharT> & link, 
+		AttachMode mode) const
 {
 	switch(mode)
 	{

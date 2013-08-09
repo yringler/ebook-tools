@@ -4,14 +4,14 @@
 #include <queue>
 #include <iterator>
 #include "../link.h"
-#include "../attachLink.h"
+#include "../attachString.h"
 
 int main()
 {
 	using std::cout;
 	using std::endl;
 
-	std::string commentedStory;
+	AttachString commentedStory;
 	std::queue<Link> commentQueue;
 
 	cout << "INITIALIZING DATA\n\n";
@@ -24,15 +24,17 @@ int main()
 		cout << "Files not opened\n";
 
 		/* load story */
-	std::string tmp_str;
-	while(std::getline(story,tmp_str)){
-		commentedStory += tmp_str;
+	std::string one_line;
+	std::string all_lines;
+	while(std::getline(story,one_line)){
+		all_lines += one_line;
 	}
-/* here because of sorta bug: the iterators are invalid after change */
-	AttachLink commentAttacher(commentedStory);
+
+	commentedStory = all_lines;
 
 		/* load comments */
 	Link tmp_link;
+	std::string tmp_str;
 	while(std::getline(comments,tmp_str)){
 		if(tmp_str[0] == '~'){
 			tmp_link.link = tmp_str.substr(1);
@@ -40,7 +42,7 @@ int main()
 			tmp_link.text = tmp_str;
 		
 			cout << "Attempt attach...";
-			if(commentAttacher.attach(tmp_link)) {
+			if(commentedStory.attach(tmp_link)) {
 				cout << "Attached\n";
 				commentQueue.push(tmp_link);
 			} else {
@@ -58,8 +60,8 @@ int main()
 
 		/* Print story with comments */
 	std::ostream_iterator<char> p_iter(cout);
-	const std::string & kludge = commentedStory;
-	std::copy(kludge.begin(), commentQueue.front().begin, p_iter);
+	std::copy(commentedStory.get().begin(), commentQueue.front().begin, 
+			p_iter);
 
 	Link next_link = commentQueue.front();
 	while(not commentQueue.empty()) {
@@ -72,7 +74,8 @@ int main()
 			next_link = commentQueue.front();
 			std::copy(tmp_link.end, next_link.begin, p_iter);
 		} else {
-			std::copy(tmp_link.end, kludge.end(), p_iter);
+			std::copy(tmp_link.end, commentedStory.get().end(), 
+					p_iter);
 		}
 	}
 
