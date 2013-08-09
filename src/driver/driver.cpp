@@ -27,6 +27,8 @@ int main()
 	std::string one_line;
 	std::string all_lines;
 	while(std::getline(story,one_line)){
+		if(not all_lines.empty())
+			all_lines += ' ';
 		all_lines += one_line;
 	}
 
