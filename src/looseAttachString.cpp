@@ -7,12 +7,13 @@ bool BasicLooseAttachString<CharT>::attach(BasicLink<CharT> & link,
 	/* declarations of all the range iterators */
 
 	/* where I'm looking */
-	IterT in_begin(search_begin, lowest, highest);
-	IterT in_end(Parent::to_str->end, lowest, highest);
+	IterT in_begin(search_begin, Parent::to_str->end(), lowest, highest);
+	IterT in_end(Parent::to_str->end(), Parent::to_str->end(), 
+			lowest, highest);
 
 	/* what I'm searching for */
-	IterT for_begin(link.link.begin(), lowest, highest);
-	IterT for_end(link.link.end(), lowest, highest);
+	IterT for_begin(link.link.begin(),link.link.end(), lowest, highest);
+	IterT for_end(link.link.end(), link.link.end(), lowest, highest);
 
 	const_iter begin = std::search(in_begin, in_end, for_begin, for_end);
 
