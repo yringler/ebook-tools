@@ -18,7 +18,9 @@ bool BasicLooseAttachString<CharT>::attach(BasicLink<CharT> & link,
 
 	if(begin != Parent::to_str->end()) {
 		link.begin = begin;
-		link.end = begin + link.link.length();
+		// can't just add length of link.link, 
+		// b/c find may be smaller as skip chars
+		link.end = std::find_end(begin, in_end, for_begin, for_end);
 
 		Parent::last_search_begin = search_begin;
 		Parent::last_find_end = link.end;
