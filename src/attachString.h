@@ -12,11 +12,11 @@ class BasicAttachString
 {
 private:
 	typedef std::basic_string<CharT> String;
+	typedef typename String::const_iterator const_iter;
 
 	// the string that will link to
 	std::auto_ptr<const String> to_str;
 protected:
-	typedef typename String::const_iterator const_iter;
 	mutable const_iter last_search_start;	
 	mutable const_iter last_find_end;
 	virtual bool attach(BasicLink<CharT> & link, const_iter search_start)

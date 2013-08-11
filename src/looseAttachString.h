@@ -22,7 +22,7 @@ private:
 	CharT lowest;
 	CharT highest;
 protected:
-	virtual bool attach(BasicLink<CharT> & link, const_iter search_start)
+	virtual bool attach(BasicLink<CharT> & link, const_iter search_begin)
 		const;
 public:
 	BasicLooseAttachString(String & str) : BasicAttachString<CharT>(str) {}
@@ -37,6 +37,8 @@ public:
 			typename BasicAttachString<CharT>::AttachMode 
 				= BasicAttachString<CharT>::proceed) const;
 };
+
+#include "looseAttachString.cpp"
 
 typedef BasicLooseAttachString<char> LooseAttachString;
 typedef BasicLooseAttachString<wchar_t> WLooseAttachString;

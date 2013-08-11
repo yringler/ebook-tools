@@ -1,8 +1,8 @@
 #include "looseAttachString.h"
 
 template<typename CharT>
-bool BasicLooseAttachString<CharT>::attach(BasicLink<CharT> & link, 
-		const_iter search_begin) const
+bool BasicLooseAttachString<CharT>::attach(BasicLink<CharT> & link,
+		 const_iter search_begin) const
 {
 	/* declarations of all the range iterators */
 
@@ -28,6 +28,9 @@ bool BasicLooseAttachString<CharT>::attach(BasicLink<CharT> & link,
 		return 0;
 	}
 }
+
+#include <iostream>
+
 template<typename CharT>
 bool BasicLooseAttachString<CharT>::attach(BasicLink<CharT> & link, 
 	typename BasicAttachString<CharT>::AttachMode mode) const
