@@ -1,7 +1,9 @@
 #!/bin/bash
-# Usage: in_file out_format book|set calibre_options
+# Usage: out_root_dir in_file out_format book|set calibre_options
+# This is a little bit messy...
+# actually, this is downright terrifying!
 
-if ! [  "$1" -a "$2"  -a "$3" ]; then
+if ! [  "$1" -a "$2"  -a "$3" -a "$4" ]; then
  echo <<- EOF 
  Usage: in_file out_format book|set calibre_options
  the third argument is book if in_file is a book
@@ -11,10 +13,12 @@ EOF
  exit
 fi
 
-readonly file=$1
-readonly format=$2
-readonly type=$3
-shift 3
+readonly root_dir=$1
+readonly file=$2
+readonly file_dir=$(dirname $file)
+readonly format=$3
+readonly type=$4
+shift 4
 read calibre_options <<< $*
 echo $calibre_options
 
@@ -32,35 +36,37 @@ get_author() { # arg: file to extract from
 	# the heading of index.htm in author's folder is author
 	author=$(get_title $parent_dir/index.htm)
 	# For a Rebbe, has this word.
-	author=${author/ספרי/}
 	author=$(sed -e s/[[:space:]]*ספרי[[:space:]]*// <<< $author)
 
 	echo $author
 }
 convert() {	# args: filename out_dir title author
 	# doesn't generate title so if type==set can stick in prefix
-	# doesn't generate author because diffrent if set
+	# doesn't generate author because diffrent if in a set
+	# (wow, that is a beautiful bit of variable use)
 	ebook-convert "$1" "${2}/${3}.${format}" \
 		--title "$3" --authors "$4" --language Hebrew \
 		--toc-threshold 0 --max-toc-links 0 \
 		--level1-toc '//h:div[@class="heading"]' \
-		--chapter-mark rule $calibre_options
+		--chapter-mark rule $calibre_options \
+		--publisher "Yehuda Ringler"
 }
 
 # gets author of set or of sefer
 author="$(get_author $file)"
-if ! [ -e "$author" ]; then mkdir "$author"; fi
+o_dir="$root_dir/$author"
+if ! [ -e "$o_dir" ]; then mkdir -p "$o_dir"; fi
 
 if [ $type == set ]; then
 	series="$(get_title $file)"
-	o_dir="${author}/${series}"
+	o_dir="${o_dir}/${series}"
 	if ! [ -e "$o_dir" ]; then mkdir "$o_dir"; fi
 
-	for i in */index.htm; do
+	for i in $file_dir/*/index.htm; do
 		convert "$i" "$o_dir" "$series $(get_title $i)" "$author"
 	done
 elif [ $type == book ]; then
-	convert "$file" "${author}" "$(get_title $file)" "$author"
+	convert "$file" "$o_dir" "$(get_title $file)" "$author"
 else
 	echo Error:arg3 type == $type
 fi
