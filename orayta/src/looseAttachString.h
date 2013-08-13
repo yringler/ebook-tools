@@ -17,7 +17,7 @@ class BasicLooseAttachString : public BasicAttachString<CharT>
 private:
 	typedef std::basic_string<CharT> String;
 	typedef typename String::const_iterator const_iter;
-	typedef RangeIterator<String, const_iter> IterT;
+	typedef RangeIterator<CharT, const_iter> IterT;
 	typedef BasicAttachString<CharT> Parent; // preserves sanity
 	CharT lowest;
 	CharT highest;
