@@ -6,6 +6,7 @@
 # it up later
 old_dir=$PWD
 cd $1
+if [ "${PWD##*/}" != books ]; then echo error; exit; fi
 shift
 
 if [ ! "$1" ]; then echo What format? && exit; fi
@@ -29,7 +30,7 @@ do
 		type=book
 	fi
 	# saves all in a directory called $out_format
-	${script_parent}/convert.sh $out_format $book_folder/index.htm \
+	${script_parent}/convert.sh "${old_dir}/$out_format" $book_folder/index.htm \
 		$out_format $type $calibre_options
 done
 
