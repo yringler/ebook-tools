@@ -1,0 +1,30 @@
+# matches a few maamarim sets
+maamarei
+# toras chaim
+tch
+
+# shulchan aruch
+sh
+
+ig
+#likutay sichos
+lkus
+# maamerim melukat
+mlukat
+reshimos
+# toras menachem
+tm
+
+# toras sholem
+tsh
+
+# ayin beis
+terav
+
+# of Rebbe Rayatz
+sichos
+
+# Ohr Hatora of the Tzemach Tzedek
+oht
+# shaylot and teshuvot of the Tzemach Tzedek
+shut

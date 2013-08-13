@@ -1,0 +1,5 @@
+three scripts:
+1) downloads the source html
+2) cleans the html (removes navigational stuff, etc) (sed script)
+3) convert one index.htm or a set to ebook
+4) convert all to ebooks
