@@ -5,11 +5,9 @@
 #include "attachString.h"
 #include "rangeIterator.h"
 
-/* this class has an ugly bit of repetitive code.
- * but its very straight-forward, so I'll put up with it
- *
- * but wow, that is some horrible repeition...
- * this really needs a major cleanup
+/* 
+ * this class has a little bit of repetitive code which shold be looked
+ * into eventually. Low priority though because readability is ok
  */
 template <typename CharT>
 class BasicLooseAttachString : public BasicAttachString<CharT>
