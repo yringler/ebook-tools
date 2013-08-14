@@ -3,22 +3,22 @@
 #include <string>
 #include <queue>
 #include <iterator>
-#include "../link.h"
-#include "../attachString.h"
+#include "../comment.h"
+#include "../onString.h"
 
 int main()
 {
 	using std::cout;
 	using std::endl;
 
-	AttachString commentedStory;
-	std::queue<Link> commentQueue;
+	OnString onStory;
+	std::queue<Comment> commentQueue;
 
 	cout << "INITIALIZING DATA\n\n";
 
 	std::ifstream story("story.txt");
-	std::ifstream comments("comments.txt");
-	if(story.is_open() && comments.is_open())
+	std::ifstream comment_file("comments.txt");
+	if(story.is_open() && comment_file.is_open())
 		cout << "Files opened\n";
 	else
 		cout << "Files not opened\n";
@@ -32,21 +32,21 @@ int main()
 		all_lines += one_line;
 	}
 
-	commentedStory = all_lines;
+	onStory.set(all_lines);
 
 		/* load comments */
-	Link tmp_link;
+	Comment tmp_comment;
 	std::string tmp_str;
-	while(std::getline(comments,tmp_str)){
+	while(std::getline(comment_file,tmp_str)){
 		if(tmp_str[0] == '~'){
-			tmp_link.link = tmp_str.substr(1);
-			std::getline(comments,tmp_str);
-			tmp_link.text = tmp_str;
+			tmp_comment.on = tmp_str.substr(1);
+			std::getline(comment_file,tmp_str);
+			tmp_comment.comment = tmp_str;
 		
 			cout << "Attempt attach...";
-			if(commentedStory.attach(tmp_link)) {
+			if(onStory.attach(tmp_comment)) {
 				cout << "Attached\n";
-				commentQueue.push(tmp_link);
+				commentQueue.push(tmp_comment);
 			} else {
 				cout << "Failed\n";
 			}
@@ -62,21 +62,21 @@ int main()
 
 		/* Print story with comments */
 	std::ostream_iterator<char> p_iter(cout);
-	std::copy(commentedStory.get().begin(), commentQueue.front().begin, 
+	std::copy(onStory.get().begin(), commentQueue.front().begin, 
 			p_iter);
 
-	Link next_link = commentQueue.front();
+	Comment next_comment = commentQueue.front();
 	while(not commentQueue.empty()) {
-		tmp_link = next_link;
+		tmp_comment = next_comment;
 		commentQueue.pop();
 
-		std::copy(tmp_link.begin, tmp_link.end, p_iter);
-		cout << "<comment>" << tmp_link.text << "<\\comment>";
+		std::copy(tmp_comment.begin, tmp_comment.end, p_iter);
+		cout << "<comment>" << tmp_comment.comment << "<\\comment>";
 		if(not commentQueue.empty()) {
-			next_link = commentQueue.front();
-			std::copy(tmp_link.end, next_link.begin, p_iter);
+			next_comment = commentQueue.front();
+			std::copy(tmp_comment.end, next_comment.begin, p_iter);
 		} else {
-			std::copy(tmp_link.end, commentedStory.get().end(), 
+			std::copy(tmp_comment.end, onStory.get().end(), 
 					p_iter);
 		}
 	}
