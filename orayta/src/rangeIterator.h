@@ -1,6 +1,7 @@
 #ifndef RANGE_ITERATOR_H
 #define RANGE_ITERATOR_H
 
+#include <iostream>
 #include <iterator>
 
 /* A wrapper around an iterator. operator++ skips over values within range */
@@ -28,6 +29,7 @@ protected:
 	RangeIterator & diffLocCopy(RangeIterator iter) {
 		return RangeIterator(iter,end,lowest,highest);
 	}
+	bool inRange(ValueT i) { return (i < lowest || i > highest); }
 public:
 	// args: the initial place to point to, the past-the-end iterator,
 	// and acceptable range of the values
@@ -37,19 +39,24 @@ public:
 		end = a_end;
 		lowest = a_lowest;
 		highest = a_highest;
+		
+		if(not inRange(*current)) operator++();
 	}
 	RangeIterator() {} 
 	Iterator base() const { return current; }
 	ValueT operator*() const { return *current; }
 	RangeIterator & operator++() {
+		std::cout << "start: " << *current << ' ';
+		current++;
 		// while out of range
-		while(*current < lowest && *current > highest 
-				&& current != end) {
+		while(not inRange(*current) && current != end) {
+			std::cout << "Current: " << *current;
 			current++;
 		}
+		std::cout << "end: " << *current << std::endl;
 		return *this;
 	}
-	Iterator & operator++(int) { return operator++(); }
+	Iterator & operator++(int) { std::cout << "here we go again...\n"; return operator++(); }
 	bool operator==(RangeIterator iter) { return current == iter.current; }
 	bool operator!=(RangeIterator iter) { return current != iter.current; }
 	bool operator<=(RangeIterator iter) { return current <= iter.current; }
