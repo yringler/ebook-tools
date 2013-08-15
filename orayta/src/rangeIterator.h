@@ -33,7 +33,7 @@ public:
 		lowest = a_lowest;
 		highest = a_highest;
 	}
-
+	Iterator base() const { return current; }
 	ValueT operator*() const { return *current; }
 	void operator++() {
 		while(*this <= lowest && *this >= highest &&  this != end) {
