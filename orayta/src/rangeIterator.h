@@ -10,9 +10,9 @@ template <class Iterator>
 class RangeIterator : public std::iterator<
 	      typename std::iterator_traits<Iterator>::iterator_category,
 	      typename std::iterator_traits<Iterator>::value_type,
-	      typename std::iterator_traits<Iterator>::diffrence_type,
+	      typename std::iterator_traits<Iterator>::difference_type,
 	      typename std::iterator_traits<Iterator>::pointer,
-	      typename std::iterator_traits<Iterator>::refrence>
+	      typename std::iterator_traits<Iterator>::reference>
 {
 private:
 	typedef typename std::iterator_traits<Iterator>::value_type ValueT;
@@ -26,7 +26,7 @@ private:
 public:
 	// the initial place to point to, the past-the-end iterator,
 	// and acceptable range of the values
-	RangeIterator(Iterator & a_current, Iterator & a_end,
+	RangeIterator(Iterator  a_current, Iterator  a_end,
 			ValueT a_lowest, ValueT a_highest) {
 		current = a_current;
 		end = a_end;
