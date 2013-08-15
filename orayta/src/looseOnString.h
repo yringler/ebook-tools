@@ -14,17 +14,19 @@ class BasicLooseOnString : public BasicOnString<CharT>
 {
 private:
 	typedef std::basic_string<CharT> String;
-	typedef typename String::const_iterator const_iter;
-	typedef RangeIterator<CharT, const_iter> IterT;
+	typedef typename String::const_iterator const_iterator;
 	typedef BasicOnString<CharT> Parent; // preserves sanity
+
 	CharT lowest;
 	CharT highest;
 protected:
-	virtual bool attach(BasicComment<CharT> & comment, const_iter search_begin)
-		const;
+	virtual bool attach(BasicComment<CharT> & comment,
+			const_iterator search_begin) const;
 public:
 	BasicLooseOnString(String & str) : BasicOnString<CharT>(str) {}
-	BasicLooseOnString(String & str, CharT a_lowest, CharT a_highest) {
+	BasicLooseOnString(String & str, CharT a_lowest, CharT a_highest)
+		: BasicOnString<CharT>(str)
+	{
 		lowest = a_lowest;
 		highest = a_highest;
 	}

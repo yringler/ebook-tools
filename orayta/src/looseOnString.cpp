@@ -2,9 +2,11 @@
 
 template<typename CharT>
 bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
-		 const_iter search_begin) const
+		 const_iterator search_begin) const
 {
-	/* declarations of all the range iterators */
+	typedef RangeIterator<const_iterator> IterT;
+
+		/* declarations of all the range iterators */
 
 	/* where I'm looking */
 	IterT in_begin(search_begin, Parent::on_str->end(), lowest, highest);
@@ -13,26 +15,22 @@ bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
 			lowest, highest);
 
 	/* what I'm searching for */
-	IterT for_begin(comment.on.begin(),comment.on.end(),
-			lowest, highest);
-	IterT for_end(comment.on.end(), comment.on.end(),
-			lowest, highest);
+	IterT for_begin(comment.on.begin(),comment.on.end(), lowest, highest);
+	IterT for_end(comment.on.end(), comment.on.end(), lowest, highest);
 
-	IterT begin = std::search(in_begin, in_end, for_begin, for_end);
+	// begining of where comment is on
+	IterT tmp = std::search(in_begin, in_end, for_begin, for_end);
 
-	// on failure, std::search returns where searched untill
-	if(begin != Parent::on_str->end()) {
-		comment.begin = begin;
+	// on failure, std::search returns where searched untill ie end()
+	if(tmp != Parent::on_str->end()) {
+		comment.begin = tmp.base();
 		
 		// can't just add length of comment.on 
 		// b/c find may be smaller as skip chars
 
-		/*****************************************************
-		 *Notice that I specifically call find_end with begin*
-		 *not with comment.begin. This is because I want to  *
-		 ***************use the rangeIterator*****************
-		 *****************************************************/
-		comment.end = std::find_end(begin, in_end, for_begin, for_end);
+		// use tmp, not comment.begin, because want RangeIterator
+		tmp = std::find_end(tmp, in_end, for_begin, for_end);
+		comment.end = tmp;
 
 		Parent::last_search_begin = search_begin;
 		Parent::last_find_end = comment.end;
