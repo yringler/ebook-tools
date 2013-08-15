@@ -23,8 +23,13 @@ private:
 	// range of values not to skip
 	ValueT lowest;
 	ValueT highest;
+protected:
+	// convenionce function: returns a copy, but diffrent this->current
+	RangeIterator & diffLocCopy(RangeIterator iter) {
+		return RangeIterator(iter,end,lowest,highest);
+	}
 public:
-	// the initial place to point to, the past-the-end iterator,
+	// args: the initial place to point to, the past-the-end iterator,
 	// and acceptable range of the values
 	RangeIterator(Iterator  a_current, Iterator  a_end,
 			ValueT a_lowest, ValueT a_highest) {
@@ -33,14 +38,29 @@ public:
 		lowest = a_lowest;
 		highest = a_highest;
 	}
+	RangeIterator() {} 
 	Iterator base() const { return current; }
 	ValueT operator*() const { return *current; }
-	void operator++() {
-		while(*this <= lowest && *this >= highest &&  this != end) {
+	RangeIterator & operator++() {
+		// while out of range
+		while(*current < lowest && *current > highest 
+				&& current != end) {
 			current++;
 		}
+		return *this;
 	}
-	void operator++(int) { operator++(); }
+	Iterator & operator++(int) { return operator++(); }
+	bool operator==(RangeIterator iter) { return current == iter.current; }
+	bool operator!=(RangeIterator iter) { return current != iter.current; }
+	bool operator<=(RangeIterator iter) { return current <= iter.current; }
+	bool operator>=(RangeIterator iter) { return current >= iter.current; }
+	typename std::iterator_traits<Iterator>::difference_type
+		operator-(RangeIterator iter) {
+			return current - iter.current;
+		}
+	RangeIterator operator-(int i) { return diffLocCopy(current - i); }
+	RangeIterator operator+(int i) { return diffLocCopy(current + i); }
+	ValueT & operator[](int i) { return current[i]; }
 };
 
 #endif
