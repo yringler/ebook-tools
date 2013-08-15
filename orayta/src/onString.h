@@ -20,8 +20,7 @@ protected:
 	mutable const_iter last_search_start;	
 	mutable const_iter last_find_end;
 	virtual bool attach(BasicComment<CharT> & comment,
-			const_iter search_start)
-		const;
+			const_iter search_start) const;
 public:
 	enum AttachMode { begin, stay, proceed };
 public:
@@ -36,9 +35,7 @@ public:
 	}
 	void operator=(const String & str) { set(str); }
 	virtual bool attach(BasicComment<CharT> & comment,
-			AttachMode mode=proceed) 
-		const;
-
+			AttachMode mode=proceed) const;
 };
 
 #include "onString.cpp"
