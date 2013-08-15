@@ -23,14 +23,18 @@ protected:
 	virtual bool attach(BasicComment<CharT> & comment,
 			const_iterator search_begin) const;
 public:
-	BasicLooseOnString(String & str) : BasicOnString<CharT>(str) {}
-	BasicLooseOnString(String & str, CharT a_lowest, CharT a_highest)
+	BasicLooseOnString(String & str, CharT a_lowest = CharT(),
+			CharT a_highest = CharT())
 		: BasicOnString<CharT>(str)
 	{
 		lowest = a_lowest;
 		highest = a_highest;
 	}
-	BasicLooseOnString() {}
+	BasicLooseOnString(CharT a_lowest = CharT(), CharT a_highest = CharT())
+	{
+		lowest = a_lowest;
+		highest = a_highest;
+	}
 
 	void setRange(CharT a, CharT b) { lowest = a, highest = b; }
 	virtual bool attach(BasicComment<CharT> & comment, 
