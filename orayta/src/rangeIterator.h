@@ -4,7 +4,7 @@
 #include <iterator>
 #include <iostream>
 
-/* A wrapper around an iterator. operator++ skips over values within range */
+/* A wrapper around an iterator. operator++ skips over values outside range */
 /* the beggining and end of range are acceptable values */
 // ( design from std::reverse_iterator, as written in c++ in a nutshell )
 template <class Iterator>
