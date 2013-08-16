@@ -11,8 +11,10 @@ int main()
 	using std::cout;
 	using std::endl;
 
+	//OnString onStory;//('a','z');
 	LooseOnString onStory('a','z');
 	std::queue<Comment> commentQueue;
+	std::ostream_iterator<char> p_iter(cout);
 
 	cout << "INITIALIZING DATA\n\n";
 
@@ -43,10 +45,14 @@ int main()
 			std::getline(comment_file,tmp_str);
 			tmp_comment.comment = tmp_str;
 		
-			cout << "Attempt attach...";
+			cout << "Attempt attach:" << tmp_comment.on << endl;
+			cout << '\t' << tmp_comment.comment << endl;
 			if(onStory.attach(tmp_comment)) {
-				cout << "Attached\n";
+				cout << "Did attach:";
+				std::copy(tmp_comment.begin, tmp_comment.end,
+						p_iter);
 				commentQueue.push(tmp_comment);
+			cout << endl;
 			} else {
 				cout << "Failed\n";
 			}
@@ -61,7 +67,6 @@ int main()
 	}
 
 		/* Print story with comments */
-	std::ostream_iterator<char> p_iter(cout);
 	std::copy(onStory.get().begin(), commentQueue.front().begin, 
 			p_iter);
 

@@ -2,6 +2,7 @@
 #define RANGE_ITERATOR_H
 
 #include <iterator>
+#include <iostream>
 
 /* A wrapper around an iterator. operator++ skips over values within range */
 /* the beggining and end of range are acceptable values */
@@ -24,7 +25,7 @@ private:
 	ValueT lowest;
 	ValueT highest;
 protected:
-	bool inRange(ValueT i) { return (i < lowest || i > highest); }
+	bool inRange(ValueT i) { return (i >= lowest && i <= highest); }
 public:
 	// args: the initial place to point to, the past-the-end iterator,
 	// and acceptable range of the values
@@ -35,7 +36,7 @@ public:
 		lowest = a_lowest;
 		highest = a_highest;
 		
-		if(not inRange(*current)) operator++();
+		if(current != end && not inRange(*current)) operator++();
 	}
 	RangeIterator() {} 
 	Iterator base() const { return current; }
@@ -50,9 +51,10 @@ public:
 	RangeIterator & operator++() {
 		current++;
 		// while out of range
-		while(not inRange(*current) && current != end) {
+		while(current != end && not inRange(*current)) {
 			current++;
 		}
+
 		return *this;
 	}
 	Iterator & operator++(int) { return operator++(); }

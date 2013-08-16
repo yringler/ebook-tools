@@ -21,10 +21,10 @@ int main()
 	
 
 	typedef RangeIterator<string::iterator> Iter;
-	Iter loose_messy(messy.begin(),messy.end(), '0','9');
-	Iter loose_messy_end(messy.end(),messy.end(), '0','9');
-	Iter loose_clean(clean.begin(),clean.end(), '0','9');
-	Iter loose_clean_end(clean.end(),clean.end(), '0','9');
+	Iter loose_messy(messy.begin(),messy.end(), 'a','z');
+	Iter loose_messy_end(messy.end(),messy.end(), 'a','z');
+	Iter loose_clean(clean.begin(),clean.end(), 'a','z');
+	Iter loose_clean_end(clean.end(),clean.end(), 'a','z');
 
 	if (std::equal(loose_messy,loose_messy_end,loose_clean)) {
 	//if(equal(loose_messy, loose_messy_end, loose_clean, loose_clean_end)){
