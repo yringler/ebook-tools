@@ -13,8 +13,8 @@ EOF
  exit
 fi
 
-readonly root_dir=$1
-readonly file=$2
+readonly root_dir="$1"
+readonly file="$2"
 readonly file_dir="$(dirname "$file")"
 readonly format=$3
 readonly type=$4
@@ -54,7 +54,7 @@ convert() {	# args: filename out_dir title author
 
 # gets author of set or of sefer
 author="$(get_author "$file")"
-o_dir="$root_dir/$author"
+o_dir="${root_dir}/$author"
 if ! [ -e "$o_dir" ]; then mkdir -p "$o_dir"; fi
 
 if [ $type == set ]; then
