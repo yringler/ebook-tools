@@ -1,0 +1,12 @@
+RangeIterator:I have no clue why I can't create a refrence "ValueT &" with
+"return current;". Because I can't do this, I can't really be forward iterator.
+
+The easiest thing to do is to be an input_iterator, but that flops -- something
+about missing a find_end() function...
+
+In the mean time, everything works, and "$const$ ValueT operator*() , so any 
+attempt to set *current will fail at compile time, as the returned ValueT will
+be const.
+
+But I still think the code is pretty clean and non-kludgey, despite haveing
+these annoying problems...
