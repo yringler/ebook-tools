@@ -38,6 +38,7 @@ public:
 		
 		if(current != end && not inRange(*current)) operator++();
 	}
+	RangeIterator(const RangeIterator & iter) { *this = iter; }
 	RangeIterator() {} 
 	Iterator base() const { return current; }
 

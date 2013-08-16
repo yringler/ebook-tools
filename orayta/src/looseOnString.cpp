@@ -1,5 +1,6 @@
 #include "looseOnString.h"
 #include <iostream>
+#include <utility>
 
 template<typename CharT>
 bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
@@ -20,19 +21,19 @@ bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
 	IterT for_end(comment.on.end(), comment.on.end(), lowest, highest);
 
 	// begining of where comment is on
-	IterT tmp = std::search(in_begin, in_end, for_begin, for_end);
+	IterT find_begin = std::search(in_begin, in_end, for_begin, for_end);
 
 	// on failure, std::search returns where searched untill ie end()
-	if(tmp != in_end) {
-		comment.begin = tmp.base();
+	if(find_begin != in_end) {
+		comment.begin = find_begin.base();
 		
 		// can't just add length of comment.on 
 		// b/c find may be smaller as skip chars
 
-		// use tmp, not comment.begin, because want RangeIterator
-		//tmp = std::find_end(in_begin, in_end, for_begin, for_end);
-		//comment.end = tmp.base();
-		comment.end = tmp.base() + comment.on.length();
+		std::pair<IterT,IterT> mismatch;
+		mismatch = std::mismatch(find_begin,in_end, for_begin);
+		comment.end = mismatch.first.base();
+		//comment.end = find_begin.base() + comment.on.length();
 
 		Parent::last_search_begin = search_begin;
 		Parent::last_find_end = comment.end;

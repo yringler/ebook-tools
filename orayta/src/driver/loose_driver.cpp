@@ -11,14 +11,13 @@ int main()
 	using std::cout;
 	using std::endl;
 
-	//OnString onStory;//('a','z');
 	LooseOnString onStory('a','z');
 	std::queue<Comment> commentQueue;
 	std::ostream_iterator<char> p_iter(cout);
 
 	cout << "INITIALIZING DATA\n\n";
 
-	std::ifstream story("story.txt");
+	std::ifstream story("looseStory.txt");
 	std::ifstream comment_file("comments.txt");
 	if(story.is_open() && comment_file.is_open())
 		cout << "Files opened\n";
@@ -41,12 +40,14 @@ int main()
 	std::string tmp_str;
 	while(std::getline(comment_file,tmp_str)){
 		if(tmp_str[0] == '~'){
+			// this line is what is commenting on
+			// next line is the comment
 			tmp_comment.on = tmp_str.substr(1);
 			std::getline(comment_file,tmp_str);
 			tmp_comment.comment = tmp_str;
 		
-			cout << "Attempt attach:" << tmp_comment.on << endl;
-			cout << '\t' << tmp_comment.comment << endl;
+			cout << "Attempt attach:" << tmp_comment.on;
+			cout << "|>comment:" << tmp_comment.comment << endl;
 			if(onStory.attach(tmp_comment)) {
 				cout << "Did attach:";
 				std::copy(tmp_comment.begin, tmp_comment.end,
