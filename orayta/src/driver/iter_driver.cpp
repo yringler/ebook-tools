@@ -26,8 +26,8 @@ int main()
 	Iter loose_clean(clean.begin(),clean.end(), '0','9');
 	Iter loose_clean_end(clean.end(),clean.end(), '0','9');
 
-	//if (std::equal(loose_messy,loose_messy_end,loose_clean)) {
-	if(equal(loose_messy, loose_messy_end, loose_clean, loose_clean_end)){
+	if (std::equal(loose_messy,loose_messy_end,loose_clean)) {
+	//if(equal(loose_messy, loose_messy_end, loose_clean, loose_clean_end)){
 		std::cout << "Sucess!" << std::endl;
 	} else {
 		std::cout << "If you would see this, I probably didn't compile"

@@ -4,17 +4,17 @@
 
 template<typename CharT>
 bool BasicOnString<CharT>::attach(BasicComment<CharT> & link,
-		 const_iter search_start) const
+		 const_iter search_begin) const
 {
 	typename String::const_iterator begin;
-	begin = std::search(search_start, on_str->end(),
+	begin = std::search(search_begin, on_str->end(),
 			link.on.begin(), link.on.end());
 
 	if(begin != on_str->end()) {
 		link.begin = begin;
 		link.end = begin + link.on.length();
 
-		last_search_start = search_start;
+		last_search_begin = search_begin;
 		last_find_end = link.end;
 
 		return 1;
@@ -32,7 +32,7 @@ bool BasicOnString<CharT>::attach(BasicComment<CharT> & link,
 	switch(mode)
 	{
 		case begin:	return attach(link,on_str->begin());
-		case stay:	return attach(link,last_search_start);
+		case stay:	return attach(link,last_search_begin);
 		case proceed:	return attach(link,last_find_end);
 		default:
 			std::cerr << "attach:error:bad mode\n";

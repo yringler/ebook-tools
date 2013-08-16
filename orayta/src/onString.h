@@ -14,13 +14,14 @@ private:
 	typedef std::basic_string<CharT> String;
 	typedef typename String::const_iterator const_iter;
 
+protected:
 	// the string that is being commented on
 	std::auto_ptr<const String> on_str;
-protected:
-	mutable const_iter last_search_start;	
+
+	mutable const_iter last_search_begin;	
 	mutable const_iter last_find_end;
 	virtual bool attach(BasicComment<CharT> & comment,
-			const_iter search_start) const;
+			const_iter search_begin) const;
 public:
 	enum AttachMode { begin, stay, proceed };
 public:
@@ -30,7 +31,7 @@ public:
 	virtual void set(const String & str) { 
 		on_str.reset(new const String(str));
 
-		last_search_start = on_str->begin();
+		last_search_begin = on_str->begin();
 		last_find_end = on_str->begin();
 	}
 	void operator=(const String & str) { set(str); }

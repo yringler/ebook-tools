@@ -1,7 +1,6 @@
 #ifndef RANGE_ITERATOR_H
 #define RANGE_ITERATOR_H
 
-#include <iostream>
 #include <iterator>
 
 /* A wrapper around an iterator. operator++ skips over values within range */
@@ -9,7 +8,7 @@
 // ( design from std::reverse_iterator, as written in c++ in a nutshell )
 template <class Iterator>
 class RangeIterator : public std::iterator<
-	      typename std::iterator_traits<Iterator>::iterator_category,
+	      typename std::forward_iterator_tag,
 	      typename std::iterator_traits<Iterator>::value_type,
 	      typename std::iterator_traits<Iterator>::difference_type,
 	      typename std::iterator_traits<Iterator>::pointer,
@@ -44,30 +43,28 @@ public:
 	}
 	RangeIterator() {} 
 	Iterator base() const { return current; }
+
+	// const ValueT operator*() const { return *current; }
 	ValueT operator*() const { return *current; }
+	// I think that'll work...
+	// const ValueT operator->() const { return *current; }
+	//ValueT & operator->() { return *current; }
+
+
 	RangeIterator & operator++() {
-		std::cout << "start: " << *current << ' ';
 		current++;
 		// while out of range
 		while(not inRange(*current) && current != end) {
-			std::cout << "Current: " << *current;
 			current++;
 		}
-		std::cout << "end: " << *current << std::endl;
 		return *this;
 	}
-	Iterator & operator++(int) { std::cout << "here we go again...\n"; return operator++(); }
-	bool operator==(RangeIterator iter) { return current == iter.current; }
-	bool operator!=(RangeIterator iter) { return current != iter.current; }
-	bool operator<=(RangeIterator iter) { return current <= iter.current; }
-	bool operator>=(RangeIterator iter) { return current >= iter.current; }
-	typename std::iterator_traits<Iterator>::difference_type
-		operator-(RangeIterator iter) {
-			return current - iter.current;
-		}
-	RangeIterator operator-(int i) { return diffLocCopy(current - i); }
-	RangeIterator operator+(int i) { return diffLocCopy(current + i); }
-	ValueT & operator[](int i) { return current[i]; }
+	Iterator & operator++(int) { return operator++(); }
+
+	bool operator==(const RangeIterator & iter) const
+		{ return current == iter.current; }
+	bool operator!=(const RangeIterator & iter) const
+		{ return current != iter.current; }
 };
 
 #endif

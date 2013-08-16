@@ -22,7 +22,7 @@ bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
 	IterT tmp = std::search(in_begin, in_end, for_begin, for_end);
 
 	// on failure, std::search returns where searched untill ie end()
-	if(tmp != Parent::on_str->end()) {
+	if(tmp.base() != Parent::on_str->end()) {
 		comment.begin = tmp.base();
 		
 		// can't just add length of comment.on 
@@ -30,7 +30,7 @@ bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
 
 		// use tmp, not comment.begin, because want RangeIterator
 		tmp = std::find_end(tmp, in_end, for_begin, for_end);
-		comment.end = tmp;
+		comment.end = tmp.base();
 
 		Parent::last_search_begin = search_begin;
 		Parent::last_find_end = comment.end;
