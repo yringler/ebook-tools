@@ -24,10 +24,6 @@ private:
 	ValueT lowest;
 	ValueT highest;
 protected:
-	// convenionce function: returns a copy, but diffrent this->current
-	RangeIterator & diffLocCopy(RangeIterator iter) {
-		return RangeIterator(iter,end,lowest,highest);
-	}
 	bool inRange(ValueT i) { return (i < lowest || i > highest); }
 public:
 	// args: the initial place to point to, the past-the-end iterator,
