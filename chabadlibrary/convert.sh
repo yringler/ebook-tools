@@ -19,8 +19,7 @@ readonly file_dir="$(dirname "$file")"
 readonly format=$3
 readonly type=$4
 shift 4
-read calibre_options <<< $*
-echo $calibre_options
+calibre_options="$*"
 
 get_title() {	# arg: file to extract title from
 	sed -n -e "/div class=heading/{ 
@@ -31,20 +30,25 @@ get_title() {	# arg: file to extract title from
 get_author() { # arg: file to extract from
 	cur_file="$(readlink -f "$1")"
 	in_dir="$(dirname "$cur_file")"	# directory $1 is in
-	parent_dir="$(dirname "$in_dir")"
+	parent_dir="$(dirname "$in_dir")" # author's folder
 
 	# the heading of index.htm in author's folder is author
-	author="$(get_title "$parent_dir/index.htm")"
-	# For a Rebbe, has this word.
+	author="$(get_title "$parent_dir"/index.htm)"
+	# For a Rebbe, has the word "sifrei" in hebrew
 	author=$(sed -e s/[[:space:]]*ספרי[[:space:]]*// <<< $author)
 
 	echo $author
 }
-convert() {	# args: filename out_dir title author
+convert() {	# args: file_to_convert out_dir title author
+	o_file="${2}/${3}".${format}
+	if [ -e "$o_file" ]; then
+		echo $o_file: exists
+		return
+	fi
+
 	# doesn't generate title so if type==set can stick in prefix
 	# doesn't generate author because diffrent if in a set
-	# (wow, that is a beautiful bit of variable use)
-	ebook-convert "$1" "${2}/${3}.${format}" \
+	ebook-convert "$1" "$o_file" \
 		--title "$3" --authors "$4" --language Hebrew \
 		--toc-threshold 0 --max-toc-links 0 \
 		--level1-toc '//h:div[@class="heading"]' \
