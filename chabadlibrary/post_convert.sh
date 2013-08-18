@@ -15,7 +15,7 @@ convert() {
 	# exchange cur extension with out_format
 	# /% means match must occur at end of value
 	o_file="${1/%$in_format/$out_format}"
-	if [ -e "$o_file" ]; then echo ${o_file##*/}:already exists; fi
+	if [ -e "$o_file" ]; then echo ${o_file##*/}:already exists && return; fi
 
 	ebook-convert "$1" "$o_file" $calibre_args
 }
