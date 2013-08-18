@@ -1,9 +1,9 @@
 #!/bin/bash
-# Usage: out_root_dir in_file out_format book|set calibre_options
+# Usage: out_root_dir in_file out_format calibre_options
 # This is a little bit messy...
 # actually, this is downright terrifying!
 
-if ! [  "$1" -a "$2"  -a "$3" -a "$4" ]; then
+if ! [ "$1" -a "$2"  -a "$3" ]; then
  echo <<- EOF 
  Usage: out_rood_dir in_file out_format book|set calibre_options
  the third argument is book if in_file is a book
@@ -13,12 +13,11 @@ EOF
  exit
 fi
 
-readonly root_dir="$1"
-readonly file="$2"
-readonly file_dir="$(dirname "$file")"
+readonly out_root_dir="$1"
+readonly in_file="$2"
+readonly in_file_dir="$(dirname "$in_file")"
 readonly format=$3
-readonly type=$4
-shift 4
+shift 3
 calibre_options="$*"
 
 get_title() {	# arg: file to extract title from
@@ -57,20 +56,20 @@ convert() {	# args: file_to_convert out_dir title author
 }
 
 # gets author of set or of sefer
-author="$(get_author "$file")"
-o_dir="${root_dir}/$author"
+author="$(get_author "$in_file")"
+o_dir="${out_root_dir}/$author"
 if ! [ -e "$o_dir" ]; then mkdir -p "$o_dir"; fi
 
-if [ $type == set ]; then
-	series="$(get_title "$file")"
+is_set="$(sed -e "/^#/d" "${script_parent}"/set.txt | 
+	grep "${in_file_dir##*/}")"
+if [ "$is_set" ]; then
+	series="$(get_title "$in_file")"
 	o_dir="${o_dir}/${series}"
 	if ! [ -e "$o_dir" ]; then mkdir "$o_dir"; fi
 
-	for i in "$file_dir"/*/index.htm; do
+	for i in "$in_file_dir"/*/index.htm; do
 		convert "$i" "$o_dir" "$series $(get_title "$i")" "$author"
 	done
-elif [ $type == book ]; then
-	convert "$file" "$o_dir" "$(get_title "$file")" "$author"
 else
-	echo Error:arg3 type == $type
+	convert "$in_file" "$o_dir" "$(get_title "$in_file")" "$author"
 fi
