@@ -45,8 +45,7 @@ convert() {	# args: file_to_convert out_dir title author
 		return
 	fi
 
-	# doesn't generate title so if type==set can stick in prefix
-	# doesn't generate author because diffrent if in a set
+	# doesn't generate title or author because diffrent if in a set
 	ebook-convert "$1" "$o_file" \
 		--title "$3" --authors "$4" --language Hebrew \
 		--toc-threshold 0 --max-toc-links 0 \
