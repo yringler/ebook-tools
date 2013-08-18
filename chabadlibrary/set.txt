@@ -27,4 +27,5 @@ sichos
 # Ohr Hatora of the Tzemach Tzedek
 oht
 # shaylot and teshuvot of the Tzemach Tzedek
+# problem: also (1 volume) Of the Alter Rebbe!
 shut
