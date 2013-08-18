@@ -1,6 +1,7 @@
-three scripts:
+five scripts:
 1) downloads the source html
 2) cleans the html (removes navigational stuff, etc) (sed script)
 3) convert one index.htm or a set to ebook
 4) convert all to ebooks ( saves output to [format] folder in 
 	directory ran from)
+5) after an initial conversion, convert the new files to a diffrent format
