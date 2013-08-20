@@ -25,7 +25,9 @@ private:
 	ValueT lowest;
 	ValueT highest;
 protected:
-	bool inRange(ValueT i) { return (i >= lowest && i <= highest); }
+	// warning: this is a finicky function. its given me a lot of trouble
+	bool should_increment() { return ( current != end &&
+			(*current < lowest || *current > highest) ); }
 public:
 	// args: the initial place to point to, the past-the-end iterator,
 	// and acceptable range of the values
@@ -36,7 +38,7 @@ public:
 		lowest = a_lowest;
 		highest = a_highest;
 		
-		if(current != end && not inRange(*current)) operator++();
+		if(should_increment()) operator++();
 	}
 	RangeIterator(const RangeIterator & iter) { *this = iter; }
 	RangeIterator() {} 
@@ -52,7 +54,7 @@ public:
 	RangeIterator & operator++() {
 		current++;
 		// while out of range
-		while(current != end && not inRange(*current)) {
+		while(should_increment()) {
 			current++;
 		}
 
