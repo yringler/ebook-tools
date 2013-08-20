@@ -53,7 +53,6 @@ public:
 
 	RangeIterator & operator++() {
 		current++;
-		// while out of range
 		while(should_increment()) {
 			current++;
 		}
