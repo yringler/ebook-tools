@@ -52,10 +52,9 @@ public:
 
 
 	RangeIterator & operator++() {
-		current++;
-		while(should_increment()) {
+		do {
 			current++;
-		}
+		} while(should_increment());
 
 		return *this;
 	}
