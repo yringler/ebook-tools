@@ -1,5 +1,11 @@
 sefer-ebook
 ===========
+
+NOTE: Due to weird template stuff, all the .cpp files are #included-ed
+into their respective header files. I didn't #ifdef etc protect the .cpp files,
+so an attempt to compile them will end in error.
+
+
 Concept: one string is a comment on another string
 Implement: struct Comment
     client has direct access to members
