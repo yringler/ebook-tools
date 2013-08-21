@@ -20,4 +20,7 @@ convert() {
 	ebook-convert "$1" "$o_file" $calibre_args
 }
 
-find "$root_dir" -name \*$in_format -type f | while read file; do convert "$file" ; done
+find "$root_dir" -name \*$in_format -type f | while read file
+do
+	convert "$file" 
+done
