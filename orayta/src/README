@@ -39,7 +39,7 @@ Implement: RangeIterator<typename Iterator>
 
 
 Concept: an Attach string which, when finding where comment.on is located in the
-	source string, is “fuzzy”, not considering values outside a given range to make
+	source string, is "fuzzy", not considering values outside a given range to make
 	or break a match
 Implement: LooseOnString ( maybe make onString take a template arg of iterator
-        to use for compare?...would shrink code size...TZ”I )
+        to use for compare?...would shrink code size...TZ"I )
