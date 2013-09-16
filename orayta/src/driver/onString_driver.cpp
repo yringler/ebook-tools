@@ -3,15 +3,16 @@
 #include <string>
 #include <queue>
 #include <iterator>
+#include <algorithm>
 #include "../comment.h"
-#include "../onString.h"
+#include "../binder.h"
 
 int main()
 {
 	using std::cout;
 	using std::endl;
 
-	OnString onStory;
+	Binder binder;
 	std::queue<Comment> commentQueue;
 
 	cout << "INITIALIZING DATA\n\n";
@@ -32,7 +33,7 @@ int main()
 		all_lines += one_line;
 	}
 
-	onStory.set(all_lines);
+	binder.to(all_lines.begin(), all_lines.end());
 
 		/* load comments */
 	Comment tmp_comment;
@@ -44,7 +45,7 @@ int main()
 			tmp_comment.comment = tmp_str;
 		
 			cout << "Attempt attach...";
-			if(onStory.attach(tmp_comment)) {
+			if(binder.attach(tmp_comment)) {
 				cout << "Attached\n";
 				commentQueue.push(tmp_comment);
 			} else {
@@ -62,8 +63,7 @@ int main()
 
 		/* Print story with comments */
 	std::ostream_iterator<char> p_iter(cout);
-	std::copy(onStory.get().begin(), commentQueue.front().begin, 
-			p_iter);
+	std::copy(binder.begin(), commentQueue.front().begin, p_iter);
 
 	Comment next_comment = commentQueue.front();
 	while(not commentQueue.empty()) {
@@ -76,8 +76,7 @@ int main()
 			next_comment = commentQueue.front();
 			std::copy(tmp_comment.end, next_comment.begin, p_iter);
 		} else {
-			std::copy(tmp_comment.end, onStory.get().end(), 
-					p_iter);
+			std::copy(tmp_comment.end, binder.end(), p_iter);
 		}
 	}
 

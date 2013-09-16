@@ -4,14 +4,14 @@
 #include <queue>
 #include <iterator>
 #include "../comment.h"
-#include "../looseOnString.h"
+#include "../looseBinder.h"
 
 int main()
 {
 	using std::cout;
 	using std::endl;
 
-	LooseOnString onStory('a','z');
+	LooseBinder binder('a','z');
 	std::queue<Comment> commentQueue;
 	std::ostream_iterator<char> p_iter(cout);
 
@@ -33,7 +33,7 @@ int main()
 		all_lines += one_line;
 	}
 
-	onStory.set(all_lines);
+	binder.to(all_lines);
 
 		/* load comments */
 	Comment tmp_comment;
@@ -48,7 +48,7 @@ int main()
 		
 			cout << "Attempt attach:" << tmp_comment.on;
 			cout << "|>comment:" << tmp_comment.comment << endl;
-			if(onStory.attach(tmp_comment)) {
+			if(binder.attach(tmp_comment)) {
 				cout << "Did attach:";
 				std::copy(tmp_comment.begin, tmp_comment.end,
 						p_iter);
@@ -68,8 +68,8 @@ int main()
 	}
 
 		/* Print story with comments */
-	std::copy(onStory.get().begin(), commentQueue.front().begin, 
-			p_iter);
+	// print from beggining to first commented on letter
+	std::copy(binder.begin(), commentQueue.front().begin, p_iter);
 
 	Comment next_comment = commentQueue.front();
 	while(not commentQueue.empty()) {
@@ -82,8 +82,7 @@ int main()
 			next_comment = commentQueue.front();
 			std::copy(tmp_comment.end, next_comment.begin, p_iter);
 		} else {
-			std::copy(tmp_comment.end, onStory.get().end(), 
-					p_iter);
+			std::copy(tmp_comment.end, binder.end(), p_iter);
 		}
 	}
 

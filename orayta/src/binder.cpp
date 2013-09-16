@@ -1,16 +1,16 @@
 #include <algorithm>
 #include <iostream>
-#include "onString.h"
+#include "binder.h"
 
 template<typename CharT>
-bool BasicOnString<CharT>::attach(BasicComment<CharT> & link,
+bool BasicBinder<CharT>::attach(BasicComment<CharT> & link,
 		 const_iter search_begin) const
 {
 	typename String::const_iterator begin;
-	begin = std::search(search_begin, on_str->end(),
+	begin = std::search(search_begin, to_end,
 			link.on.begin(), link.on.end());
 
-	if(begin != on_str->end()) {
+	if(begin != to_end) {
 		link.begin = begin;
 		link.end = begin + link.on.length();
 
@@ -26,14 +26,14 @@ bool BasicOnString<CharT>::attach(BasicComment<CharT> & link,
 #include <iostream>
 
 template<typename CharT>
-bool BasicOnString<CharT>::attach(BasicComment<CharT> & link, 
+bool BasicBinder<CharT>::attach(BasicComment<CharT> & link, 
 		AttachMode mode) const
 {
 	switch(mode)
 	{
-		case begin:	return attach(link,on_str->begin());
-		case stay:	return attach(link,last_search_begin);
-		case proceed:	return attach(link,last_find_end);
+		case first:	return attach(link,to_begin);
+		case same:	return attach(link,last_search_begin);
+		case next:	return attach(link,last_find_end);
 		default:
 			std::cerr << "attach:error:bad mode\n";
 			throw;

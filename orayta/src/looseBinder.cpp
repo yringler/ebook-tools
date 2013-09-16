@@ -1,20 +1,19 @@
-#include "looseOnString.h"
+#include "looseBinder.h"
 #include <iostream>
 #include <utility>
 
 template<typename CharT>
-bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
+bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment,
 		 const_iterator search_begin) const
 {
 	typedef RangeIterator<const_iterator> IterT;
 
 		/* declarations of all the range iterators */
 
-	/* where I'm looking */
-	IterT in_begin(search_begin, Parent::on_str->end(), lowest, highest);
+	/* where I'm looking ; ie I'm looking *in* this substring */
+	IterT in_begin(search_begin, Parent::to_end, lowest, highest);
 			// search untill end of commented on string
-	IterT in_end(Parent::on_str->end(), Parent::on_str->end(), 
-			lowest, highest);
+	IterT in_end(Parent::to_end, Parent::to_end, lowest, highest);
 
 	/* what I'm searching for */
 	IterT for_begin(comment.on.begin(),comment.on.end(), lowest, highest);
@@ -23,7 +22,7 @@ bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
 	// begining of where comment is on
 	IterT find_begin = std::search(in_begin, in_end, for_begin, for_end);
 
-	// on failure, std::search returns where searched untill ie end()
+	// on failure, std::search returns where searched untill ; ie end()
 	if(find_begin != in_end) {
 		comment.begin = find_begin.base();
 		
@@ -47,16 +46,16 @@ bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment,
 #include <iostream>
 
 template<typename CharT>
-bool BasicLooseOnString<CharT>::attach(BasicComment<CharT> & comment, 
-	typename BasicOnString<CharT>::AttachMode mode) const
+bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment, 
+	typename BasicBinder<CharT>::AttachMode mode) const
 {
 	switch(mode)
 	{
-		case Parent::begin:
-			return attach(comment,Parent::on_str->begin());
-		case Parent::stay:	
+		case Parent::first:
+			return attach(comment,Parent::to_begin);
+		case Parent::same:	
 			return attach(comment,Parent::last_search_begin);
-		case Parent::proceed:
+		case Parent::next:
 			return attach(comment,Parent::last_find_end);
 		default:
 			std::cerr << "attach:error:bad mode\n";
