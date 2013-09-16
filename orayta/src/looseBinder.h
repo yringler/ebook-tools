@@ -26,18 +26,18 @@ public:
 	void setRange(CharT a, CharT b) { lowest = a, highest = b; }
 
 	BasicLooseBinder(String & str, CharT a = CharT(), CharT b = CharT())
-		: BasicBinder<CharT>(str) { setRange(a, b); }
+		: Parent(str) { setRange(a, b); }
 
 	BasicLooseBinder(const_iterator ia, const_iterator ib,
 			CharT ca = CharT(), CharT cb = CharT())
-		: BasicBinder<CharT>(ia,ib) { setRange(ca, cb); }
+		: Parent(ia,ib) { setRange(ca, cb); }
 
 	BasicLooseBinder(CharT a = CharT(), CharT b = CharT())
 		{ setRange(a, b); }
 
 	virtual bool attach(BasicComment<CharT> & comment, 
-			typename BasicBinder<CharT>::AttachMode 
-				= BasicBinder<CharT>::next) const;
+			typename Parent::AttachMode 
+				= Parent::next) const;
 };
 
 #include "looseBinder.cpp"

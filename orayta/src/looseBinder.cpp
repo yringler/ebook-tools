@@ -47,7 +47,7 @@ bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment,
 
 template<typename CharT>
 bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment, 
-	typename BasicBinder<CharT>::AttachMode mode) const
+	typename Parent::AttachMode mode) const
 {
 	switch(mode)
 	{
