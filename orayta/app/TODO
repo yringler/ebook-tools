@@ -1,0 +1,3 @@
+
+basicLoader:skipEmptyTillMarker:switch isspace (char) to iswspace (wchar_t)
+		or something

@@ -15,6 +15,7 @@
 template<typename CharT>
 bool extractFrom(int, std::basic_string<CharT> &, std::basic_istream<CharT> &);
 
+// carefull not to remove non-empty lines from stream
 template<typename CharT>
 bool skipEmptyTillMarker(char, std::basic_istream<CharT> &);
 
@@ -31,22 +32,29 @@ bool skipEmptyTillMarker(char, std::basic_istream<CharT> &);
  * 	type to copy AddT to - must have a push_back() function
  */
 
+// returns 1 if loaded something, 0 if not
 template<int loadFrom, char childMarker,
 	typename AddT, typename loadFunction, typename CharT,typename ToT>
 bool basicLoader(ToT & to, std::basic_istream<CharT> & stream)
 {
 	extractFrom(loadFrom, to.lable, stream);	// set name
 	
+	int orig_size = to.size();
+	AddT tmp;
+
 	try {
-		AddT tmp;
-		int orig_size = to.size();
+		// keeps on loading more stuff untill doesn't find child marker
 		while(skipEmptyTillMarker(childMarker, stream)) {
 			tmp = AddT();	// clear tmp
 
 			if(loadFunction(stream, tmp))
 				to.push_back(tmp);
-			else 
-				return (orig_size < to.size());
+			else {
+		// catches a problem - I already skipped till right marker
+		// so it should have worked
+				std::cerr << "basicLoader:problem\n";
+				throw;
+			}
 		}
 	} catch(std::ios_base::failure &) {
 		using std::ios_base;
@@ -57,9 +65,11 @@ bool basicLoader(ToT & to, std::basic_istream<CharT> & stream)
 				std::cerr << "loader:oh boy\n";
 				throw;
 			case ios_base::eofbit:
-				 return 0;
+				break;
 		}
 	}
+
+	return (orig_size < to.size());
 }
 
 template<typename CharT>
@@ -81,13 +91,14 @@ bool skipEmptyTillMarker(CharT marker, std::basic_istream<CharT> & stream)
 	TmpStreamException<CharT> change(stream);
 
 	std::basic_string<CharT> line;
-	do {
-		std::getline(stream,line);
-	} while(std::isspace((char)line[0]));
+
 // I'm a little nervous of that test - what if the 2nd char is not a space?
 // but I can't imagine that that will happen...
-// also, the (char) for if line is wide...
-	return line[0] == marker;
+// also, the (char) , there for if line is wide...
+	while(std::isspace((char)stream.peek())) {
+		std::getline(stream,line);
+	}
+	return (stream.peek() == marker);
 }
 
 #endif
