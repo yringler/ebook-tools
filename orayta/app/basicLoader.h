@@ -1,16 +1,22 @@
+/*
+ * dude exceptions are totally awesome!!!
+ * I hope this works...
+ */
 #ifndef BASIC_LOADER_H
 #define BASIC_LOADER_H
 
 #include <string>
 #include <iostream>
-#include "markers.h"
-#include "tmpStringException.h"
+#include <cctype>
 
+#include "tmpStreamException.h"
+
+// pulls out nth and on whitespace seperated word from string
 template<typename CharT>
 bool extractFrom(int, std::basic_string<CharT> &, std::basic_istream<CharT> &);
 
 template<typename CharT>
-bool findMarker(char, std::basic_istream<CharT> &);
+bool skipEmptyTillMarker(char, std::basic_istream<CharT> &);
 
 /*
  * template arguments:
@@ -31,14 +37,28 @@ bool basicLoader(ToT & to, std::basic_istream<CharT> & stream)
 {
 	extractFrom(loadFrom, to.lable, stream);	// set name
 	
-	AddT tmp;
-	while(findMarker(childMarker, stream)) {
-		tmp = AddT();	// clear tmp
+	try {
+		AddT tmp;
+		int orig_size = to.size();
+		while(skipEmptyTillMarker(childMarker, stream)) {
+			tmp = AddT();	// clear tmp
 
-		if(loadFunction(stream, tmp))
-			to.push_back(tmp);
-		else 
-			return is_marker( (char) stream.peek() );
+			if(loadFunction(stream, tmp))
+				to.push_back(tmp);
+			else 
+				return (orig_size < to.size());
+		}
+	} catch(std::ios_base::failure &) {
+		using std::ios_base;
+		switch(std::cin.rdstate())
+		{
+			case ios_base::badbit:
+			case ios_base::failbit:
+				std::cerr << "loader:oh boy\n";
+				throw;
+			case ios_base::eofbit:
+				 return 0;
+		}
 	}
 }
 
@@ -46,35 +66,28 @@ template<typename CharT>
 bool extractFrom(int start, std::basic_string<CharT> & to,
 		std::basic_istream<CharT> & stream)
 {
-	tmpStringException change(stream);
-	for(int i=0; i < start; i++) {
-		if(not stream >> to){	// reads from non-space until space
-			std::cerr << "extractFrom:err. eof?" << stream.eof();
-			return 0;
-	}
+	TmpStreamException<CharT> change(stream);
 
-	if(not std::getline(stream, to)) {
-		std::cerr << "extractFrom:err. eof?" << stream.eof();
-		return 0;
-	}
-	
-	return 1;
+	for(int i=0; i < start; i++)
+		stream >> to;	// reads from non-space until space
+	std::getline(stream, to);
+
+	return (not to.empty());
 }
 
 template<typename CharT>
-bool findMarker(char marker, std::basic_istream<CharT> & stream)
+bool skipEmptyTillMarker(CharT marker, std::basic_istream<CharT> & stream)
 {
-	tmpStringException change(stream);
+	TmpStreamException<CharT> change(stream);
+
 	std::basic_string<CharT> line;
 	do {
-		char next = (char) stream.peak();
-		if(next == marker)
-			return 1;
-		else
-			std::getline(stream,line);
-	} while(is_marker(next));
-
-	return 0;
+		std::getline(stream,line);
+	} while(std::isspace((char)line[0]));
+// I'm a little nervous of that test - what if the 2nd char is not a space?
+// but I can't imagine that that will happen...
+// also, the (char) for if line is wide...
+	return line[0] == marker;
 }
 
 #endif
