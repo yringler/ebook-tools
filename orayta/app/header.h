@@ -33,4 +33,6 @@ bool load(LoadT & data, std::wifstream & stream,
 
 bool load(Joiner & joiner, SourceText & sourceText);
 
+void connect(Joiner & joiner, Commentary & commentary);
+
 #endif

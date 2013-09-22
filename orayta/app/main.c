@@ -38,4 +38,6 @@ int main(int argc, char *argv[])
 	load<loadSource>(sourceText, sourceFile);
 	load<loadCommentary>(commentary, commentaryFile);
 	load(joiner, sourceText);
+
+	connect(joiner, commentary);
 }
