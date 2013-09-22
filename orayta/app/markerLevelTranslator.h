@@ -1,5 +1,5 @@
-#ifndef MARKER_DEPTH_TRANSLATOR_H
-#define MARKER_DEPTH_TRANSLATOR_H 
+#ifndef MARKER_LEVEL_TRANSLATOR_H
+#define MARKER_LEVEL_TRANSLATOR_H 
 
 #include <deque>
 #include <iostream>
@@ -8,16 +8,16 @@
 class MarkerDepthTranslator
 {
 private:
-	struct TranslationUnit { wchar_t marker; short depth; };
+	struct TranslationUnit { wchar_t marker; short level; };
 	std::deque<TranslationUnit> translator;
 public:
 	/*					*
-	 * translate between depth and marker	*
+	 * translate between level and marker	*
 	 *					*/
 	wchar_t translate(short i) {
 	for(std::deque<TranslationUnit>::iterator iter=translator.begin();
 			iter != translator.end(); iter++)
-		if(iter->depth == i) return iter->marker;
+		if(iter->level == i) return iter->marker;
 	std::cout << "MarkerDepthTranslator:error\n";
 	throw;
 }
@@ -25,12 +25,12 @@ public:
 	short translate(wchar_t wc) {
 	for(std::deque<TranslationUnit>::iterator iter=translator.begin();
 			iter != translator.end(); iter++)
-		if(iter->marker == wc) return iter->depth;
+		if(iter->marker == wc) return iter->level;
 	std::cout << "MarkerDepthTranslator:error\n";
 	throw;
 }
 	/*					*
-	 * find if marker or depth exists 	*
+	 * find if marker or level exists 	*
 	 * 					*/
 	bool exists(wchar_t wc) {
 	for(std::deque<TranslationUnit>::iterator iter=translator.begin();
@@ -42,7 +42,7 @@ public:
 	bool exists(short i) {
 	for(std::deque<TranslationUnit>::iterator iter=translator.begin();
 			iter != translator.end(); iter++)
-		if(iter->depth == i) return true;
+		if(iter->level == i) return true;
 	return false;
 }
 
