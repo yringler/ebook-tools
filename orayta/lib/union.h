@@ -13,7 +13,7 @@ T2 *second;
 private:
 	short m_active;
 public:
-	Union() m_active(-1) { first=second=0; }
+	Union() : m_active(-1) { first=second=0; }
 	void use(short i) {
 		switch(i)
 		{
@@ -26,7 +26,7 @@ public:
 		default: std::cerr << "Union.use()::error\n"; throw;
 		}
 	}
-	short active() { return active; }
+	short active() { return m_active; }
 };
 
 #endif
