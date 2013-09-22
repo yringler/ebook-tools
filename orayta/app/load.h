@@ -7,7 +7,7 @@
 // 	from[0] for level 0, etc
 // LoadT: eg deque<string>, ie chapter
 template <typename LoadT, class WithFunc>
-bool load(std::vector<short> loadFrom, LoadT & data, std::wifstream &)
+bool load(std::vector<short> & loadFrom, LoadT & data, std::wifstream &)
 {
 }
 
