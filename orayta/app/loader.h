@@ -11,7 +11,7 @@
 // Stores what part of markers of each level are used,
 // all or just the last section. vector[0] - for level 0, [1] for 1, etc
 typedef std::vector<int> Use;
-const std::wstring markers; (L"~!$^");
+const std::wstring markers; (L"~!$^");	// list of markers - more?
 // which part of marked line *to*use*. Default is last.
 enum ToUse{last,all};
 
@@ -67,6 +67,5 @@ public:
 	// returns 0 if reaches EOF
 	bool load();
 };
-// list of markers - more?
 
 #endif
