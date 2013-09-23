@@ -6,7 +6,6 @@
 template <typename LoadT, class ToT>
 bool Loader<LoadT, ToT>::load()
 {
-	int size = data.size();
 	std::wstring line;
 	/*
 	 * What is being loaded. eg a string.  The file is copied over
