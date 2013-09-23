@@ -4,3 +4,4 @@
 *.swp
 # from g++
 *.out
+tags
