@@ -12,13 +12,18 @@ private:
 	short m_active;
 public:
 	Union() : m_active(-1) { m_first=m_second=0; }
+	void clear() {
+		delete m_first, delete m_second;
+		m_first = m_second = 0;
+		m_active = -1;
+	}
 	void use(short i) {
 		switch(i)
 		{
-		case 1: delete m_second, m_second = 0;
+		case 1: clear();
 			m_first = new T1, m_active = 1;
 			break;
-		case 2: delete m_first, m_first = 0;
+		case 2: clear();
 			m_second = new T2, m_active = 2;
 			break;
 		default: std::cerr << "Union.use()::error\n"; throw;
