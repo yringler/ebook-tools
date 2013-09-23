@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 #include <fstream>
 #include <cassert>
 #include "markerLevelTranslator.h"
@@ -28,16 +29,18 @@ enum ToUse{last,all};
  * 	ToUse is an enum which says which section *to use* - both, or 
  * 	only the last, most specific one.
  * 	Default behavior is to use the last one.
- * WithFunc: takes args: LoadT, wstring
+ * LoadFunc: takes args: LoadT, wstring
  * 	     sets up LoadT according to wstring
  */
-template <typename LoadT, typename ToT, class WithFunc>
+template <typename LoadT, typename ToT=std::deque<LoadT> >
 class Loader
 {
 private:
 	Use * use;	// says how to *use* each level of marker
 	std::wifstream & stream;
 	ToT & data;	// the thing the file is being loaded into
+	// function to load up LoadT (which is eg a posuk)
+	void (*loadFunc)(LoadT, std::wstring);
 	MarkerLevelTranslator translator;
 
 	// arg is marked line. Replaces it with section lable based on
@@ -56,8 +59,9 @@ private:
 		return (markers.find(wc) != markers.end());
 	}
 public:
-	Loader(std::wifstream str, ToT & a_data, Use * a_use = 0)
-		: stream(str), data(a_data) {
+	Loader(std::wifstream str, ToT & a_data,
+			void (*funcPtr)(LoadT, std::wstring), Use * a_use = 0)
+		: stream(str), data(a_data) , loadFunc(funcPtr) {
 		use = a_use;
 	}
 	// returns 0 if reaches EOF

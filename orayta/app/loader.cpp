@@ -3,8 +3,8 @@
 #include "loader.h"
 #include "header.h"
 
-template <typename LoadT, class WithFunc>
-bool Loader<LoadT, WithFunc>::load()
+template <typename LoadT, class ToT>
+bool Loader<LoadT, ToT>::load()
 {
 	int size = data.size();
 	std::wstring line;
@@ -44,14 +44,14 @@ bool Loader<LoadT, WithFunc>::load()
 	 */
 			load.clear();
 		} else {
-			WithFunc(load, line);
+			LoadFunc(load, line);
 			data.push_back(load);
 		}
 	} while(std::getNextNonBlank(stream,line));
 }
 
-template <typename LoadT, class WithFunc>
-void Loader<LoadT, WithFunc>::getLocationLable(std::wstring & line, ToUse toUse)
+template <typename LoadT, class ToT>
+void Loader<LoadT, ToT>::getLocationLable(std::wstring & line, ToUse toUse)
 {	
 	do
 		line.erase(0);	// also gets rid of marker
@@ -67,8 +67,8 @@ void Loader<LoadT, WithFunc>::getLocationLable(std::wstring & line, ToUse toUse)
 
 }
 
-template <typename LoadT, class WithFunc>
-ToUse Loader<LoadT, WithFunc>::getToUse(const std::wstring & line)
+template <typename LoadT, class ToT>
+ToUse Loader<LoadT, ToT>::getToUse(const std::wstring & line)
 {
 	assert(isMarker(line[0]));
 
@@ -84,8 +84,8 @@ ToUse Loader<LoadT, WithFunc>::getToUse(const std::wstring & line)
 	}
 
 }
-template <typename LoadT, class WithFunc>
-bool Loader<LoadT, WithFunc>::getNextNonBlank(std::wstring & str)
+template <typename LoadT, class ToT>
+bool Loader<LoadT, ToT>::getNextNonBlank(std::wstring & str)
 {
 	while(std::getline(stream,str)) {
 		if(not std::iswspace(str[0]))
@@ -94,8 +94,8 @@ bool Loader<LoadT, WithFunc>::getNextNonBlank(std::wstring & str)
 	return 0
 }
 
-template <typename LoadT, class WithFunc>
-bool Loader<LoadT, WithFunc>::getNextMarkered(std::wstring & str)
+template <typename LoadT, class ToT>
+bool Loader<LoadT, ToT>::getNextMarkered(std::wstring & str)
 {
 	if(getNextNonBlank(str)) {
 		if(std::iswspace(str[0])) {
