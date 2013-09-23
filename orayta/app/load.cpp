@@ -8,7 +8,7 @@ bool Loader<LoadT, WithFunc>::load()
 	int size = data.size();
 	std::wstring line;
 	/*
-	 * What is beging loaded. eg a string.  The file is copied over
+	 * What is being loaded. eg a string.  The file is copied over
 	 * to a bunch of individual ones with WithFunc to ToT (eg a queue)
 	 */
 	LoadT load;
