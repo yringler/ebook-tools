@@ -10,8 +10,9 @@ using std::wstring
 #include "../lib/union.h"
 
 #include "markerLevelTranslator.h"
-#include "header.h"
+#include "typedefs.h"
 #include "loader.h"
+#include "jointools.h"
 
 /*
  * functors to load the actual commentary or source data
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
 	load(sourceFile, sourceTextQueue, loadSource);
 	load(commentaryFile, commentaryQueue, loadCommentary);
 
-	load(joinerQueue, sourceTextQueue);
+	connect(joinerQueue, sourceTextQueue);
 	connect(joinerQueue, commentaryQueue);
 }
 
