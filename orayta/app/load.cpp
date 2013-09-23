@@ -19,6 +19,7 @@ bool Loader<LoadT, WithFunc>::load()
 		} else {
 			return 0;
 		}
+	}
 
 	do {
 		if(isMarker(line[0])){
