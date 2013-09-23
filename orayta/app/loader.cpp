@@ -94,18 +94,3 @@ bool Loader<LoadT, ToT>::getNextNonBlank(std::wstring & str)
 	}
 	return 0
 }
-
-template <typename LoadT, class ToT>
-bool Loader<LoadT, ToT>::getNextMarkered(std::wstring & str)
-{
-	if(getNextNonBlank(str)) {
-		if(std::iswspace(str[0])) {
-			return 1;
-		} else {
-			std::cerr << "getNextMarkered:error\n";
-			throw;
-		}
-	} else {
-		return 0;
-	}
-}
