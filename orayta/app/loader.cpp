@@ -16,7 +16,7 @@ bool Loader<LoadT, ToT>::load()
 
 	// skips to first marker
 	while(true) {
-		if(getNextNonBlank(stream,line)) {
+		if(getNextNonBlank(line)) {
 			if(isMarker(line[0])) 
 				break;
 		} else {
@@ -50,7 +50,7 @@ bool Loader<LoadT, ToT>::load()
 			LoadFunc(load, line);
 			data.push_back(load);
 		}
-	} while(std::getNextNonBlank(stream,line));
+	} while(std::getNextNonBlank(line));
 }
 
 template <typename LoadT, class ToT>
