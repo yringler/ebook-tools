@@ -26,15 +26,16 @@ bool Loader<LoadT, ToT>::load()
 
 	do {
 		if(isMarker(line[0])){
-			if(not translator.exists(line[0]))
-				translator.add(line[0]);
+			wchar_t marker = line[0];
+			if(not translator.exists(marker))
+				translator.add(marker);
 			ToUse toUse = getToUse(line);
 			getLocationLable(line, toUse);
 
 			load.clear();	// not needed, but clearer
 			load.use(2);
 			load.second()->lable = line;
-			load.second()->level = translator.translator(line[0]);
+			load.second()->level = translator.translator(marker);
 
 			data.push_back(load);
 	/*
