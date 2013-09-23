@@ -62,4 +62,11 @@ public:
 	// returns 0 if reaches EOF
 	bool load();
 };
+
+template<typename LoadT, typename ToT=std::deque<LoadT> >
+bool load(std::wifstream & str, ToT & to, LoadFuncPtr funcPtr, Use * a_use = 0)
+{
+	Loader<LoadT,ToT> loader(str,to,a_use);
+	loader.load();
+}
 #endif

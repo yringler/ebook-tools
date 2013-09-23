@@ -35,10 +35,8 @@ int main(int argc, char *argv[])
 	CommentaryQueue commentaryQueue;
 	JoinerQueue joinerQueue;
 
-	Loader<SourceText, SourceTextQueue, loadSource>
-		SourceLoader(sourceFile, sourceTextQueue);
-	Loader<Commentary, CommentaryQueue, loadCommentary>
-		CommentaryLoader(commentaryFile, commentaryQueue);
+	load(sourceFile, sourceTextQueue, loadSource);
+	load(commentaryFile, commentaryQueue, loadCommentary);
 	load(joinerQueue, sourceText);
 
 	connect(joinerQueue, commentaryQueue);
