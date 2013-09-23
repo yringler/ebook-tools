@@ -8,6 +8,7 @@
 
 // tells program where he is in the file, like a sign post
 // eg "now your at a level 3 labled 'homeward bound'"
+// levels start at 0 (book), and go up untill reach actuall content
 struct Location
 {
 	std::wstring lable;
