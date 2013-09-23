@@ -1,6 +1,7 @@
 #include <cwctype>
 #include <iostream>
 #include "load.h"
+#include "header.h"
 
 template <typename LoadT, class WithFunc>
 bool Loader<LoadT, WithFunc>::load()
@@ -29,6 +30,12 @@ bool Loader<LoadT, WithFunc>::load()
 				translator.add(line[0]);
 			ToUse toUse = getToUse(line);
 			getLocationLable(line, toUse);
+
+			load.use(2);
+			load.second()->lable = line;
+			load.second()->level = translator.translator(line[0]);
+
+			data.push_back(load);
 	/*
 	 * by reseting the temporary variable over here, if one content
 	 * (eg text of a mishna between two markered lines) spans multiple
