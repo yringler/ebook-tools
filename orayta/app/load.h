@@ -29,7 +29,7 @@ enum ToUse{last,all};
  * 	only the last, most specific one.
  * 	Default behavior is to use the last one.
  * WithFunc: takes args: LoadT, wstring
- * 	     sets up LoadT tmp according to wstring
+ * 	     sets up LoadT according to wstring
  */
 template <typename LoadT, typename ToT, class WithFunc>
 class Loader
