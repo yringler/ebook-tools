@@ -64,7 +64,7 @@ void Loader<LoadT, ToT>::getLocationLable(std::wstring & line, ToUse toUse)
 		int last_dash = line.find_last_of(L'-');
 		// array of char: a b - d - f g h
 		// indices:	  0 1 2 3 4 5 6 7
-		// [last_dash=] 4 + 1 = 5 = number of chars to erase
+		// last_dash=4, + 1 = 5 = number of chars to erase
 		line.erase(0, last_dash + 1);
 	}
 }
