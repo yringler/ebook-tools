@@ -67,7 +67,6 @@ void Loader<LoadT, ToT>::getLocationLable(std::wstring & line, ToUse toUse)
 		// [last_dash=] 4 + 1 = 5 = number of chars to erase
 		line.erase(0, last_dash + 1);
 	}
-
 }
 
 template <typename LoadT, class ToT>
