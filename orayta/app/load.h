@@ -28,8 +28,8 @@ enum ToUse{last,all};
  * 	ToUse is an enum which says which section *to use* - both, or 
  * 	only the last, most specific one.
  * 	Default behavior is to use the last one.
- * WithFunc: takes args: LoadT, ifstream
- * 	     returns : 0 on EOF
+ * WithFunc: takes args: LoadT, wstring
+ * 	     sets up LoadT tmp according to wstring
  */
 template <typename LoadT, typename ToT, class WithFunc>
 class Loader

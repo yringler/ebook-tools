@@ -15,8 +15,8 @@ using std::wstring
 /*
  * functors to load the actual commentary or source data
  */
-bool loadSource(wstring &, std::wifstream &);
-bool loadCommentary(Commentary &, std::wifstream &);
+void loadSource(SourceText &, wstring &);
+void loadCommentary(Commentary &, wstring &);
 
 int main(int argc, char *argv[])
 {
@@ -41,15 +41,7 @@ int main(int argc, char *argv[])
 	connect(joinerQueue, commentaryQueue);
 }
 
-bool loadSource(wstring & str, std::wifstream & stream)
-{
-	if(stream)
-		return std::getline(stream,str);
-	else {
-		cerr << "loadSource:error\n";
-		throw;
-	}
-}
+void loadSource(SourceText & txt, wstring src) { txt.first() = src; }
 
 int betweenString(wstring & from, wstring & to,
 		wchar_t bc, wchar_t ec, int pos)
@@ -64,24 +56,15 @@ int betweenString(wstring & from, wstring & to,
 	return end;
 }
 
-bool loadCommentary(Commentary & commentary, std::wifstream & stream)
+void loadCommentary(Commentary & commentary, wstring & src)
 {
 	using wstring::npos;
 
-	int end = 0;
-	wstring line;
 	WComment comment;
-	
 	do {
-		// contains all the perushim on an eg posuk
-		if(not std::getline(stream,line)){
-			std::cerr << "loadCommentary:error\n";
-			throw;
-		}
-
-		end = betweenString(line, comment.on, L'>', L'<', end);
+		end = betweenString(src, comment.on, L'>', L'<', end);
 		assert(end != npos);
-		end = betweenString(line, comment.comment, L'>', L'<', end);
+		end = betweenString(src, comment.comment, L'>', L'<', end);
 
 		commentary.first()->push_back(comment);
 	} while(end != npos);

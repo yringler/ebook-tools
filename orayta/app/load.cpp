@@ -34,7 +34,7 @@ bool Loader<LoadT, WithFunc>::load()
 	 */
 			load = LoadT();
 		} else {
-			assert(WithFunc(load, stream));
+			assert(WithFunc(load, line));
 			data.push_back(load);
 		}
 	} while(std::getNextNonBlank(stream,line));
