@@ -49,6 +49,7 @@ private:
 
 	// returns zero if reaches EOF
 	bool getNextNonBlank(std::wstring &);
+	// throws if reaches nonblank-nonmarkered
 	bool getNextMarkered(std::wstring &);
 
 	bool isMarker(wchar_t wc) { 
