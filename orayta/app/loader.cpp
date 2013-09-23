@@ -35,7 +35,7 @@ bool Loader<LoadT, ToT>::load()
 			tmp.clear();
 			tmp.use(2);
 			tmp.second()->lable = line;
-			tmp.second()->level = translator.translator(marker);
+			tmp.second()->level = translator.translate(marker);
 
 			data.push_back(tmp);
 	/*
