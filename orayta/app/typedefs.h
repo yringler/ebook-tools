@@ -1,20 +1,12 @@
 // misc. generic stuff
-#ifndef HEADER_H
-#define HEADER_H
+#ifndef TYPEDEFS_H
+#define TYPEDEFS_H
 
 #include <vector>
 #include <deque>
 #include <string>
 #include "../lib/looseBinder.h"
-
-// tells program where he is in the file, like a sign post
-// eg "now your at a level 3 labled 'homeward bound'"
-// levels start at 0 (book), and go up untill reach actuall content
-struct Location
-{
-	std::wstring lable;
-	short level;
-};
+#include "location.h"
 
 /*
  * Each union is either data or positional data
@@ -36,7 +28,5 @@ typedef Union<CommentaryBinder, Location> Joiner;
 typedef std::deque<SourceText> SourceTextQueue;
 typedef std::deque<Commentary> CommentaryQueue;
 typedef std::deque<Joiner> JoinerQueue;
-
-void connect(Joiner & joiner, Commentary & commentary);
 
 #endif
