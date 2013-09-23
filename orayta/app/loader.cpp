@@ -31,6 +31,7 @@ bool Loader<LoadT, ToT>::load()
 			ToUse toUse = getToUse(line);
 			getLocationLable(line, toUse);
 
+			load.clear();	// not needed, but clearer
 			load.use(2);
 			load.second()->lable = line;
 			load.second()->level = translator.translator(line[0]);
