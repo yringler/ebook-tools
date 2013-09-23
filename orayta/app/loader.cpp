@@ -46,6 +46,7 @@ bool Loader<LoadT, ToT>::load()
 	 */
 			load.clear();
 		} else {
+			if(load.active() != 1) load.use(1);
 			LoadFunc(load, line);
 			data.push_back(load);
 		}

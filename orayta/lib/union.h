@@ -18,6 +18,7 @@ public:
 		m_active = -1;
 	}
 	void use(short i) {
+		if(i == active()) return;
 		switch(i)
 		{
 		case 1: clear();
