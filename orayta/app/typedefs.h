@@ -1,4 +1,3 @@
-// misc. generic stuff
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
@@ -7,6 +6,7 @@
 #include <string>
 #include "../lib/looseBinder.h"
 #include "location.h"
+#include "../lib/union.h"
 
 /*
  * Each union is either data or positional data
