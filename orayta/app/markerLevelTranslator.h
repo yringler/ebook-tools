@@ -5,12 +5,14 @@
 #include <iostream>
 #include <cassert>
 
-class MarkerDepthTranslator
+class MarkerLevelTranslator
 {
 private:
 	struct TranslationUnit { wchar_t marker; short level; };
 	std::deque<TranslationUnit> translator;
+	short m_highest;
 public:
+	MarkerLevelTranslator() { m_highest = -1; }
 	/*					*
 	 * translate between level and marker	*
 	 *					*/
@@ -18,7 +20,7 @@ public:
 	for(std::deque<TranslationUnit>::iterator iter=translator.begin();
 			iter != translator.end(); iter++)
 		if(iter->level == i) return iter->marker;
-	std::cout << "MarkerDepthTranslator:error\n";
+	std::cout << "MarkerLevelTranslator:error\n";
 	throw;
 }
 
@@ -26,7 +28,7 @@ public:
 	for(std::deque<TranslationUnit>::iterator iter=translator.begin();
 			iter != translator.end(); iter++)
 		if(iter->marker == wc) return iter->level;
-	std::cout << "MarkerDepthTranslator:error\n";
+	std::cout << "MarkerLevelTranslator:error\n";
 	throw;
 }
 	/*					*
@@ -46,12 +48,14 @@ public:
 	return false;
 }
 
-	void add(wchar_t wc, short i) { 
-		assert(not exists(wc) && not exists(i));
-
-		TranslationUnit tmp = { wc, i };
+	void add(wchar_t wc) { 
+		assert(not exists(wc));
+		m_highest++;
+		TranslationUnit tmp = { wc, m_highest };
 		translator.push_back(tmp);
 	}
+	
+	short highest() { return m_highest; }
 };
 
 #endif

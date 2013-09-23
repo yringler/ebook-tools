@@ -1,7 +1,4 @@
 header.h contains:
 
-load stuff: initializes various queues
 type stuff: typedefs for data types source text and commentary
 struct location: holds location information
-an enum: last all, to specify what dash(-)seperated section you want in
-	location string

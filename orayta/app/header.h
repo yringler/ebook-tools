@@ -3,7 +3,16 @@
 #define HEADER_H
 
 #include <vector>
+#include <deque>
 #include <string>
+
+// tells program where he is in the file, like a sign post
+// eg "now your at a level 3 labled 'homeward bound'"
+struct Location
+{
+	std::wstring lable;
+	short level;
+};
 
 /*
  * Each union is either data or positional data
@@ -11,27 +20,14 @@
  */
 
 typedef Union<std::wstring, Location> SourceText;
-typedef Union<WComment, Location> Commentary;
+// note: all the comments on one eg posuk are in one group in source file
+// hence they are lumped together to be loaded in one queue
+typedef Union<std::deque<WComment>, Location > Commentary;
 typedef Union<WLooseBinder, Location> Joiner;
 
-struct Location
-{
-	std::wstring lable;
-	short level;
-};
-
-enum ToUse{last,all};
-
-// information. section is - seperated text on marker line or 1st.
-// LoadT: eg deque<string>, ie chapter
-// vector<> loadSection: whether to use all sections or just one
-template <class WithFunc, typename LoadT>
-bool load(LoadT & data, std::wifstream & stream,
-		std::vector<ToUse> * loadSection = 0);
-{
-}
-
-bool load(Joiner & joiner, SourceText & sourceText);
+typedef std::deque<SourceText> SourceTextQueue;
+typedef std::deque<Commentary> CommentaryQueue;
+typedef std::deque<Joiner> JoinerQueue;
 
 void connect(Joiner & joiner, Commentary & commentary);
 
