@@ -12,6 +12,8 @@ bool Loader<LoadT, WithFunc>::load()
 	 * to a bunch of individual ones with WithFunc to ToT (eg a queue)
 	 */
 	LoadT load;
+
+	// skips to first marker
 	while(true) {
 		if(getNextNonBlank(stream,line)) {
 			if(isMarker(line[0])) 
