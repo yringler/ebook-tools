@@ -11,6 +11,7 @@ using std::wstring
 
 #include "markerLevelTranslator.h"
 #include "header.h"
+#include "loader.h"
 
 /*
  * functors to load the actual commentary or source data
@@ -34,8 +35,10 @@ int main(int argc, char *argv[])
 	CommentaryQueue commentaryQueue;
 	JoinerQueue joinerQueue;
 
-	load<loadSource>(sourceTextQueue, sourceFile);
-	load<loadCommentary>(commentaryQueue, commentaryFile);
+	Loader<SourceText, SourceTextQueue, loadSource>
+		SourceLoader(sourceFile, sourceTextQueue);
+	Loader<Commentary, CommentaryQueue, loadCommentary>
+		CommentaryLoader(commentaryFile, commentaryQueue);
 	load(joinerQueue, sourceText);
 
 	connect(joinerQueue, commentaryQueue);
