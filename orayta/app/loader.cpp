@@ -75,7 +75,7 @@ ToUse Loader<LoadT, ToT>::getToUse(const std::wstring & line)
 {
 	assert(isMarker(line[0]));
 
-// use is a pointer to vector which says how to use each level of marker
+// toUse is a pointer to int which says how to use each level of marker
 // if its non-null...
 	if(toUse) {
 		// ... make use of it
