@@ -3,6 +3,7 @@
 #include "loader.h"
 #include "header.h"
 
+// returns 0 at EOF
 template <typename LoadT, class ToT>
 bool Loader<LoadT, ToT>::load()
 {
