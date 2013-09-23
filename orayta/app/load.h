@@ -60,6 +60,7 @@ public:
 		: stream(str), data(a_data) {
 		use = a_use;
 	}
+	// returns 0 if reaches EOF
 	bool load();
 };
 // list of markers - more?
