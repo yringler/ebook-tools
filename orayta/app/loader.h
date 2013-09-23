@@ -28,7 +28,7 @@ enum ToUse{last,all};
  * LoadFunc: takes args: LoadT, wstring
  * 	     sets up LoadT according to wstring
  */
-template <typename LoadT, typename ToT=std::deque<LoadT> >
+template<typename LoadT, typename ToT=std::deque<LoadT> >
 class Loader
 {
 private:
