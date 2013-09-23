@@ -1,4 +1,0 @@
-header.h contains:
-
-type stuff: typedefs for data types source text and commentary
-struct location: holds location information
