@@ -42,7 +42,7 @@ bool Loader<LoadT, WithFunc>::load()
 	 * lines, will be processed and added to queue correctly
 	 * (I hope this comment atones for the <adjactive> design)
 	 */
-			load = LoadT();
+			load.clear();
 		} else {
 			WithFunc(load, line);
 			data.push_back(load);
