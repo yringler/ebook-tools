@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	connect(joinerQueue, commentaryQueue);
 }
 
-void loadSource(SourceText & txt, wstring src) { txt.first() = src; }
+void loadSource(SourceText & txt, wstring & src) { txt.first() = src; }
 
 int betweenString(wstring & from, wstring & to,
 		wchar_t bc, wchar_t ec, int pos)
