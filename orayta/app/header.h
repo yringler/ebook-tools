@@ -5,6 +5,7 @@
 #include <vector>
 #include <deque>
 #include <string>
+#include "../lib/looseBinder.h"
 
 // tells program where he is in the file, like a sign post
 // eg "now your at a level 3 labled 'homeward bound'"
@@ -24,7 +25,13 @@ typedef Union<std::wstring, Location> SourceText;
 // note: all the comments on one eg posuk are in one group in source file
 // hence they are lumped together to be loaded in one queue
 typedef Union<std::deque<WComment>, Location > Commentary;
-typedef Union<WLooseBinder, Location> Joiner;
+
+const wchar_t aleph = 'א', tov = 'ת';
+class CommentaryBinder : WLooseBinder {
+	public: CommentaryBinder() : WLooseBinder(aleph, tov) {}
+}
+// this naming is a bit clumsy. sorry.
+typedef Union<CommentaryBinder, Location> Joiner;
 
 typedef std::deque<SourceText> SourceTextQueue;
 typedef std::deque<Commentary> CommentaryQueue;
