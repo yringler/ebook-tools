@@ -12,7 +12,7 @@ bool Loader<LoadT, ToT>::load()
 	 * What is being loaded. eg a string.  The file is copied over
 	 * to a bunch of individual ones with WithFunc to ToT (eg a queue)
 	 */
-	LoadT load;
+	LoadT tmp;
 
 	// skips to first marker
 	while(true) {
@@ -32,23 +32,23 @@ bool Loader<LoadT, ToT>::load()
 			ToUse toUse = getToUse(line);
 			getLocationLable(line, toUse);
 
-			load.clear();	// not needed, but clearer
-			load.use(2);
-			load.second()->lable = line;
-			load.second()->level = translator.translator(marker);
+			tmp.clear();	// not needed, but clearer
+			tmp.use(2);
+			tmp.second()->lable = line;
+			tmp.second()->level = translator.translator(marker);
 
-			data.push_back(load);
+			data.push_back(tmp);
 	/*
 	 * by reseting the temporary variable over here, if one content
 	 * (eg text of a mishna between two markered lines) spans multiple
 	 * lines, will be processed and added to queue correctly
 	 * (I hope this comment atones for the <adjactive> design)
 	 */
-			load.clear();
+			tmp.clear();
 		} else {
-			if(load.active() != 1) load.use(1);
-			LoadFunc(load, line);
-			data.push_back(load);
+			if(tmp.active() != 1) tmp.use(1);
+			LoadFunc(tmp, line);
+			data.push_back(tmp);
 		}
 	} while(std::getNextNonBlank(line));
 }
