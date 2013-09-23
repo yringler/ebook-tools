@@ -80,7 +80,6 @@ ToUse Loader<LoadT, ToT>::getToUse(const std::wstring & line)
 	if(toUse) {
 		// ... make use of it
 		int depth = translator.translate(line[0]);
-		// this is a weird little line...
 		return toUse[depth];
 	} else {
 		return last;
