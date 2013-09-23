@@ -32,7 +32,7 @@ bool Loader<LoadT, ToT>::load()
 			ToUse toUse = getToUse(line);
 			getLocationLable(line, toUse);
 
-			tmp.clear();	// not needed, but clearer
+			tmp.clear();
 			tmp.use(2);
 			tmp.second()->lable = line;
 			tmp.second()->level = translator.translator(marker);
