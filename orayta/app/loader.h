@@ -1,5 +1,5 @@
-#ifndef LOAD_H
-#define LOAD_H
+#ifndef LOADER_H
+#define LOADER_H
 
 #include <string>
 #include <vector>
