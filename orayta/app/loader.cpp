@@ -74,11 +74,11 @@ ToUse Loader<LoadT, ToT>::getToUse(const std::wstring & line)
 
 // use is a pointer to vector which says how to use each level of marker
 // if its non-null...
-	if(use) {
+	if(toUse) {
 		// ... make use of it
 		int depth = translator.translate(line[0]);
 		// this is a weird little line...
-		return (*use)[depth];
+		return toUse[depth];
 	} else {
 		return last;
 	}

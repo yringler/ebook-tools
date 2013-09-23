@@ -2,15 +2,11 @@
 #define LOADER_H
 
 #include <string>
-#include <vector>
 #include <deque>
 #include <fstream>
 #include <cassert>
 #include "markerLevelTranslator.h"
 
-// Stores what part of markers of each level are used,
-// all or just the last section. vector[0] - for level 0, [1] for 1, etc
-typedef std::vector<int> Use;
 const std::wstring markers; (L"~!$^");	// list of markers - more?
 // which part of marked line *to*use*. Default is last.
 enum ToUse{last,all};
@@ -36,7 +32,7 @@ template <typename LoadT, typename ToT=std::deque<LoadT> >
 class Loader
 {
 private:
-	Use * use;	// says how to *use* each level of marker
+	short *toUse;	// array of what to use for all levels
 	std::wifstream & stream;
 	ToT & data;	// the thing the file is being loaded into
 	// function to load up LoadT (which is eg a posuk)
@@ -62,7 +58,7 @@ public:
 	Loader(std::wifstream str, ToT & a_data,
 			void (*funcPtr)(LoadT, std::wstring), Use * a_use = 0)
 		: stream(str), data(a_data) , loadFunc(funcPtr) {
-		use = a_use;
+		toUse = a_use;
 	}
 	// returns 0 if reaches EOF
 	bool load();
