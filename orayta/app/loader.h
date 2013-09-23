@@ -63,6 +63,8 @@ public:
 	bool load();
 };
 
+#include "loader.cpp"
+
 template<typename LoadT, typename ToT=std::deque<LoadT> >
 bool load(std::wifstream & str, ToT & to, LoadFuncPtr funcPtr, Use * a_use = 0)
 {
