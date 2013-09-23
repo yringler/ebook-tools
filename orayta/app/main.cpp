@@ -37,8 +37,8 @@ int main(int argc, char *argv[])
 
 	load(sourceFile, sourceTextQueue, loadSource);
 	load(commentaryFile, commentaryQueue, loadCommentary);
-	load(joinerQueue, sourceText);
 
+	load(joinerQueue, sourceTextQueue);
 	connect(joinerQueue, commentaryQueue);
 }
 
