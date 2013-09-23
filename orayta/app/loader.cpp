@@ -19,7 +19,7 @@ bool Loader<LoadT, ToT>::load()
 		if(getNextNonBlank(line)) {
 			if(isMarker(line[0])) 
 				break;
-		} else {
+		} else {	// if reached EOF
 			return 0;
 		}
 	}
