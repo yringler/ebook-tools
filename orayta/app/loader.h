@@ -10,6 +10,7 @@
 const std::wstring markers; (L"~!$^");	// list of markers - more?
 // which part of marked line *to*use*. Default is last.
 enum ToUse{last,all};
+typedef void (*LoadFuncPtr)(LoadT,std::wstring);
 
 /*
  * LoadT: what information is beging loaded to. eg a string
@@ -36,7 +37,7 @@ private:
 	std::wifstream & stream;
 	ToT & data;	// the thing the file is being loaded into
 	// function to load up LoadT (which is eg a posuk)
-	void (*loadFunc)(LoadT, std::wstring);
+	LoadFuncPtr loadFunc;
 	MarkerLevelTranslator translator;
 
 	// arg is marked line. Replaces it with section lable based on
@@ -54,12 +55,11 @@ private:
 	}
 public:
 	Loader(std::wifstream str, ToT & a_data,
-			void (*funcPtr)(LoadT, std::wstring), Use * a_use = 0)
+		LoadFuncPtr funcPtr, Use * a_use = 0)
 		: stream(str), data(a_data) , loadFunc(funcPtr) {
 		toUse = a_use;
 	}
 	// returns 0 if reaches EOF
 	bool load();
 };
-
 #endif
