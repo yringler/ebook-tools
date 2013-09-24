@@ -12,7 +12,7 @@ struct Location
 
 /*
  * in all these templates:
- * IterT is assumed to be iter to union, as per header.h
+ * IterT is assumed to be iter to union, as per typedefs.h
  * return 0 on failure
  */
 

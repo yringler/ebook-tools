@@ -1,7 +1,7 @@
 #include <cwctype>
 #include <iostream>
 #include "loader.h"
-#include "header.h"
+#include "typedefs.h"
 
 // returns 0 at EOF
 template <typename LoadT, class ToT>

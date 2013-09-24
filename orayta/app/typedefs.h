@@ -18,7 +18,7 @@ typedef Union<std::wstring, Location> SourceText;
 // hence they are lumped together to be loaded in one queue
 typedef Union<std::deque<WComment>, Location > Commentary;
 
-const wchar_t aleph = 'א', tov = 'ת';
+const wchar_t aleph = L'א', tov = L'ת';
 class CommentaryBinder : WLooseBinder {
 	public: CommentaryBinder() : WLooseBinder(aleph, tov) {}
 }

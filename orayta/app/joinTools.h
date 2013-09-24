@@ -1,7 +1,7 @@
 #ifndef JOIN_TOOLS_H
 #define JOIN_TOOLS_H
 
-#include "header.h"
+#include "typedefs.h"
 
 void connect(JoinerQueue &, SourceTextQueue &);
 void connect(JoinerQueue &, CommentaryQueue &);
