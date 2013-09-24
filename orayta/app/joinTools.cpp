@@ -17,7 +17,8 @@ void connect(JoinerQueue & joinerQueue, SourceTextQueue & sourceTextQueue)
 			first_active.first().to(iter->first());
 			joinerQueue.push_back(first_active);
 		} else {
-			joinerQueue.push_back(*iter);
+			second_active.second() == iter->second();
+			joinerQueue.push_back(second_active);
 		}
 	}
 }
