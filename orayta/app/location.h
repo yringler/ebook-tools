@@ -64,10 +64,10 @@ bool moveToHighestLocation(IterT & move, IterT end)
 }
 
 // if after move loc is diffrent, moves both forward again
-template <typename IterT>
-bool moveToHighestLocationTogether(IterT & am, IterT ae, IterT & bm, IterT be) {
-	IterT ta=am;
-	IterT tb=bm;
+template <typename IterA, typename IterB>
+bool moveToHighestLocationTogether(IterA & am, IterA ae, IterB & bm, IterB be) {
+	IterA ta=am;
+	IterB tb=bm;
 
 	while(true) {
 		if(moveToHighestLocation(ta) && moveToHighestLocation(tb)) {
