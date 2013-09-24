@@ -10,11 +10,11 @@ void connect(JoinerQueue & joinerQueue, SourceTextQueue & sourceTextQueue)
 	for(SourceTextQueue::iterator iter = sourceTextQueue.begin();
 			iter != sourceTextQueue.end(); iter++) {
 		if(iter->active() == 1) {
-			joinerQueue.push_back(*iter);
-		} else {
 			// set joiner to source text
 			tmp.first().to(iter->first());
 			joinerQueue.push_back(tmp);
+		} else {
+			joinerQueue.push_back(*iter);
 		}
 	}
 }
