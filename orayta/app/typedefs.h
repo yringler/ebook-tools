@@ -21,7 +21,7 @@ typedef Union<std::deque<WComment>, Location > Commentary;
 const wchar_t aleph = L'א', tov = L'ת';
 class CommentaryBinder : WLooseBinder {
 	public: CommentaryBinder() : WLooseBinder(aleph, tov) {}
-}
+};
 // this naming is a bit clumsy. sorry.
 typedef Union<CommentaryBinder, Location> Joiner;
 
