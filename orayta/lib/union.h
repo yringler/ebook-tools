@@ -2,6 +2,7 @@
 #define UNION_H
 
 #include <iostream>
+#include <cassert>
 
 template<typename T1, typename T2>
 class Union
@@ -31,8 +32,8 @@ public:
 		}
 	}
 	short active() { return m_active; }
-	T1 & first() { return *m_first; }
-	T2 & second() { return *m_second; }
+	T1 & first() { assert(active()==1); return *m_first; }
+	T2 & second() { assert(active()==2); return *m_second; }
 };
 
 #endif
