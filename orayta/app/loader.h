@@ -56,7 +56,7 @@ private:
 		return (markers.find(wc) != std::wstring::npos);
 	}
 public:
-	Loader(std::wifstream str, ToT & a_data,
+	Loader(std::wifstream  & str, ToT & a_data,
 		LoadFuncPtr funcPtr, ToUse * a_use = 0)
 		: stream(str), data(a_data) , loadFunc(funcPtr) {
 		toUse = a_use;
