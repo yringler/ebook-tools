@@ -33,7 +33,19 @@ void connect(JoinerQueue & joinerQueue, CommentaryQueue & commentaryQueue)
 	while(moveToHighestLocationTogether(jit, jend, cit, cend)) {
 		jit++;
 		cit++;
-		// attach comment to source text
-		jit->first().attach(cit->first());
+		
+	/* 
+	 * commentary is queue of comments on one eg mishna
+	 * cycle through all of them, call attach(comment)
+	 * for now, this code is a mess. B'e"H I'll clean up the typedefs later
+	 */
+		// cit is iterator-to-union, first of which is queu. Sorry.
+		for(std::deque<WComment>::iterator i = cit->first().begin();
+				i != cit->first().end(); i++)
+			jit->first().attach(*i);
+		/*
+		 * this has to be the murkiest code I've written in my life
+		 * I really don't know what came over me!
+		 */
 	}
 }
