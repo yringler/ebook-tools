@@ -12,10 +12,11 @@ private:
 	T2 *m_second;
 	short m_active;
 public:
-	Union() : m_active(-1) { m_first=m_second=0; }
+	Union() : m_active(-1) { m_first=0; m_second=0; }
 	void clear() {
 		delete m_first, delete m_second;
-		m_first = m_second = 0;
+		m_first = 0;
+	        m_second = 0;
 		m_active = -1;
 	}
 	void use(short i) {
