@@ -10,6 +10,9 @@ struct Location
 {
 	std::wstring lable;
 	short level;
+	bool operator==(Location & loc) { 
+		return loc.lable == lable && loc.level == level;
+	}
 };
 
 /*
