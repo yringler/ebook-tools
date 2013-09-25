@@ -7,7 +7,7 @@
 #include <cassert>
 #include "markerLevelTranslator.h"
 
-const std::wstring markers; (L"~!$^");	// list of markers - more?
+const std::wstring markers(L"~!$^");	// list of markers - more?
 // which part of marked line *to*use*. Default is last.
 enum ToUse{last,all};
 typedef void (*LoadFuncPtr)(LoadT,std::wstring);
