@@ -31,13 +31,14 @@ enum ToUse{last,all};
 template<typename LoadT, typename ToT=std::deque<LoadT> >
 class Loader
 {
+public:
+	typedef void (*LoadFuncPtr)(LoadT,std::wstring);
 private:
 	short *toUse;	// array of what to use for all levels
 	std::wifstream & stream;
 	ToT & data;	// the thing the file is being loaded into
 	
 	// function to load up LoadT (which is eg a posuk)
-	typedef void (*LoadFuncPtr)(LoadT,std::wstring);
 	LoadFuncPtr loadFunc;
 	MarkerLevelTranslator translator;
 
