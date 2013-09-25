@@ -47,7 +47,7 @@ bool Loader<LoadT, ToT>::load()
 			tmp.clear();
 		} else {
 			if(tmp.active() != 1) tmp.use(1);
-			LoadFunc(tmp, line);
+			loadFunc(tmp, line);
 			data.push_back(tmp);
 		}
 	} while(getNextNonBlank(line));
