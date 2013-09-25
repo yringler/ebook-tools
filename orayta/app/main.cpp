@@ -48,28 +48,25 @@ void loadSource(SourceText & txt, wstring & src) { txt.first() = src; }
 int betweenString(wstring & from, wstring & to,
 		wchar_t bc, wchar_t ec, int pos)
 {
-	int begin = str.find(bc,pos);
-	int end = str.find(ec, begin);
+	int begin = from.find(bc,pos);
+	int end = from.find(ec, begin);
 	begin++;	// to get to first char, which is after bc
 
-	assert(begin != npos);
-	to = line.substr(begin, end-begin);
+	assert(begin != std::wstring::npos);
+	to = from.substr(begin, end-begin);
 
 	return end;
 }
 
 void loadCommentary(Commentary & commentary, wstring & src)
 {
-	using wstring::npos;
-
 	WComment comment;
+	int end;
 	do {
 		end = betweenString(src, comment.on, L'>', L'<', end);
-		assert(end != npos);
+		assert(end != wstring::npos);
 		end = betweenString(src, comment.comment, L'>', L'<', end);
 
-		commentary.first()->push_back(comment);
-	} while(end != npos);
-
-	return 1;
+		commentary.first().push_back(comment);
+	} while(end != wstring::npos);
 }

@@ -32,7 +32,7 @@ template<typename LoadT, typename ToT=std::deque<LoadT> >
 class Loader
 {
 public:
-	typedef void (*LoadFuncPtr)(LoadT,std::wstring);
+	typedef void (*LoadFuncPtr)(LoadT &,std::wstring &);
 private:
 	short *toUse;	// array of what to use for all levels
 	std::wifstream & stream;
@@ -70,9 +70,9 @@ public:
 // conveniance function, so that you don't have to actually create a loader
 template<typename LoadT>
 bool load(std::wifstream & str, std::deque<LoadT> & to,
-		void (*LoadFuncPtr)(LoadT,std::wstring), ToUse * a_use = 0)
+		void (*LoadFuncPtr)(LoadT &,std::wstring &), ToUse * a_use = 0)
 {
-	Loader<LoadT,std::deque<LoadT> > loader(str,to,a_use);
+	Loader<LoadT,std::deque<LoadT> > loader(str,to,LoadFuncPtr,a_use);
 	loader.load();
 }
 #endif
