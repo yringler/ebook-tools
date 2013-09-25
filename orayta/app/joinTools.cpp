@@ -25,9 +25,9 @@ void join(JoinerQueue & joinerQueue, SourceTextQueue & sourceTextQueue)
 
 void join(JoinerQueue & joinerQueue, CommentaryQueue & commentaryQueue)
 {
-	JoinerQueue::iterator jit;
+	JoinerQueue::iterator jit = joinerQueue.begin();
 	JoinerQueue::iterator jend = joinerQueue.end();
-	CommentaryQueue::iterator cit;
+	CommentaryQueue::iterator cit = commentaryQueue.begin();
 	CommentaryQueue::iterator cend = commentaryQueue.end();
 
 	while(moveToHighestLocationTogether(jit, jend, cit, cend)) {
