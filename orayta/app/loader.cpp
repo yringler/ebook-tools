@@ -92,5 +92,5 @@ bool Loader<LoadT, ToT>::getNextNonBlank(std::wstring & str)
 		if(not std::iswspace(str[0]))
 			return 1;
 	}
-	return 0
+	return 0;
 }
