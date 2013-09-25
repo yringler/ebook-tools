@@ -57,7 +57,7 @@ template <typename IterT>
 bool moveToHighestLocation(IterT & move, IterT end)
 {
 	IterT tmp = move;
-	while(moveToLocation(tmp)) {
+	while(moveToLocation(tmp, end)) {
 		if(isAtHighestLocation(tmp)) {
 			move = tmp;
 			return true;
@@ -73,7 +73,8 @@ bool moveToHighestLocationTogether(IterA & am, IterA ae, IterB & bm, IterB be) {
 	IterB tb=bm;
 
 	while(true) {
-		if(moveToHighestLocation(ta) && moveToHighestLocation(tb)) {
+		if(moveToHighestLocation(ta,ae) && moveToHighestLocation(tb,be))
+		{
 			if(ta->second() == tb->second()) {
 				am = ta;
 				bm = tb;
