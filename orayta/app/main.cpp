@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-using std::wstring
+using std::wstring;
 #include <deque>
 #include <cassert>
 
@@ -12,7 +12,7 @@ using std::wstring
 #include "markerLevelTranslator.h"
 #include "typedefs.h"
 #include "loader.h"
-#include "jointools.h"
+#include "joinTools.h"
 
 /*
  * functors to load the actual commentary or source data
