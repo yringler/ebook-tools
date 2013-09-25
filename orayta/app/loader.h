@@ -56,7 +56,7 @@ private:
 	}
 public:
 	Loader(std::wifstream str, ToT & a_data,
-		LoadFuncPtr funcPtr, Use * a_use = 0)
+		LoadFuncPtr funcPtr, ToUse * a_use = 0)
 		: stream(str), data(a_data) , loadFunc(funcPtr) {
 		toUse = a_use;
 	}
@@ -67,7 +67,8 @@ public:
 #include "loader.cpp"
 
 template<typename LoadT, typename ToT=std::deque<LoadT> >
-bool load(std::wifstream & str, ToT & to, LoadFuncPtr funcPtr, Use * a_use = 0)
+bool load(std::wifstream & str, ToT & to, LoadFuncPtr funcPtr,
+		ToUse * a_use = 0)
 {
 	Loader<LoadT,ToT> loader(str,to,a_use);
 	loader.load();
