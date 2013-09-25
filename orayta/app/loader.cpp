@@ -50,7 +50,7 @@ bool Loader<LoadT, ToT>::load()
 			LoadFunc(tmp, line);
 			data.push_back(tmp);
 		}
-	} while(std::getNextNonBlank(line));
+	} while(getNextNonBlank(line));
 }
 
 template <typename LoadT, class ToT>
