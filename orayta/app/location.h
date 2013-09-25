@@ -50,7 +50,7 @@ void moveToLocation(IterT & move, IterT end, Location location) {
 // highest is understood to be one before content, ie a union.first
 template <typename IterT>
 bool isAtHighestLocation(IterT & iter) {
-	return (iter->active() == 2 && iter[1]->active() == 1);
+	return (iter->active() == 2 && iter[1].active() == 1);
 }
 
 template <typename IterT>
