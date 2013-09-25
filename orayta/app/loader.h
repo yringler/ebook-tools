@@ -52,7 +52,7 @@ private:
 	bool getNextNonBlank(std::wstring &);
 
 	bool isMarker(wchar_t wc) { 
-		return (markers.find(wc) != markers.end());
+		return (markers.find(wc) != std::wstring::npos);
 	}
 public:
 	Loader(std::wifstream str, ToT & a_data,
