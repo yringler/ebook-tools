@@ -25,7 +25,7 @@ struct Location
 template <typename IterT>
 bool moveToLocation(IterT & move, IterT end) {
 	for(IterT tmp = move; tmp != end; tmp++)
-		if(tmp.active() == 2) {
+		if(tmp->active() == 2) {
 			move = tmp;
 			return true;
 		}
