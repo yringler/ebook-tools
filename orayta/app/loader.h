@@ -10,7 +10,6 @@
 const std::wstring markers(L"~!$^");	// list of markers - more?
 // which part of marked line *to*use*. Default is last.
 enum ToUse{last,all};
-typedef void (*LoadFuncPtr)(LoadT,std::wstring);
 
 /*
  * LoadT: what information is beging loaded to. eg a string
@@ -36,7 +35,9 @@ private:
 	short *toUse;	// array of what to use for all levels
 	std::wifstream & stream;
 	ToT & data;	// the thing the file is being loaded into
+	
 	// function to load up LoadT (which is eg a posuk)
+	typedef void (*LoadFuncPtr)(LoadT,std::wstring);
 	LoadFuncPtr loadFunc;
 	MarkerLevelTranslator translator;
 
