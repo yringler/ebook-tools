@@ -69,7 +69,8 @@ public:
 
 // conveniance function, so that you don't have to actually create a loader
 template<typename LoadT, typename ToT=std::deque<LoadT> >
-bool load(std::wifstream & str, ToT & to, LoadFuncPtr funcPtr,
+bool load(std::wifstream & str, ToT & to,
+		typename Loader<LoadT,ToT>::LoadFuncPtr funcPtr,
 		ToUse * a_use = 0)
 {
 	Loader<LoadT,ToT> loader(str,to,a_use);
