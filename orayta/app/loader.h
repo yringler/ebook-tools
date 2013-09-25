@@ -34,7 +34,7 @@ class Loader
 public:
 	typedef void (*LoadFuncPtr)(LoadT &,std::wstring &);
 private:
-	short *toUse;	// array of what to use for all levels
+	ToUse *toUse;	// array of what to use for all levels
 	std::wifstream & stream;
 	ToT & data;	// the thing the file is being loaded into
 	
