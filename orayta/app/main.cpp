@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
 	load(sourceFile, sourceTextQueue, loadSource);
 	load(commentaryFile, commentaryQueue, loadCommentary);
 
-	connect(joinerQueue, sourceTextQueue);
-	connect(joinerQueue, commentaryQueue);
+	join(joinerQueue, sourceTextQueue);
+	join(joinerQueue, commentaryQueue);
 }
 
 void loadSource(SourceText & txt, wstring & src) { txt.first() = src; }

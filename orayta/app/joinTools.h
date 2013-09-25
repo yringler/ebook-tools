@@ -3,7 +3,7 @@
 
 #include "typedefs.h"
 
-void connect(JoinerQueue &, SourceTextQueue &);
-void connect(JoinerQueue &, CommentaryQueue &);
+void join(JoinerQueue &, SourceTextQueue &);
+void join(JoinerQueue &, CommentaryQueue &);
 
 #endif

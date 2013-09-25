@@ -2,7 +2,7 @@
 #include "joinTools.h"
 #include "location.h"
 
-void connect(JoinerQueue & joinerQueue, SourceTextQueue & sourceTextQueue)
+void join(JoinerQueue & joinerQueue, SourceTextQueue & sourceTextQueue)
 {
 	// where first is binder and second is location
 	Joiner first_active;
@@ -23,7 +23,7 @@ void connect(JoinerQueue & joinerQueue, SourceTextQueue & sourceTextQueue)
 	}
 }
 
-void connect(JoinerQueue & joinerQueue, CommentaryQueue & commentaryQueue)
+void join(JoinerQueue & joinerQueue, CommentaryQueue & commentaryQueue)
 {
 	JoinerQueue::iterator jit;
 	JoinerQueue::iterator jend = joinerQueue.end();
