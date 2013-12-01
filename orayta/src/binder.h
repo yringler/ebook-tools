@@ -4,8 +4,12 @@
 #include <string>
 #include "comment.h"
 
-// a string which is commented on
-// main feature is connecting comments to itself
+/*
+ * Binds a comment to source string.
+ * Source string stored in begin and end const iterators
+ * 	refrencable by public methods to prevent type mismatch
+ * 	when a non-const source is used with a const comment iterator
+ */
 template<typename CharT>
 class BasicBinder
 {
