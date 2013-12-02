@@ -45,6 +45,7 @@ public:
 		names.back() = new String(str);
 	}
 	
+	void set(T & t) { place = t; }	
 	T & get() { return *place; }
 };
 
