@@ -3,4 +3,5 @@
 # from vim
 *.swp
 # from g++
-*.out
+a.out
+tags
