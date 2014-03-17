@@ -7,20 +7,37 @@
 #include "../src/sharedAutoPtr.h"
 
 /*
- * This is basically a deque and a refrence smooshed together
- * Purpose: n-deep subsection lables, access to start of subsection
- * 	depth is counted from 0, which is probably the whole book
- * Contains: a pointer to the start of section
- *	deque of unique_ptrs to string
- * Semi-Random Method That I Chucked In Because Its Conveniant:
- * 	diff(other) - returns the lowest diffrent index
- * 		terminate if there isn't one
- * 		thats harsh, but I don't think that should ever happen
- * 		if it does I'll reconsider
- * Example: a toc item representing third paragraph of chapter seven:
- * 	depth 0 = pointer to pre-existing book title
- * 	1 to pre-existing chapter, and 2 to the paragraph title
+ * Bear in mind: each TocItem refrences one "smallest text division"
+ * You're going to be useing a lot of TocItems
+ *
+ * This is a *WTA* and a *deque* smooshed together
+ * WTA: Way To Access. Access the smallest division of (I guess) EXTERNALY
+ * stored text.
+ * eg an array of strings for the entire book, each element a paragraph -
+ * WTA is to the strings
+ *
+ * Deque: contains all *descriptions* of the refrenced text
+ * Description: MUST contain the *depth*. Should contain the *number* and a 
+ * *lable*, but only needs one.
+ * 	Depth: an int represents the depth. A lower number is *shallow*. A
+ * 	  higher number is *deeper*.
+ * 	  Shallow: =general. A chapter might be the shallowest book division
+ * 	  Deep: =particular. A paragraph might be the deepest book division
+ *   	  (All chapters {in all TocItems} will have the same depth, maybe 0,
+ *   	  depending on the book structure.)
+ * 	Number: eg 1 for chapter 1, etc
+ *	Lable: eg "In which an ox falls into a pit" for chapter 1
+ *      (Generally, there should be only one 1 for a given depth, but a lable
+ *      could show up twice {at the same depth of diffrent TocItems} I suppose)
+ * 	
+ * Very important method:
+ * 	diff(otherTocItem) - compares the two description queues of the TocIems,
+ * 	returns the first depth that has a different description, terminate if
+ * 	there isn't one. Thats harsh, but I don't think that should ever happen
+ * 	If it does I'll reconsider
  */
+
+
 
 // T=type pointing to, CharT is for title
 template<typename T, typename CharT>
