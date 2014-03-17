@@ -37,8 +37,6 @@
  * 	If it does I'll reconsider
  */
 
-
-
 // T=type pointing to, CharT is for title
 template<typename T, typename CharT>
 class BasicTocItem {
