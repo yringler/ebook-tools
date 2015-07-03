@@ -43,21 +43,23 @@ class BasicTocItem {
 private:
 	typedef std::basic_string<CharT> String;
 		/* eg name of book and chapter and... */
-	std::deque<SharedAutoPtr<String> >names;
+	struct Description { SharedAutoPtr<String> name; int num; };
+	std::deque<Description> desc;
 	/* 
 	 * the eg chapter. This should provide access to 
 	 * the whole eg chapter, not just the first eg paragraph
 	 */
 	T * place;
 public:
-	BasicTocItem(BasicTocItem & base) : names(base.names()) {}
+	//BasicTocItem(BasicTocItem & base) : desc(base.names()) {}
 		/* depth starts from 0 size from 1 */
-	int depth() { return names.size() - 1; }
-	void add(const String & str, int a_depth) {
+	int depth() { return desc.size() - 1; }
+	void add(const String & str, int a_depth, int a_num=0) {
 			/* depth + 1 to allow adding */
 		assert((a_depth >= 0) && (a_depth <= (depth() + 1)));
-		names.resize(a_depth + 1);	// I hate all this +/-1 stuff
-		names.back() = new String(str);
+		desc.resize(a_depth + 1);	// I hate all this +/-1 stuff
+		desc.back().name = new String(str);
+		desc.back().num = a_num;
 	}
 	
 	void set(T & t) { place = &t; }	
