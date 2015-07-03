@@ -88,7 +88,7 @@ public:
 		pair = std::mismatch(descs.begin(),descs.end(),
 				t.descs.begin());
 		if (*(pair.first) == *(pair.second)) throw;
-		else return pair.first;
+		else return pair.first->depth;
 	}
 };
 
