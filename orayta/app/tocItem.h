@@ -4,7 +4,6 @@
 #include <deque>
 #include <string>
 #include <cassert>
-#include "../src/sharedAutoPtr.h"
 
 /*
  * Bear in mind: each TocItem refrences one "smallest text division"
@@ -43,7 +42,7 @@ class BasicTocItem {
 private:
 	typedef std::basic_string<CharT> String;
 		/* eg name of book and chapter and... */
-	struct Description { SharedAutoPtr<String> name; int num; };
+	struct Description { String name; int num; };
 	std::deque<Description> desc;
 	/* 
 	 * the eg chapter. This should provide access to 
