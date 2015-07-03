@@ -11,17 +11,15 @@ Implement: struct Comment
     client has direct access to members
   
     concept: lets you know what is the substring that its commenting on
-              This can be seen as a request
+		This can be seen as a request
     implement: std::string on
   
     concept: the comment - std::string comment
   
-   concept: access commented on and not commented on parts of source 
-          string
- separately at will
-    implement: iterators (similar to pointers) to source string hold 
-            location of beginning 
-and end of what commented on
+   concept: access commented on and not commented on parts of source string
+		separately at will
+    implement: iterators (similar to pointers) to source string hold location
+		of beginning and end of what commented on
 
 
 Concept: a string which is being commented on, which can attach a link 
@@ -39,7 +37,7 @@ Implement: RangeIterator<typename Iterator>
 
 
 Concept: an Attach string which, when finding where comment.on is located in the
-	source string, is "fuzzy", not considering values outside a given range to make
-	or break a match
+	source string, is "fuzzy", not considering values outside a given
+		range to make or break a match
 Implement: LooseOnString ( maybe make onString take a template arg of iterator
         to use for compare?...would shrink code size...TZ"I )
