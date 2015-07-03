@@ -42,8 +42,18 @@ class BasicTocItem {
 private:
 	typedef std::basic_string<CharT> String;
 		/* eg name of book and chapter and... */
-	struct Description { String name; int num; };
-	std::deque<Description> desc;
+	struct Description { 
+		String name; 
+		int num;
+		int depth;	// kinda kludgey, kinda not.
+				// (That'll be cryptic in a few years ;)
+		bool operator==(const Description & d) {
+			// this is probably a bit excessive
+			if (depth != d.depth) throw;
+			return ( (name == d.name) && (num == d.num) ); 
+		}
+	};
+	std::deque<Description> descs;
 	/* 
 	 * the eg chapter. This should provide access to 
 	 * the whole eg chapter, not just the first eg paragraph
@@ -51,19 +61,35 @@ private:
 	T * place;
 public:
 	// I don't think I need this...
-	//BasicTocItem(BasicTocItem & base) : desc(base.names()) {}
+	//BasicTocItem(BasicTocItem & base) : descs(base.names()) {}
 		/* depth starts from 0 size from 1 */
-	int depth() { return desc.size() - 1; }
-	void add(const String & str, int a_depth, int a_num=0) {
+	int depth() { return descs.size() - 1; }
+	void add(const String & name, int a_depth, int a_num=0) {
 			/* depth + 1 to allow adding */
 		assert((a_depth >= 0) && (a_depth <= (depth() + 1)));
-		desc.resize(a_depth + 1);	// I hate all this +/-1 stuff
-		desc.back().name = new String(str);
-		desc.back().num = a_num;
+
+		Description desc;
+		desc.name = name;
+		desc.depth = a_depth;
+		desc.num = a_num;
+
+		descs.push_back(desc);
 	}
 	
 	void set(T & t) { place = &t; }	
 	T & get() { return *place; }
+	int diff(const BasicTocItem<T, CharT> & t)
+	{
+		if (depth() != t.depth()) throw;
+
+		typedef typename std::deque<Description>::const_iterator iter;
+		std::pair<iter, iter> pair;
+
+		pair = std::mismatch(descs.begin(),descs.end(),
+				t.descs.begin());
+		if (*(pair.first) == *(pair.second)) throw;
+		else return pair.first;
+	}
 };
 
 #endif
