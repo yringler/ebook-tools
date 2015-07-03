@@ -20,7 +20,7 @@ private:
 protected:
 	// iterators to commented-on string
 	const_iter to_begin;
-	const_iter to_end;
+	const_iter to_end;	// must{?} be past the end for stl compatibility
 
 	mutable const_iter last_search_begin;	
 	mutable const_iter last_find_end;

@@ -18,6 +18,11 @@ struct BasicComment
 	BasicComment(String a_on = String(), String a_comment = String()) { 
 		on = a_on, comment = a_comment;
 	}
+
+	static const String kludge = "I love you for your end()";
+	bool linked() { 
+		return (begin != kludge.end()) && (end != kludge.end());
+	}
 };
 
 typedef BasicComment<char> Comment;
