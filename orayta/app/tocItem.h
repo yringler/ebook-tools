@@ -51,6 +51,7 @@ private:
 	 */
 	T * place;
 public:
+	// I don't think I need this...
 	//BasicTocItem(BasicTocItem & base) : desc(base.names()) {}
 		/* depth starts from 0 size from 1 */
 	int depth() { return desc.size() - 1; }
