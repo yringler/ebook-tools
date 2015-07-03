@@ -43,7 +43,7 @@ class BasicTocItem {
 private:
 	typedef std::basic_string<CharT> String;
 		/* eg name of book and chapter and... */
-	std::deque<sharedAutoPtr<String> names;
+	std::deque<SharedAutoPtr<String> >names;
 	/* 
 	 * the eg chapter. This should provide access to 
 	 * the whole eg chapter, not just the first eg paragraph
@@ -60,7 +60,7 @@ public:
 		names.back() = new String(str);
 	}
 	
-	void set(T & t) { place = t; }	
+	void set(T & t) { place = &t; }	
 	T & get() { return *place; }
 };
 
