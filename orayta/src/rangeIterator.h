@@ -26,10 +26,8 @@ private:
 	ValueT highest;
 protected:
 	// warning: this is a finicky function. its given me a lot of trouble
-	bool should_increment(int add=0) { 
-		Iterator i = current + add;
-		return ( i != end && (*i < lowest || *i > highest) ); 
-	}
+	bool should_increment() { return ( current != end &&
+			(*current < lowest || *current > highest) ); }
 public:
 	// args: the initial place to point to, the past-the-end iterator,
 	// and acceptable range of the values
@@ -54,16 +52,13 @@ public:
 
 
 	RangeIterator & operator++() {
-		int add;	// to keep at function scope
-		for(add=1; should_increment(add); add++)
-			continue;
-		if (current + add != end)
-			current += add;
-		else 
-			std::cout << "RangeIterator:warning:reached end\n";
+		do {
+			current++;
+		} while(should_increment());
+
 		return *this;
 	}
-	RangeIterator & operator++(int) { return operator++(); }
+	Iterator & operator++(int) { return operator++(); }
 
 	bool operator==(const RangeIterator & iter) const
 		{ return current == iter.current; }
