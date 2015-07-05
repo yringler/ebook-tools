@@ -19,9 +19,9 @@ struct BasicComment
 		on = a_on, comment = a_comment;
 	}
 
-	static const String kludge = "I love you for your end()";
+	static const String kludge;
 	bool linked() { 
-		return (begin != kludge.end()) && (end != kludge.end());
+		return begin != kludge.end();
 	}
 };
 
