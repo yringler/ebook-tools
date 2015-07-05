@@ -58,7 +58,7 @@ public:
 
 		return *this;
 	}
-	Iterator & operator++(int) { return operator++(); }
+	RangeIterator & operator++(int) { return operator++(); }
 
 	bool operator==(const RangeIterator & iter) const
 		{ return current == iter.current; }

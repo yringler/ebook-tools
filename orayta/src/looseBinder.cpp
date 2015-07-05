@@ -34,16 +34,18 @@ bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment,
 		 * this incrementation only goes through chars in range.
 		 */
 			// points to char in source string
-		IterT in_cmp = in_begin; 
+		IterT in_cmp = find_begin; 
 			// points to char in comment.on string
 		IterT for_cmp = for_begin;
 		
-		while(for_cmp != for_end)
-			for_cmp++, in_cmp++;
-		in_cmp++;
+		while(for_cmp != for_end){
+			for_cmp++;
+			if(for_cmp != for_end)
+				in_cmp++;
+		}
 
 		comment.begin = find_begin.base();
-		comment.end = in_cmp.base();
+		comment.end = in_cmp.base() + 1;
 
 		Parent::last_search_begin = search_begin;
 		Parent::last_find_end = comment.end;
