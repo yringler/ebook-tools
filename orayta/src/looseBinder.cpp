@@ -45,6 +45,7 @@ bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment,
 		}
 
 		comment.begin = find_begin.base();
+		// end has to be past the end, so...
 		comment.end = in_cmp.base() + 1;
 
 		Parent::last_search_begin = search_begin;
