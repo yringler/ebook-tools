@@ -54,7 +54,7 @@ public:
 
 
 	RangeIterator & operator++() {
-		int add;	// to keep at function skope
+		int add;	// to keep at function scope
 		for(add=1; should_increment(add); add++)
 			continue;
 		if (current + add != end)
@@ -63,7 +63,7 @@ public:
 			std::cout << "RangeIterator:warning:reached end\n";
 		return *this;
 	}
-	Iterator & operator++(int) { return operator++(); }
+	RangeIterator & operator++(int) { return operator++(); }
 
 	bool operator==(const RangeIterator & iter) const
 		{ return current == iter.current; }

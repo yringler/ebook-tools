@@ -1,3 +1,6 @@
+#ifndef LOOSE_BINDER_CPP
+#define LOOSE_BINDER_CPP
+
 #include "looseBinder.h"
 #include <iostream>
 #include <utility>
@@ -24,21 +27,23 @@ bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment,
 
 	// on failure, std::search returns where searched untill ; ie end()
 	if(find_begin != in_end) {
-		comment.begin = find_begin.base();
 		
-		// can't just add length of comment.on 
-		// b/c find may be smaller as skip chars
-
-		std::pair<IterT,IterT> mismatch;
 		/*
-		 * !bug found!
-		 * the mismatch can only be a char in range!
-		 * bug termination immenent
-		 * prepare phasers
+		 * We'll just increment these both, one at a time, untill we've
+		 * hit for_end, the end of comment.on
+		 * this incrementation only goes through chars in range.
 		 */
-		mismatch = std::mismatch(find_begin,in_end, for_begin);
-		comment.end = mismatch.first.base();
-		//comment.end = find_begin.base() + comment.on.length();
+			// points to char in source string
+		IterT in_cmp = in_begin; 
+			// points to char in comment.on string
+		IterT for_cmp = for_begin;
+		
+		while(for_cmp != for_end)
+			for_cmp++, in_cmp++;
+		in_cmp++;
+
+		comment.begin = find_begin.base();
+		comment.end = in_cmp.base();
 
 		Parent::last_search_begin = search_begin;
 		Parent::last_find_end = comment.end;
@@ -68,3 +73,5 @@ bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment,
 			throw;
 	}
 }
+
+#endif
