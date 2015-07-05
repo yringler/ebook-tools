@@ -30,6 +30,12 @@ bool BasicLooseBinder<CharT>::attach(BasicComment<CharT> & comment,
 		// b/c find may be smaller as skip chars
 
 		std::pair<IterT,IterT> mismatch;
+		/*
+		 * !bug found!
+		 * the mismatch can only be a char in range!
+		 * bug termination immenent
+		 * prepare phasers
+		 */
 		mismatch = std::mismatch(find_begin,in_end, for_begin);
 		comment.end = mismatch.first.base();
 		//comment.end = find_begin.base() + comment.on.length();
