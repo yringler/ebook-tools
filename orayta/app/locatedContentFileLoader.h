@@ -5,7 +5,7 @@
 #include <deque>
 #include <string>
 #include <cassert>
-#include "locatedContent.h"
+#include "../lib/locatedContent.h"
 
 // translates from marker to depth
 template <typename CharT>
