@@ -6,6 +6,7 @@
 #include <string>
 #include <cassert>
 #include "../lib/locatedContent.h"
+#include "../lib/commentGroup.h"
 
 // translates from marker to depth
 template <typename CharT>
@@ -28,10 +29,18 @@ public:
 };
 
 template<typename LocatedContentT, typename CharT>
-loadLocatedContentLine(LocatedContentT & locatedContent, 
+void loadLocatedContentLine(LocatedContentT & locatedContent, 
 		std::basic_string<CharT> line) {
 	locatedContent = line;
 }
+
+// Commentary is loaded *way* diffrent than other stuff
+// This is *so* ingenuis. (I hope I spelled that right)
+template<typename CharT>
+void loadLocatedContentLine(
+		BasicLocatedContent<BasicCommentGroup<CharT> & locatedContent,
+		std::basic_string<CharT> line
+		);
 /*
  * Creates a deque of LocatedContent
  * It loads two things:
@@ -39,12 +48,11 @@ loadLocatedContentLine(LocatedContentT & locatedContent,
  * 	the content
  * of an entire text file
  *
- * The loading of the data is done via template based functor ContentLoader()
+ * The loading of the data is done via template, to be overloaded for diffrent
+ * data types
  */
 
-template <typename LocatedContentT, typename LocatedContentLoader =
-	defaultLocatedContentLoader<LocatedContentLoader, CharT>,
-	typename CharT>
+template <typename LocatedContentT, typename CharT>
 loadLocatedContentFile(const std::basic_istream<CharT> & stream,
 		const std::basic_string<CharT> & markers)
 {
