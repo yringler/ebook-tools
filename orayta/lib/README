@@ -7,37 +7,30 @@ so an attempt to compile them will end in error.
 
 
 Concept: one string is a comment on another string
-Implement: struct Comment
-    client has direct access to members
+Implement: Comment
+	(client has direct access to members)
   
-    concept: lets you know what is the substring that its commenting on
-		This can be seen as a request
-    implement: std::string on
+	concept: lets you know what substring its commenting on
+	implement: std::string on
   
-    concept: the comment - std::string comment
+	concept: the comment - std::string comment
   
-   concept: access commented on and not commented on parts of source string
+	concept: access commented on and not commented on parts of source string
 		separately at will
-    implement: iterators (similar to pointers) to source string hold location
-		of beginning and end of what commented on
+	implement: iterators to source string hold location of beginning and
+		(past the) end of what commented on
 
 
-Concept: a string which is being commented on, which can attach a link 
-        to itself, meaning  set the iterators of the Comment
-Implement: class OnString
-	concept: set what string should be connected to
-	implement: set(string)
-	notes: copies to a “pointer to const String"
-	      : has an intersting ability that I'll hopefully document later
-
+Concept: Bind a comment to source text, ie set its iterators to the place in
+	the source text that is being commented on
+Implement: Binder
 
 Concept: iterator which only allows itself to be on a value within a 
       given range ( e.g. letters)
 Implement: RangeIterator<typename Iterator>
 
 
-Concept: an Attach string which, when finding where comment.on is located in the
-	source string, is "fuzzy", not considering values outside a given
-		range to make or break a match
-Implement: LooseOnString ( maybe make onString take a template arg of iterator
+Concept: A "fuzzy" binder, not considering characters outside a given range to
+	be reason to say that the comment isn't commenting on that string
+Implement: LooseBinder ( maybe make onString take a template arg of iterator
         to use for compare?...would shrink code size...TZ"I )
