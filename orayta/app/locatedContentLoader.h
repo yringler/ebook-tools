@@ -1,5 +1,5 @@
-#ifndef LOCATED_CONTENT_FILE_LOADER_H
-#define LOCATED_CONTENT_FILE_LOADER_H
+#ifndef LOCATED_CONTENT_LOADER_H
+#define LOCATED_CONTENT_LOADER_H
 
 #include <istream>
 #include <deque>
@@ -28,8 +28,8 @@ public:
 };
 
 template<typename LocatedContentT, typename CharT>
-defaultLocatedContentLoader(const std::basic_string<CharT> & line,
-		LocatedContentT & locatedContent) {
+loadLocatedContentLine(LocatedContentT & locatedContent, 
+		std::basic_string<CharT> line) {
 	locatedContent = line;
 }
 /*
