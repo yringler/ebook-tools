@@ -1,4 +1,5 @@
 lib contains generic, reusable classes suitable for any comment/source text
 structure.
-app contains classes and templates that are geared towards the orayta text, available here:
+app contains classes and templates that are geared towards the orayta text.
+The text is available here:
 https://code.google.com/p/orayta/source/browse/BooksSrc
