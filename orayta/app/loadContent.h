@@ -53,12 +53,15 @@ void loadLocatedContentFile(
 	// in case content is spread over a few lines
 	// cleared whenever a marker is reached
 	ContentT content_base;
+	// to prevent constant clearing. Normally, as a mordern programmer, I
+	// don't worry about optimization stuff, but this was killing me
+	bool working_on_content = false;
 
 	while(std::readline(stream, line)) {
 		if(string.empty())
 			continue;
 		else if(markerDictionary.is_marker(line[0])) {
-			content_base = ContentT();
+			working_on_content = false;
 
 			BasicDivision<CharT> div;
 			markerDictionary.add(line[0]);
@@ -68,6 +71,11 @@ void loadLocatedContentFile(
 			
 			location_construct.add(div);
 		} else {
+			if(not working_on_content) {
+				// clear anything from previous work
+				content_base = ContentT();
+				working_on_content = true;
+			}
 			content_base.location = location_base;
 			loadContentLine(content_base, line);
 		}
