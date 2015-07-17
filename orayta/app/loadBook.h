@@ -7,19 +7,7 @@
 #include <cassert>
 #include "../lib/book.h"
 #include "../lib/locatedContent.h"
-#include "../lib/commentGroup.h"
 #include "markerDictionary.h"
-
-template<typename ContentT, typename CharT>
-void loadContentLine(ContentT & content, std::basic_string<CharT> line) {
-	content = line;
-}
-
-// Commentary is loaded *way* diffrent than other stuff
-// This is *so* ingenuis. (I hope I spelled that right)
-template<typename CharT>
-void loadContentLine(BasicCommentGroup<CharT> & content,
-		std::basic_string<CharT> line);
 
 /*
  * It loads two things the location and content of an entire text file
@@ -86,12 +74,6 @@ void loadBook(
 		book.push_back(locatedContent_base);
 }
 
-template<typename CharT>
-void loadContentLine(BasicCommentGroup<CharT> & content,
-		std::basic_string<CharT> line)
-{
-	// to be continued...
-	// (maybe soon, if I don't get an answer about Kazakhstan soon)
-}
+
 
 #endif
