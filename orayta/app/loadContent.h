@@ -81,6 +81,9 @@ void loadLocatedContentFile(
 			loadContentLine(locatedContent_base, line);
 		}
 	}
+
+	if(working_on_content)
+		book.push_back(locatedContent_base);
 }
 
 template<typename CharT>
