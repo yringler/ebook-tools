@@ -15,6 +15,7 @@ struct BasicComment
 	typename String::const_iterator begin;
 	typename String::const_iterator end;
 
+	BasicComment() {}
 	BasicComment(String a_on = String(), String a_comment = String()) { 
 		on = a_on, comment = a_comment;
 	}

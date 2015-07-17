@@ -14,18 +14,36 @@ template <typename CharT>
 class MarkerDictionary
 {
 private:
-	std::basic_string<CharT> markers;
+	typedef std::basic_string<CharT> string;
+
+	String dict;	// translates
+	bool marker_set;
+	CharT m_title_marker;	// title not a div (see there)
+	const String markers;	// valid markers
 public:
+	// I don't have to make it const, but why not?
+	MarkerDictionary(const String & str) : markers(str) {
+		marker_set = false;
+	}
+	bool is_marker(CharT ch) {
+		return markers.find(ch) != String::npos;
+	}
 	bool exists(CharT marker) { 
-		return markers.find(marker) != std::basic_string<CharT>::npos;
+		assert(marker != m_title_marker);
+		return dict.find(marker) != String::npos;
+	}
+	void title_marker(CharT marker) { 
+		assert(not marker_set);
+		m_title_marker = marker; 
+		marker_set = true;
 	}
 	void add(CharT marker) {
 		if(!exists(marker))
-			markers += marker;
+			dict += marker;
 	}
 	int depth(CharT marker) {
 		assert(exists(marker));
-		return markers.find(marker);
+		return dict.find(marker);
 	}
 };
 
@@ -50,12 +68,52 @@ void loadContentLine(BasicCommentGroup<CharT> & Content,
  * data types
  */
 
-template <typename LocatedContentT, typename CharT>
-loadLocatedContentFile(const std::basic_istream<CharT> & stream,
-		const std::basic_string<CharT> & markers)
-{
-	Book<LocatedContentT, CharT> book;
+template <typename ContentT, typename CharT>
+Book<ContentT, CharT> loadLocatedContentFile(
+		const std::basic_istream<CharT> & stream,
+		const std::basic_string<CharT> & markers) {
+	Book<ContentT, CharT> book(markers);
 	MarkerDictionary<CharT> markerDictionary;
+	std::basic_string<CharT> line;	// line being processed now from file
+
+	// this could probably be made a one liner, but this is easier
+	while(std::readline(stream, line)) {
+		if(markerDictionary.is_marker(line[0])) {
+			markerDictionary.title_marker(line[0]);
+			// I'm pretty sure theres always one ' 'after the marker
+			book.title = line.substr(2);
+			break;
+		}
+	}
+
+	// every time a division is reached, its added to location_base
+	// it doesn't keep on going deeper and deeper, because Location knows
+	// to clear deeper info. See there for more info.
+	BasicLocation<CharT> location_base;
+	// in case content is spread over a few lines
+	// cleared whenever a marker is reached
+	ContentT content_base;
+
+	while(std::readline(stream, line)) {
+		if(string.empty())
+			continue;
+		else if(markerDictionary.is_marker(line[0])) {
+			content_base = ContentT();
+
+			BasicDivision<CharT> div;
+			markerDictionary.add(line[0]);
+
+			div.depth = markerDictionary.depth(line[0]);
+			div.name = line.substr(2);
+			
+			location_construct.add(div);
+		} else {
+			content_base.location = location_base;
+			loadContentLine(content_base, line);
+		}
+	}
+
+	return book;
 }
 
 #endif
