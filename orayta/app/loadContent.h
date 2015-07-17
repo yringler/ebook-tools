@@ -61,7 +61,10 @@ void loadLocatedContentFile(
 		if(string.empty())
 			continue;
 		else if(markerDictionary.is_marker(line[0])) {
-			working_on_content = false;
+			if(working_on_content) {
+				working_on_content = false;
+				book.push_back(content_base);
+			}
 
 			BasicDivision<CharT> div;
 			markerDictionary.add(line[0]);
