@@ -29,19 +29,16 @@ public:
 	}
 };
 
-template<typename LocatedContentT, typename CharT>
-void loadLocatedContentLine(LocatedContentT & locatedContent, 
-		std::basic_string<CharT> line) {
-	locatedContent = line;
+template<typename ContentT, typename CharT>
+void loadContentLine(ContentT & content, std::basic_string<CharT> line) {
+	content = line;
 }
 
 // Commentary is loaded *way* diffrent than other stuff
 // This is *so* ingenuis. (I hope I spelled that right)
 template<typename CharT>
-void loadLocatedContentLine(
-		BasicLocatedContent<BasicCommentGroup<CharT> & locatedContent,
-		std::basic_string<CharT> line
-		);
+void loadContentLine(BasicCommentGroup<CharT> & Content,
+		std::basic_string<CharT> line);
 /*
  * Creates a deque of LocatedContent
  * It loads two things:
