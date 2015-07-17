@@ -9,6 +9,11 @@
  * section, paragraph - even a sentance could be a division, depending on what
  * you're doing.
  *
+ * NOTE*
+ * A BOOK TITLE IS NOT A DIVISION 
+ * A division is how a book is divided, *not* the title.
+ * This (kind of?) makes sence, and it makes things a *lot* easier.
+ *
  * Depth: an int represents the depth. The deeper it is, the higher this number
  * is, the more particular it is. The physical analogy is that at the surface,
  * things look the same, and the deeper you go the more detail you get. 

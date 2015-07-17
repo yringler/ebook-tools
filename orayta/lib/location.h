@@ -40,7 +40,13 @@ private:
 	 * the eg chapter. This should provide access to 
 	 * the whole eg chapter, not just the first eg paragraph
 	 */
+	String m_title;
 public:
+	void title(const String & a_title) { m_title = a_title; }
+	String title() { return title; }
+	std::deque<Division>::iterator begin() { return divs.begin(); }
+	std::deque<Division>::iterator end() { return divs.end(); }
+
 	int depth() { return divs.back().depth; }
 	// add another divion that text belongs to
 	void add(const Division & div) {
@@ -70,22 +76,29 @@ public:
 		add(desc);
 	}
 	
-	void set(T & t) { place = &t; }	
-	T & get() { return *place; }
-	int diff(const BasicLocation<T, CharT> & t)
-	{
+	int diff(const BasicLocation<T, CharT> & t) {
 		if (depth() != t.depth()) throw "location:diff:same depth";
 
-		typedef typename std::deque<Division>::const_iterator iter;
-		std::pair<iter, iter> pair;
-
-		pair = std::mismatch(divs.begin(),divs.end(),
-				t.divs.begin());
 		// if the data exists as seperate entities, there should be a
 		// division to represent that. If there isn't, you'll just have
 		// to put up with the terminations.
-		if (*(pair.first) == *(pair.second)) throw "location:diff:=";
+		if (operator==(t)) throw "location:diff:=";
 		else return pair.first->depth;
+	}
+
+	bool operator==(BasicLocation & t) {
+		typedef typename std::deque<Division>::const_iterator iter;
+		std::pair<iter, iter> pair;
+
+		pair = std::mismatch(divs.begin(),divs.end(), t.divs.begin());
+		/*
+		 * All ye who enter here, despair of comprehension
+		 *
+		 * true if all values compared matched
+		 * THIS IS ALSO TRUE IF ONE QUEUE IS SMALLER
+		 * more general matches *all* more particular locations
+		 */
+		return *pair.first == divs.end() && *pair.second == t.end();
 	}
 };
 
