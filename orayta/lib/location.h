@@ -39,10 +39,7 @@ private:
 	 * the eg chapter. This should provide access to 
 	 * the whole eg chapter, not just the first eg paragraph
 	 */
-	String m_title;
 public:
-	void title(const String & a_title) { m_title = a_title; }
-	String title() { return title; }
 	std::deque<Division>::iterator begin() { return divs.begin(); }
 	std::deque<Division>::iterator end() { return divs.end(); }
 

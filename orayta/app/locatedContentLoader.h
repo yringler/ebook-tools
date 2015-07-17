@@ -5,6 +5,7 @@
 #include <deque>
 #include <string>
 #include <cassert>
+#include "../lib/book.h"
 #include "../lib/locatedContent.h"
 #include "../lib/commentGroup.h"
 
@@ -56,7 +57,7 @@ template <typename LocatedContentT, typename CharT>
 loadLocatedContentFile(const std::basic_istream<CharT> & stream,
 		const std::basic_string<CharT> & markers)
 {
-	std::deque<LocatedContentT> locatedContentQueue;
+	Book<LocatedContentT, CharT> book;
 	MarkerDictionary<CharT> markerDictionary;
 }
 
