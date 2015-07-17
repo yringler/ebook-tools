@@ -16,8 +16,7 @@
  *	********
  *	* NOTE *
  *	********
- * 	Divisions must be added in depth order. (That is, lesser depth=more
- * 	general=lower number first.) If you add a division of lesser depth than
+ * 	If you add a division of lesser depth than
  * 	the current final depth than all greater depths are deleted and that
  * 	depth is replaced.
  *
