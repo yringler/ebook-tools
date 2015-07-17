@@ -20,15 +20,11 @@ void loadContentLine(ContentT & content, std::basic_string<CharT> line) {
 template<typename CharT>
 void loadContentLine(BasicCommentGroup<CharT> & content,
 		std::basic_string<CharT> line);
+
 /*
- * Creates a deque of LocatedContent
- * It loads two things:
- * 	the location
- * 	the content
- * of an entire text file
- *
- * The loading of the data is done via template, to be overloaded for diffrent
- * data types
+ * It loads two things the location and content of an entire text file
+ * The loading of the data is done via template, so there can be diffrent
+ * loading methods for diffrent data types
  */
 
 template <typename ContentT, typename CharT>
