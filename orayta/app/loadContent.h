@@ -55,7 +55,7 @@ void loadContentLine(ContentT & content, std::basic_string<CharT> line) {
 // Commentary is loaded *way* diffrent than other stuff
 // This is *so* ingenuis. (I hope I spelled that right)
 template<typename CharT>
-void loadContentLine(BasicCommentGroup<CharT> & Content,
+void loadContentLine(BasicCommentGroup<CharT> & content,
 		std::basic_string<CharT> line);
 /*
  * Creates a deque of LocatedContent
@@ -113,6 +113,14 @@ Book<ContentT, CharT> loadLocatedContentFile(
 			loadContentLine(content_base, line);
 		}
 	}
+}
+
+template<typename CharT>
+void loadContentLine(BasicCommentGroup<CharT> & content,
+		std::basic_string<CharT> line)
+{
+	// to be continued...
+	// (maybe soon, if I don't get an answer about Kazakhstan soon)
 }
 
 #endif
