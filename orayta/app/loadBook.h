@@ -28,7 +28,7 @@ void loadContentLine(BasicCommentGroup<CharT> & content,
  */
 
 template <typename ContentT, typename CharT>
-void loadLocatedContentFile(
+void loadBook(
 		Book<LocatedContent<ContentT>, CharT> & book,
 		const std::basic_istream<CharT> & stream,
 		const std::basic_string<CharT> & markers)
