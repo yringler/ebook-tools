@@ -69,11 +69,11 @@ void loadContentLine(BasicCommentGroup<CharT> & Content,
  */
 
 template <typename ContentT, typename CharT>
-Book<ContentT, CharT> loadContentFile(
+Book<ContentT, CharT> loadLocatedContentFile(
 		Book<LocatedContent<ContentT>, CharT> & book,
 		const std::basic_istream<CharT> & stream,
-		const std::basic_string<CharT> & markers) {
-	Book<LocatedContent<ContentT>, CharT> book;
+		const std::basic_string<CharT> & markers)
+{
 	MarkerDictionary<CharT> markerDictionary(markers);
 	std::basic_string<CharT> line;	// line being processed now from file
 
