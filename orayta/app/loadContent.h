@@ -5,7 +5,7 @@
 #include "../lib/commentGroup.h"
 
 template<typename ContentT, typename CharT>
-void loadContent(ContentT & content, std::basic_string<CharT> line) {
+void loadContent(ContentT & content, const std::basic_string<CharT> & line) {
 	content = line;
 }
 
@@ -13,7 +13,7 @@ void loadContent(ContentT & content, std::basic_string<CharT> line) {
 // This is *so* ingenuis. (I hope I spelled that right)
 template<typename CharT>
 void loadContent(BasicCommentGroup<CharT> & content,
-		std::basic_string<CharT> line)
+		const std::basic_string<CharT> & line)
 {
 	// to be continued...
 	// (maybe soon, if I don't get an answer about Kazakhstan soon)
