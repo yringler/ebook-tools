@@ -9,13 +9,13 @@ private:
 	typedef std::basic_string<CharT> string;
 
 	String dict;	// translates
-	bool marker_set;
+	bool title_marker_set;
 	CharT m_title_marker;	// title not a div (see there)
 	const String markers;	// valid markers
 public:
 	// I don't have to make it const, but why not?
 	MarkerDictionary(const String & str) : markers(str) {
-		marker_set = false;
+		title_marker_set = false;
 	}
 	bool is_marker(CharT ch) {
 		return markers.find(ch) != String::npos;
@@ -25,9 +25,9 @@ public:
 		return dict.find(marker) != String::npos;
 	}
 	void title_marker(CharT marker) { 
-		assert(not marker_set);
+		assert(not title_marker_set);
 		m_title_marker = marker; 
-		marker_set = true;
+		title_marker_set = true;
 	}
 	void add(CharT marker) {
 		if(!exists(marker))
