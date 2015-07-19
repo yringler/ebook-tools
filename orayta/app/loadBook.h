@@ -75,6 +75,4 @@ void loadBook(
 		book.push_back(locatedContent_base);
 }
 
-
-
 #endif
