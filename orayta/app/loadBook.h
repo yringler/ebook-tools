@@ -73,6 +73,8 @@ void loadBook(
 
 	if(working_on_content)
 		book.push_back(locatedContent_base);
+
+	cassert(not book.empty());
 }
 
 #endif
