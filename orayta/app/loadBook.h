@@ -7,6 +7,7 @@
 #include <cassert>
 #include "../lib/book.h"
 #include "../lib/locatedContent.h"
+#include "loadContent.h"
 #include "markerDictionary.h"
 
 /*
@@ -66,7 +67,7 @@ void loadBook(
 				locatedContent_base.location = location_base;
 			}
 
-			loadContentLine(locatedContent_base, line);
+			loadContent(locatedContent_base, line);
 		}
 	}
 
