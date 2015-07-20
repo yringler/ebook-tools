@@ -16,7 +16,6 @@
 	index of start of marker(1) + length of marker(3)
 */
 
-
 template<typename ContentT, typename CharT>
 void loadContent(ContentT & content, const std::basic_string<CharT> & line) {
 	content = line;
