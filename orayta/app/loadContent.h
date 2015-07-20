@@ -83,9 +83,10 @@ void loadContent(CommentGroup<CommentT> & content, const std::wstring & line)
 	else if(line.find(L"{") != std::wstring::npos)
 		loadContent(content, line, L"{", L"}");
 	else if(line.find(L"-") != std::wstring::npos) {
-// mishna berura has the honour of being processed right here the length of the
-// substring up to and including "-" is its index + 1 (see comment before
-// previous function) But I don't want "-", so I don't add 1
+// mishna berura has the honour of being processed right here 
+// the length of the substring up to and including "-" is its index + 1 (see
+// comment before previous function) 
+// But I don't want "-", so I don't add 1
 
 		content.back().on = trimSpace(line.substr(0, line.find(L"-")));
 		line.erase(line.find(L"-"));
