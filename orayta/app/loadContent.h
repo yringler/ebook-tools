@@ -17,8 +17,8 @@
 */
 
 
-template<typename ContentT>
-void loadContent(ContentT & content, const std::wstring & line) {
+template<typename ContentT, typename CharT>
+void loadContent(ContentT & content, const std::basic_string<CharT> & line) {
 	content = line;
 }
 
