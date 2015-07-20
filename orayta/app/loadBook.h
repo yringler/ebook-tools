@@ -24,6 +24,7 @@ void loadBook(
 		// support custom function for unique formatting. I notice now
 		// Mishna Berura. But the default supports the overwelming
 		// majority of things
+		// (this is some pretty wild template stuff. But it should work)
 		LoaderFunc loaderFunc = loadContent<ContentT>)
 {
 	MarkerDictionary<CharT> markerDictionary(markers);
