@@ -49,11 +49,11 @@ public:
 			assert(d.depth == 0);
 		else if(d.depth < divs.back().depth)
 	       /* 
-		* depth starts at zero, size from one.
-		* resizing to d.depth means that from the current div of that
-		* depth and on are deleted, allowing push_back to work
-		* properly.  This is a clever, ergo dangerous, way of saving an
-		* asignment, but too clean to pass up
+		* depth starts at zero, size from one.  resizing to d.depth
+		* means that from the current div of that depth and on are
+		* deleted, allowing push_back to work properly.  This is a
+		* clever, ergo dangerous, way of saving an asignment, but too
+		* clean to pass up
 		*/
 			divs.resize(d.depth);
 		
