@@ -22,6 +22,7 @@ void loadContent(CommentGroup<CommentT> & content, const std::wstring & line)
 	
 	// start of chars which mark that a quote is coming
 	std::wstring quote_mark_start(L"<");	
+
 	std::wstring before_quote_start(L">");
 	std::wstring after_quote_end(L"</");	
 	
