@@ -83,27 +83,22 @@ void loadContent(CommentGroup<CommentT> & content, const std::wstring & line)
 	else if(line.find(L"{") != std::wstring::npos)
 		loadContent(content, line, L"{", L"}");
 	else if(line.find(L"-") != std::wstring::npos) {
-		// mishna berura has the honour of being processed right here
-		// the length of the substring up to and including "-" is its
-		// index + 1 (see comment before previous function)
-		// But I don't want "-", so I don't add 1
+// mishna berura has the honour of being processed right here the length of the
+// substring up to and including "-" is its index + 1 (see comment before
+// previous function) But I don't want "-", so I don't add 1
 
 		content.back().on = trimSpace(line.substr(0, line.find(L"-")));
 		line.erase(line.find(L"-"));
 		content.back().comment += line;	// append, after seif katan
 	} else if(line.find(mb_sk_start) != std::wstring::npos) {
-		// mishna berura again. This line contains seif katan.
-		// I might handle that later, or I might prefer to convert it
-		// from the number. Tz"I
-		// 
-		// For now I'll ignore it, no great shakes, because the
-		// shulchon aruch text doesn't use the seif katan system
-		// actually - I guess for now I could just stick it on to the
-		// comment
+// mishna berura again. This line contains seif katan.  I might handle that
+// later, or I might prefer to convert it from the number. Tz"I
+// For now I'll just stick it on to the comment
 
 		line.erase(0, line.find(mb_sk_start) + mb_sk_start.length());
 		ContentT tmp;
 		tmp.comment = line.substr(0, line.find(mb_sk_end));
+		tmp.comment = L'{' + tmp.comment + L'}'
 		content.push_back(tmp);
 	}
 }
