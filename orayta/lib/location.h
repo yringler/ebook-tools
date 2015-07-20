@@ -35,6 +35,14 @@ private:
 	typedef BasicDivision<CharT> Division;
 
 	std::deque<Division> divs;
+	// returns first division@depth in divs which is diffrent then the
+	// corresponding divion in a diffrent location object
+	std::deque<Division>::iterator mismatch(BasicLocation & t) {
+		typedef typename std::deque<Division>::iterator iter;
+		std::pair<iter, iter> pair;
+		pair = std::mismatch(divs.begin(),divs.end(), t.divs.begin());
+		return pair.first;
+	}
 public:
 	std::deque<Division>::iterator begin() { return divs.begin(); }
 	std::deque<Division>::iterator end() { return divs.end(); }
@@ -75,22 +83,22 @@ public:
 		// division to represent that. If there isn't, you'll just have
 		// to put up with the terminations.
 		if (operator==(t)) throw "location:diff:=";
-		else return pair.first->depth;
+		else return mismatch(t)->depth(); 
 	}
 
 	bool operator==(BasicLocation & t) {
-		typedef typename std::deque<Division>::const_iterator iter;
-		std::pair<iter, iter> pair;
-
-		pair = std::mismatch(divs.begin(),divs.end(), t.divs.begin());
 		/*
 		 * All ye who enter here, despair of comprehension
 		 *
-		 * true if all values compared matched
+		 * true if all values compared matched, in which case
+		 * std::mismatch returns a pair, the first item of which is set
+		 * to its end value. B'kitzur, it works. If you don't
+		 * understand it, take another look at the first line of this
+		 * comment
 		 * THIS IS ALSO TRUE IF ONE QUEUE IS SMALLER
 		 * more general matches *all* more particular locations
 		 */
-		return *pair.first == divs.end() && *pair.second == t.end();
+		return mismatch(t) == divs.end();
 	}
 };
 
