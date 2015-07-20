@@ -77,8 +77,6 @@ public:
 	}
 	
 	int diff(const BasicLocation<T, CharT> & t) {
-		if (depth() != t.depth()) throw "location:diff:same depth";
-
 		// if the data exists as seperate entities, there should be a
 		// division to represent that. If there isn't, you'll just have
 		// to put up with the terminations.
