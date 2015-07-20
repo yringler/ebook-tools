@@ -41,23 +41,23 @@ public:
 
 	int depth() { return divs.back().depth; }
 	// add another divion that text belongs to
-	void add(const Division & div) {
+	void add(const Division & d) {
 		// depth + 1 to allow adding
-		assert((div.depth >= 0) && (div.depth <= depth()+1));
+		assert((d.depth >= 0) && (d.depth <= depth()+1));
 
 		if(divs.empty())
-			assert(divs.depth == 0);
-		else if(div.depth < divs.back().depth)
+			assert(d.depth == 0);
+		else if(d.depth < divs.back().depth)
 	       /* 
 		* depth starts at zero, size from one.
-		* resizing to div.depth means that from the current div of that
+		* resizing to d.depth means that from the current div of that
 		* depth and on are deleted, allowing push_back to work
 		* properly.  This is a clever, ergo dangerous, way of saving an
 		* asignment, but too clean to pass up
 		*/
-			divs.resize(div.depth);
+			divs.resize(d.depth);
 		
-		divs.push_back(div);
+		divs.push_back(d);
 	}
 	void add(int a_depth, const String & name, int a_num=0) {
 		Division desc;
