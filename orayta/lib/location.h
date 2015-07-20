@@ -35,10 +35,6 @@ private:
 	typedef BasicDivision<CharT> Division;
 
 	std::deque<Division> divs;
-	/* 
-	 * the eg chapter. This should provide access to 
-	 * the whole eg chapter, not just the first eg paragraph
-	 */
 public:
 	std::deque<Division>::iterator begin() { return divs.begin(); }
 	std::deque<Division>::iterator end() { return divs.end(); }
