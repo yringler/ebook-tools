@@ -15,12 +15,9 @@
  * 	(Although I'll confess that it does feel a bit silly to make an empty
  * 	class like this.)
  */
-template <typename CharT>
-class BasicCommentGroup : public std::deque<Comment<CharT> >
+template <typename CommentT>
+class CommentGroup : public std::deque<CommentT>
 {
 };
-
-typedef BasicCommentGroup<char> CommentGroup;
-typedef BasicCommentGroup<wchar_t> WCommentGroup;
 
 #endif

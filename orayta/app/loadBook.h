@@ -16,11 +16,15 @@
  * loading methods for diffrent data types
  */
 
-template <typename ContentT, typename CharT>
+template <typename ContentT, typename CharT, typename LoaderFunc>
 void loadBook(
 		Book<LocatedContent<ContentT>, CharT> & book,
 		const std::basic_istream<CharT> & stream,
-		const std::basic_string<CharT> & markers)
+		const std::basic_string<CharT> & markers,
+		// support custom function for unique formatting. I notice now
+		// Mishna Berura. But the default supports the overwelming
+		// majority of things
+		LoaderFunc loaderFunc = loadContent<ContentT>)
 {
 	MarkerDictionary<CharT> markerDictionary(markers);
 	std::basic_string<CharT> line;	// line being processed now from file
@@ -67,7 +71,7 @@ void loadBook(
 				locatedContent_base.location = location_base;
 			}
 
-			loadContent(locatedContent_base, line);
+			loaderFunc(locatedContent_base, line);
 		}
 	}
 
