@@ -54,4 +54,14 @@ void loadContent(CommentGroup<CommentT> & content, const std::wstring & line)
 	}
 }
 
+template<typename CommentT>
+void loadMishnaBerura(CommentGroup<CommentT> & content)
+{
+}
+
+template<typename CommentT>
+void loadIkkurTosfosYomtov(CommentGroup<CommentT> & content)
+{
+}
+
 #endif
