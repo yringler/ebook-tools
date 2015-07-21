@@ -21,6 +21,19 @@ void loadContent(ContentT & content, const std::basic_string<CharT> & line) {
 	content = line;
 }
 
+
+template<typename CharT>
+std::basic_string<CharT> removeThroughString(std::basic_string<CharT> & orig
+		const std::basic_string<CharT> & str) {
+	orig.erase(0, orig.find(str) + str.length());
+}
+
+template<typename CharT>
+std::basic_string<CharT> extractToString(const std::basic_string<CharT> & orig
+		const std::basic_string<CharT> & str) {
+	return orig.substr(0, orig.find(str));
+}
+
 // Commentary is loaded *way* diffrent than other stuff
 // This is *so* ingenuis. (I hope I spelled that right)
 template<typename CommentT, CharT>
@@ -35,26 +48,21 @@ void loadContent(CommentGroup<CommentT> & content, const std::wstring & line
 	
 	// if theres an introductory part that isn't on a particular quote
 	if(i > 10) {
-		tmp.comment = line.substr(i);
+		// remove up to but not including start_marker
+		tmp.comment = line.substr(0, i);
 		content.push_back(tmp);
 	}
 
-	while(i != std::wstring::npos) {
-		// erase untill start of quote
-		line.erase(0, i+quote_start_marker.length();
+	removeThroughString(quote_start_marker);
+	// while there's another comment
+	// use end, because I just removed a start, so if there's only one
+	// comment, the test will fail too soon
+	while(line.find(quote_end_marker) != std::wstring::npos) {
+		tmp.on = extractToString(line, quote_end_marker);
+		removeThroughString(line, quote_end_marker);
 
-		i = line.find(quote_end_marker);
-		tmp.on = line.substr(0, i);	// extract quote
-
-		// erase until start of comment
-		line.erase(0, i + quote_end_marker.length());
-
-		// extract comment
-		// if not followed by comment, find returns npos, which causes
-		// substr to use until end of string. nice
-		i = line.find(quote_start_marker);
-		tmp.comment = line.substr(0, i);
-
+		tmp.comment = extractToString(line, quote_start_marker);
+		removeThroughString(line,quote_start_marker);
 		content.push_back(tmp);
 	}
 }
@@ -82,22 +90,16 @@ void loadContent(CommentGroup<CommentT> & content, const std::wstring & line)
 	else if(line.find(L"{") != std::wstring::npos)
 		loadContent(content, line, L"{", L"}");
 	else if(line.find(L"-") != std::wstring::npos) {
-// mishna berura has the honour of being processed right here 
-// the length of the substring up to and including "-" is its index + 1 (see
-// comment before previous function) 
-// But I don't want "-", so I don't add 1
-
-		content.back().on = trimSpace(line.substr(0, line.find(L"-")));
-		line.erase(line.find(L"-"));
+		// mishna berura has the honour of being processed right here 
+		content.back().on = trimSpace(extractToString(line, L'-'));
+		removeThroughString(line, L'-');
 		content.back().comment += line;	// append, after seif katan
 	} else if(line.find(mb_sk_start) != std::wstring::npos) {
-// mishna berura again. This line contains seif katan.  I might handle that
-// later, or I might prefer to convert it from the number. Tz"I
-// For now I'll just stick it on to the comment
-
-		line.erase(0, line.find(mb_sk_start) + mb_sk_start.length());
+		// this line contains the seif katan number for mishna berura
+		removeThroughString(line, mb_sk_start);
 		ContentT tmp;
-		tmp.comment = line.substr(0, line.find(mb_sk_end));
+		// (don't worry, no spaces between { and }. I checked)
+		tmp.comment = extractToString(line, mb_sk_end);
 		tmp.comment = L'{' + tmp.comment + L'}'
 		content.push_back(tmp);
 	}
