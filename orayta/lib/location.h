@@ -4,6 +4,7 @@
 #include <deque>
 #include <string>
 #include <cassert>
+#include <mismatch header>
 
 #include "division.h"
 
@@ -27,28 +28,15 @@
  * 	should ever happen If it does I'll reconsider
  */
 
-template<typename CharT>
-class BasicLocation {
+template<typename DataT, typename CharT>
+class Location {
 private:
 	typedef std::basic_string<CharT> String;
 		/* eg name of book and chapter and... */
-	typedef BasicDivision<CharT> Division;
+	typedef Division<DataT, CharT> Division;
 
 	std::deque<Division> divs;
-	// returns first division@depth in divs which is diffrent then the
-	// corresponding divion in a diffrent location object
-	std::deque<Division>::iterator mismatch(BasicLocation & t) {
-		typedef typename std::deque<Division>::iterator iter;
-		std::pair<iter, iter> pair;
-		pair = std::mismatch(divs.begin(),divs.end(), t.divs.begin());
-		return pair.first;
-	}
 public:
-	std::deque<Division>::iterator begin() { return divs.begin(); }
-	std::deque<Division>::iterator end() { return divs.end(); }
-
-	int depth() { return divs.back().depth; }
-	// add another divion that text belongs to
 	void add(const Division & d) {
 		// depth + 1 to allow adding
 		assert((d.depth >= 0) && (d.depth <= depth()+1));
@@ -76,14 +64,9 @@ public:
 		add(desc);
 	}
 	
-	int diff(const BasicLocation<T, CharT> & t) {
-		// if the data exists as seperate entities, there should be a
-		// division to represent that. If there isn't, you'll just have
-		// to put up with the terminations.
-		if (operator==(t)) throw "location:diff:=";
-		else return mismatch(t)->depth(); 
-	}
-
+	// returns true if the divisions contained in t are equal to those
+	// contained in this, *even* if one of them has greater detail
+	// I don't think I still need this functionality, but I'll keep it
 	bool operator==(BasicLocation & t) {
 		/*
 		 * All ye who enter here, despair of comprehension
@@ -96,11 +79,12 @@ public:
 		 * THIS IS ALSO TRUE IF ONE QUEUE IS SMALLER
 		 * more general matches *all* more particular locations
 		 */
-		return mismatch(t) == divs.end();
+
+		typedef typename std::deque<Division>::iterator iter;
+		std::pair<iter, iter> pair;
+		pair = std::mismatch(divs.begin(),divs.end(), t.divs.begin());
+		return *(pair.first) == *(divs.end());
 	}
 };
-
-typedef BasicLocation<char> Location;
-typedef BasicLocation<wchar_t> WLocation;
 
 #endif

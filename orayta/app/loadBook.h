@@ -6,7 +6,7 @@
 #include <string>
 #include <cassert>
 #include "../lib/book.h"
-#include "../lib/locatedContent.h"
+#include "../lib/division.h"
 #include "loadContent.h"
 #include "markerDictionary.h"
 
@@ -18,13 +18,12 @@
 
 template <typename ContentT, typename CharT, typename LoaderFunc>
 void loadBook(
-		Book<LocatedContent<ContentT>, CharT> & book,
+		Book<Division<ContentT, CharT> > & book,
 		const std::basic_istream<CharT> & stream,
 		const std::basic_string<CharT> & markers,
-		// support custom function for unique formatting. I notice now
-		// Mishna Berura. But the default supports the overwelming
-		// majority of things
-		// (this is some pretty wild template stuff. But it should work)
+		// support custom function for unique formatting. But the
+		// default supports everything that I saw (this is some pretty
+		// wild template stuff. But it should work)
 		LoaderFunc loaderFunc = loadContent<ContentT>)
 {
 	MarkerDictionary<CharT> markerDictionary(markers);
@@ -40,44 +39,26 @@ void loadBook(
 		}
 	}
 
-	// every time a division is reached, its added to location_base
-	// it doesn't keep on going deeper and deeper, because Location knows
-	// to clear deeper info. See there for more info.
-	BasicLocation<CharT> location_base;
-	// in case content is spread over a few lines
-	// cleared whenever a marker is reached
-	LocatedContent<ContentT> locatedContent_base;
-	bool working_on_content = false;
+	// tmp_div is only cleared when a division is reached, allowing content to be
+	// spread out over multiple lines
+	Division<ContentT,CharT> tmp_div
 
 	while(std::readline(stream, line)) {
 		if(string.empty())
 			continue;
 		else if(markerDictionary.is_marker(line[0])) {
-			if(working_on_content) {
-				working_on_content = false;
-				book.push_back(locatedContent_base);
-				locatedContent_base = ContentT();
-			}
-
 			BasicDivision<CharT> div;
 			markerDictionary.add(line[0]);
 
 			div.depth = markerDictionary.depth(line[0]);
 			div.name = line.substr(2);
-			
-			location_construct.add(div);
-		} else {
-			if(not working_on_content) {
-				working_on_content = true;
-				locatedContent_base.location = location_base;
-			}
+			div.clearContent();
 
-			loaderFunc(locatedContent_base, line);
+			book.push_back(div);
+		} else {
+			loaderFunc(book.back().content(), line);
 		}
 	}
-
-	if(working_on_content)
-		book.push_back(locatedContent_base);
 
 	cassert(not book.empty());
 }

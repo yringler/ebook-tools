@@ -2,12 +2,14 @@
 #define DIVISION_H
 
 #include <string>
-#include <istream>
+#include <cassert>
 
 /*
  * Describes one text division in the text. For example, a chapter break,
  * section, paragraph - even a sentance could be a division, depending on what
  * you're doing.
+ *
+ * The most specific division contains the content located at that division
  *
  * NOTE*
  * A BOOK TITLE IS NOT A DIVISION 
@@ -30,20 +32,35 @@
  * the same depth I suppose)
  */
  
-Template<typename CharT>
-struct BasicDivision
+template<typename ContentT, typename CharT>
+struct Division
 { 
 	typedef std::basic_string<CharT> String;
 	String name; 	// eg chapter name
-	int num;	// eg num of chapter
+	int num;	// eg num of chapter. optional
 	int depth;	// depth described by this Division
 
 	bool operator==(const BasicDivision & d) {
 		return name==d.name && num==d.num && depth == d.depth;
 	}
-};
 
-typedef BasicDivision<char> Division;
-typedef BasicDivision<wchar_t> WDivision;
+	bool content_set;
+	ContentT m_content;
+	void content(ContentT & ad) {
+		m_content = ad;
+		content_set = true;
+	}
+	bool has_content() { return content_set == true; }
+	ContentT & content() { 
+		// if content hasn't been set yet, assume that acessing it
+		// in order to set it, so initilize to default value.
+		// Obviously, it's already set to default, this is just more
+		// complete code, in fitting with the class interface
+		if(not has_content())
+			content(ContentT());
+		return m_content;
+	}
+	void clearContent() { content_set = false; }
+};
 
 #endif
