@@ -2,6 +2,7 @@
 *.gch
 # from vim
 *.swp
+*~
 # from g++
 a.out
 tags
