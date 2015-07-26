@@ -10,13 +10,18 @@ struct BasicComment
 	String on;	// what is being commented on
 			// not neccisarily the whole e.g. story
 	String comment;
+	// the string which is being commented on
+	// enables simple insertion of comment into source text
+	// not graceful. idea?
+	String *commented;
 
 	/* begin and end of what commented on in source string */
 	typename String::iterator begin;
 	typename String::iterator end;
 
-	BasicComment() {}
+	BasicComment() { commented = 0; }
 	BasicComment(String a_on = String(), String a_comment = String()) { 
+		commented = 0;
 		on = a_on, comment = a_comment;
 	}
 

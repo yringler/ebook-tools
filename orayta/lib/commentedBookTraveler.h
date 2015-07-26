@@ -60,6 +60,12 @@ public:
 				return true;
 		return false;
 	}
+
+	SourceT & source(int i = 0) {
+		assert(*cur_souce == *cur_comGroup_vector[i]);
+		return *cur_souce;
+
+	}
 	iterator sourceBegin(int i = 0) {
 		assertOnSame(i);
 
