@@ -35,6 +35,7 @@
 template<typename ContentT, typename CharT>
 struct Division
 { 
+public:
 	typedef std::basic_string<CharT> String;
 	String name; 	// eg chapter name
 	int num;	// eg num of chapter. optional
@@ -45,13 +46,15 @@ struct Division
 		return name==d.name && num==d.num && depth == d.depth;
 	}
 
+private:
 	bool content_set;
 	ContentT m_content;
+public:
 	void content(ContentT & ad) {
 		m_content = ad;
 		content_set = true;
 	}
-	bool has_content() { return content_set == true; }
+	bool hasContent() { return content_set == true; }
 	ContentT & content() { 
 		// if content hasn't been set yet, assume that acessing it
 		// in order to set it, so initilize to default value.
