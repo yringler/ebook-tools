@@ -40,7 +40,8 @@ struct Division
 	int num;	// eg num of chapter. optional
 	int depth;	// depth described by this Division
 
-	bool operator==(const BasicDivision & d) {
+	template<typename ArgT>
+	bool operator==(const Division<ArgT, CharT> & d) {
 		return name==d.name && num==d.num && depth == d.depth;
 	}
 
