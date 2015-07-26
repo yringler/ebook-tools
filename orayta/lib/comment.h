@@ -12,8 +12,8 @@ struct BasicComment
 	String comment;
 
 	/* begin and end of what commented on in source string */
-	typename String::const_iterator begin;
-	typename String::const_iterator end;
+	typename String::iterator begin;
+	typename String::iterator end;
 
 	BasicComment() {}
 	BasicComment(String a_on = String(), String a_comment = String()) { 
