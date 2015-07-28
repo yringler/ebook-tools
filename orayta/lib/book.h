@@ -9,8 +9,6 @@
 template<typename ContentT, typename CharT>
 class Book : public std::deque<Division<ContentT, CharT> > {
 private:
-	typedef std::deque<Division<ContentT, CharT> deque;
-
 	std::basic_string<CharT> m_title;
 	std::basic_string<CharT> & title() { return m_title; }
 public:
