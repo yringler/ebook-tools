@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 #include "book.h"
-#include "commentedContent.h"
+#include "commentedDivision.h"
+#include "bulkBinder.h"
+#include "binder.h"
+#include "looseBinder.h"
 
 template<typename CharT>
 class CommentedBook : public Book<CommentedDivision<CharT> >
@@ -15,6 +18,7 @@ private:
 	std::vector<std::basic_string<Chart> > commentaryTitles;
 	const int numCommentaries;
 	int num_added;
+
 public:
 	CommentBook(SourceBook & sb, int nc = 1) : numCommentaries(nc) {
 		for(SourceBook::iterator iter = sb.begin(); iter != sb.end(); iter++) {
@@ -43,6 +47,27 @@ public:
 	}
 
 	std::basic_string<CharT> & title(int i=0) { return commentaryTitles[i]; }
+
+	template<typename BinderT>
+	void bind() {
+		for(iterator iter = begin(); iter != end(); ++iter)
+			for(int i=0; i < numCommentaries; ++i)
+				if(iter->hasCommentary(i))
+					if(iter->hasContent()) {
+					}
+					// if commentGroup on more general
+					// eg on chapter, and source content
+					// is found at paragraph div
+					else {
+					}
+	}
+
+	void bind() {
+		bind<BasicBinder<CharT> >();
+	}
+	void looseBind() {
+		bind<BasicLooseBinder<CharT> >()
+	}
 };
 
 #endif

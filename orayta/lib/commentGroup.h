@@ -1,6 +1,7 @@
 #ifndef COMMENT_GROUP_H
 #define COMMENT_GROUP_H
 
+#include "comment.h"
 #include <deque>
 
 /*

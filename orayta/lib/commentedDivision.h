@@ -31,6 +31,14 @@ public:
 	CommentGroup<BasicComment<CharT> > & operator[int i] {
 		return commentary(i);
 	}
+
+	bool hasCommentary() {
+		for(int i=0; i < commentaries.size(); ++i)
+			if(commentaries[i] != 0)
+				return true;
+	}
+
+	bool hasCommentary(int i) { return commentaries[i]; }
 };
 
 #endif
