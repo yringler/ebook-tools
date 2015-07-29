@@ -2,6 +2,7 @@
 #define BINDER_H
 
 #include <string>
+#include <cassert>
 #include "comment.h"
 
 /*
@@ -15,17 +16,17 @@ class BasicBinder
 {
 private:
 	typedef std::basic_string<CharT> String;
-	typedef typename String::const_iterator const_iter;
+	typedef typename String::iterator IterT;
 
 protected:
 	// iterators to commented-on string
-	const_iter to_begin;
-	const_iter to_end;	// must{?} be past the end for stl compatibility
+	IterT to_begin;
+	IterT to_end;	// must{?} be past the end for stl compatibility
 
-	mutable const_iter last_search_begin;	
-	mutable const_iter last_find_end;
+	mutable IterT last_search_begin;	
+	mutable IterT last_find_end;
 	virtual bool attach(BasicComment<CharT> & comment,
-			const_iter search_begin) const;
+			IterT search_begin) const;
 public:
 	enum AttachMode { first, same, next };
 public:
@@ -33,7 +34,10 @@ public:
 	BasicBinder() {}
 
 	void restart() { last_search_begin = last_find_end = to_begin; }
-	virtual void to(const_iter a, const_iter b) { 
+	virtual void to(IterT a, IterT b) { 
+		// no empty strings, please
+		assert(a != b);
+
 		to_begin = a;
 		to_end = b;
 
@@ -42,10 +46,10 @@ public:
 	virtual void to(const String & str) { to(str.begin(), str.end() ); }
 
 	virtual bool attach(BasicComment<CharT> & comment,
-			AttachMode mode=next) const;
+			AttachMode mode=next);
 
-	const_iter & begin() { return to_begin; }
-	const_iter & end() { return to_end; }
+	IterT & begin() { return to_begin; }
+	IterT & end() { return to_end; }
 };
 
 #include "binder.cpp"

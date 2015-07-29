@@ -11,22 +11,23 @@ template<typename CharT>
 class CommentedDivision : public Division<std::basic_string<CharT>, CharT>
 {
 private:
-	std::vector<CommentGroup<BasicComment<CharT> >*> commentaries;
+	std::vector<CommentGroup<BasicComment<CharT> > > commentaries;
 public:
-	CommentedDivision() { 
-		commentaries.resize(1);
-		commentaries[0] = 0;
+	CommentedDivision(int i=1) { 
+		commentaries.resize(i);
 	}
 
 	void numCommentaries(int num) { 
 		commentaries.resize(num);
-		for(int i = 0; i < num; i++)
-			commentaries[i] = 0;
 	}
 
+	int numCommentaries() { return commentaries.size(); }
+
+	bool hasCommentary(int i) { return not commentaries[i].empty(); }
+
 	CommentGroup<BasicComment<CharT> > & commentary(int i=0) {
-		assert(commentaries[i]);
-		return *commentaries[i];
+		assert(hasCommentary(i));
+		return commentaries[i];
 	}
 	CommentGroup<BasicComment<CharT> > & operator[int i] {
 		return commentary(i);
@@ -34,11 +35,10 @@ public:
 
 	bool hasCommentary() {
 		for(int i=0; i < commentaries.size(); ++i)
-			if(commentaries[i] != 0)
+			if(hasCommentary(i))
 				return true;
 	}
 
-	bool hasCommentary(int i) { return commentaries[i]; }
 };
 
 #endif

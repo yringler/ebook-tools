@@ -21,7 +21,8 @@ private:
 
 public:
 	CommentBook(SourceBook & sb, int nc = 1) : numCommentaries(nc) {
-		for(SourceBook::iterator iter = sb.begin(); iter != sb.end(); iter++) {
+		for(SourceBook::iterator iter = sb.begin(); iter != sb.end();
+				iter++) {
 			push_back(*iter);
 			back().numCommentaries(nc);
 		}
@@ -54,11 +55,21 @@ public:
 			for(int i=0; i < numCommentaries; ++i)
 				if(iter->hasCommentary(i))
 					if(iter->hasContent()) {
+						::bind<BinderT>(*iter);
 					}
 					// if commentGroup on more general
 					// eg on chapter, and source content
 					// is found at paragraph div
 					else {
+						iterator ie;
+						for(ie = iter;
+							ie->depth != 
+							iterator->depth;
+							++ie)
+							continue;
+						::bind<BinderT>(*iterator,
+								iterator+1,
+								ie);
 					}
 	}
 

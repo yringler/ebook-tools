@@ -4,7 +4,7 @@
 
 template<typename CharT>
 bool BasicBinder<CharT>::attach(BasicComment<CharT> & comment,
-		 const_iter search_begin) const
+		 const_iter search_begin)
 {
 	typename String::const_iterator begin;
 	begin = std::search(search_begin, to_end,
@@ -33,7 +33,7 @@ bool BasicBinder<CharT>::attach(BasicComment<CharT> & comment,
 
 template<typename CharT>
 bool BasicBinder<CharT>::attach(BasicComment<CharT> & comment, 
-		AttachMode mode) const
+		AttachMode mode)
 {
 	switch(mode)
 	{

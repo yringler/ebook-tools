@@ -81,8 +81,9 @@ void loadContent(CommentGroup<CommentT> & commentGroup, const std::wstring & lin
 	// the seif katan for mishna berura comes between these two things
 	const std::wstring mb_sk_start(L"<span class=\"S0\">")
 	const std::wstring mb_sk_end(L"</span>");
+	const std::wstring mb_etc(L"וכו");	// vchu
 
-	if(line.find(L"<b>") != std::wstring::npos)
+f(line.find(L"<b>") != std::wstring::npos)
 		loadContent(commentGroup, line, L"<b>", L"</b>");
 	else if(line.find(L"<B>") != std::wstring::npos)
 		loadContent(commentGroup, line, L"<B>", L"</B>");
@@ -92,6 +93,12 @@ void loadContent(CommentGroup<CommentT> & commentGroup, const std::wstring & lin
 		// mishna berura has the honour of being processed right here 
 		// the comment is added by the next block first, when a seif ka
 		commentGroup.back().on = trimSpace(extractToString(line, L'-'));
+		// for now I'll just get rid of this one, maybe later I'll
+		// clear out the others also. Its just that its *really*
+		// important that mishna berura match, because it starts out on
+		// a more general div
+		commentGroup.back().on = extractToString(commentGroup.back.on,
+				mb_etc);
 		removeThroughString(line, L'-');
 		commentGroup.back().comment += line;	// append, after seif katan
 	} else if(line.find(mb_sk_start) != std::wstring::npos) {
